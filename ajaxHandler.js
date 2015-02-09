@@ -1,13 +1,8 @@
-function ajaxCall (url) {
-    var jqxhr = $.ajax(url)
-                 .done(function() {
-                     alert( "success" );
-                 })
-                 .fail(function() {
-                     alert( "error" );
-                 })
-                 .always(function() {
-                     alert( "complete" );
-                 });
+function ajaxCall (url, par) {
+    var jqxhr = $.ajax({
+                    type: 'POST',
+                    url: url,
+                    data: par
+                });
     return jqxhr;
 }
