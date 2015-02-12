@@ -6,10 +6,14 @@
                     data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">{{ modal.title }}</h4>
+                <h4 class="modal-title">{% for dateId, creaDate in modal.creationDate %}
+                                            {{ creaDate }}
+                                        {% endfor %}</h4>
             </div>
             <div class="modal-body">
-                {{ modal.content }}
+                {% for descId, description in modal.description %}
+                    {{ description }}
+                {% endfor %}
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left"

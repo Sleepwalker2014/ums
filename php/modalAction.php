@@ -6,9 +6,11 @@
 
         public function getTemp () {
             $th = templateHandler::getTemplateHandler('../html/markerModal.html');
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animals');
-            $th->addContent('modal', ['title' => 'Tier entlaufen', 
-                                      'content' => 'Diese Katze ist weg']);
+            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+
+            $resultArray = $db->select('notifications', '*', "H");
+
+            $th->addContent('modal', $resultArray);
             echo $th->getHTML();
         }
     }
