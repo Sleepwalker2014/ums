@@ -20,9 +20,14 @@
 
         public function select ($table, $columns, $where) {
             $output = [];
-            $sql = 'SELECT '.$columns.'
+            $sql = 'SELECT animals.name, birthday, sexes.description as sex, c1.description as eyeColour, c2.description as furColour, species.description as species,
+                    species.code as speciesCode
                     FROM '.$table.'
-                        JOIN 
+                        JOIN animals USING (animal)
+                        JOIN species USING (species)
+                        JOIN sexes USING (sex)
+                        JOIN colours c1 ON animals.furColour = c1.colour
+                        JOIN colours c2 ON animals.eyeColour = c2.colour
                     WHERE id = 1;';
 
             $result = $this->mysqli->query($sql);

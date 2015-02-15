@@ -9,6 +9,7 @@
             $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
 
             $resultArray = $db->select('notifications', '*', "H");
+            $resultArray['speciesCode'][0] .= '.png';
 
             $th->addContent('modal', $resultArray);
             echo $th->getHTML();

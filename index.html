@@ -61,57 +61,11 @@
     <script>
         $(document).ready(
                         function() {
-                            var map;
-                            function initialize() {
-                                var mapOptions = {
-                                    zoom : 4,
-                                    center : new google.maps.LatLng(
-                                            -34.397, 150.644),
-                                    mapTypeId: google.maps.MapTypeId.SATELLITE
-                                };
-                                map = new google.maps.Map(
-                                        document
-                                                .getElementById('map-canvas'),
-                                        mapOptions);
-
-                                var myLatlng = new google.maps.LatLng(-25.363882,131.044922);
-
-                                addMarker(map, myLatlng, "jo");
-
-                                if (navigator.geolocation) {
-                                    navigator.geolocation
-                                            .getCurrentPosition(
-                                                    function(
-                                                            position) {
-                                                        var pos = new google.maps.LatLng(
-                                                                position.coords.latitude,
-                                                                position.coords.longitude);
-
-                                                        var infowindow = new google.maps.InfoWindow(
-                                                                {
-                                                                    map : map,
-                                                                    position : pos,
-                                                                    content : 'Sie sind hier'
-                                                                });
-
-                                                        map
-                                                                .setCenter(pos);
-                                                    },
-                                                    function() {
-                                                        handleNoGeolocation(true);
-                                                    });
-                                } else {
-                                    // Browser doesn't support Geolocation
-                                    handleNoGeolocation(false);
-                                }
-
-                            }
-
-                            google.maps.event.addDomListener(
-                                    window, 'load', initialize);
-
-                            //var ac = ajaxCall("index.php");
+                            var gMap = new googleMap();
+                            var tmpMarker = new googleMarker (new google.maps.LatLng(-25.363882,131.044922), "Ok");
+                            tmpMarker.setIcon('');
+                            gMap.addMarker(tmpMarker);
                         });
-                </script>
+    </script>
     </body>
 </html>

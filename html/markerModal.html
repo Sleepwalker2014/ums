@@ -11,9 +11,71 @@
                                         {% endfor %}</h4>
             </div>
             <div class="modal-body">
-                {% for descId, description in modal.description %}
-                    {{ description }}
-                {% endfor %}
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="panel panel-default">
+                           <div class="panel-heading">Steckbrief</div>
+                           <div class="panel-body">
+                               <div class="row">
+                                   <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="pwd">Name:</label>
+                                            {% for animalName in modal.name %}
+                                                {{ animalName }}
+                                            {% endfor %}
+                                        </div>
+                                   </div>
+                                   <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="pwd">Geburtsdatum:</label>
+                                            {% for animalName in modal.birthday %}
+                                                {{ birthday }}
+                                            {% endfor %}
+                                        </div>
+                                   </div>
+                               </div>
+
+                               <div class="row">
+                                   <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="pwd">Rasse:</label>
+                                            {% for animalName in modal.name %}
+                                                {{ animalName }}
+                                            {% endfor %}
+                                        </div>
+                                   </div>
+                                   <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="pwd">Grösse:</label>
+                                            {% for animalName in modal.birthday %}
+                                                {{ birthday }}
+                                            {% endfor %}
+                                        </div>
+                                   </div>
+                               </div>
+
+                               {% for furColour in modal.furColour %}
+                                  <div class="row">
+                                       <div class="col-md-6">
+                                          <img src="public/images/eye_blue.png">
+                                       </div>
+                                       <div class="col-md-6">
+                                          {{ furColour }}
+                                       </div>
+                                   </div>
+                               {% endfor %}
+                           </div>
+                        </div>
+                        <div class="panel panel-default">
+                           <div class="panel-heading">Geschlecht</div>
+                           <div class="panel-body">
+                               {% for sex in modal.sex %}
+                                    {{ sex }}
+                               {% endfor %}
+                           </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left"
