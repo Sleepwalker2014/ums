@@ -8,9 +8,14 @@
 
     function resolveUrl ($urlParams) {
         if (!empty($urlParams['actionCode'])) {
-            require 'modalAction.php';
-            $handler = array( 'modalAction', 'getTemp');
-            call_user_func_array($handler, []);
+            switch ($urlParams['actionCode']) {
+                case 1:
+                    require 'modalAction.php';
+                    $handler = array( 'modalAction', 'getTemp');
+                    call_user_func_array($handler, []);
+                break;
+                case 2:
+            }
         }
     }
 ?>

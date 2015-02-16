@@ -16,7 +16,8 @@ function addMarker (map, position, title) {
 }
 
 function setAllMarkers () {
-    
+    ajaxCall('php/routingHandler.php', {'actionCode': "2"}).success(function(result) {
+     });
 }
 
 function googleMap () {
@@ -55,15 +56,16 @@ function googleMarker (position, title) {
     this.marker = new google.maps.Marker({
                                              position: position,
                                              title: title
-                                         });
+                                        });
     this.map    = null;
 
-    googleMarker.prototype.setIcon        = function (iconPath) { this.marker.setIcon('public/images/cat.png'); return this };
+    googleMarker.prototype.setIcon        = function (iconPath) { this.marker.setIcon(iconPath); return this };
     google.maps.event.addListener(this.marker, 'click', function () { this.map.setZoom(19); 
-                                                                      /*this.map.setCenter(this.marker.getPosition());*/
-                                                                      ajaxCall('php/routingHandler.php', {'actionCode': "34"}).success(function(result) {
+                                                                      this.map.setCenter(position);
+                                                                      ajaxCall('php/routingHandler.php', {'actionCode': "1"}).success(function(result) {
                                                                                                                                          $('#modalPlaceHolder').html(result);
                                                                                                                                          $('#markerModal').modal('show');
                                                                                                                                                           });
    });
 }
+
