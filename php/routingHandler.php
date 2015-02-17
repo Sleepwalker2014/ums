@@ -15,6 +15,9 @@
                     call_user_func_array($handler, []);
                 break;
                 case 2:
+                    require 'marker.php';
+                    $handler = array('getModalInformation', 'getTemp');
+                    call_user_func_array($handler, []);
             }
         }
     }
