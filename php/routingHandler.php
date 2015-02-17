@@ -9,15 +9,14 @@
     function resolveUrl ($urlParams) {
         if (!empty($urlParams['actionCode'])) {
             switch ($urlParams['actionCode']) {
-                case 1:
+                case 2:
                     require 'modalAction.php';
                     $handler = array( 'modalAction', 'getTemp');
                     call_user_func_array($handler, []);
                 break;
-                case 2:
-                    require 'marker.php';
-                    $handler = array('getDisplayInformation', 'getTemp');
-                    call_user_func_array($handler, []);
+                case 1:
+                    require 'notification.php';
+                    notification::getFromDb(1);
             }
         }
     }

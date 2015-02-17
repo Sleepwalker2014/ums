@@ -39,5 +39,27 @@
 
             return $output;
         }
+
+        public function query ($sql, $multipleOut = true) {
+            $output = [];
+
+            $result = $this->mysqli->query($sql);
+
+            if ($multipleOut === false) {
+                while ($row = $result->fetch_assoc()) {
+                    foreach ($row as $key => $value) {
+                        $output[$key] = $value;
+                    }
+                }
+            } else {
+                while ($row = $result->fetch_assoc()) {
+                    foreach ($row as $key => $value) {
+                        $output[$key][] = $value;
+                    }
+                }
+            }
+
+            return $output;
+        }
     }
 ?>
