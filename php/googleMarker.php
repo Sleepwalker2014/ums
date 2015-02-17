@@ -6,5 +6,11 @@
         public notification () {
             
         }
+        
+        public getAnimal ($byId = false) {
+            if ($byId === true) {
+                return $this->animal;
+            }
+        }
     }
 ?>
