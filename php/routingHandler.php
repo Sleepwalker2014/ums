@@ -16,7 +16,7 @@
                 break;
                 case 2:
                     require 'marker.php';
-                    $handler = array('getModalInformation', 'getTemp');
+                    $handler = array('getDisplayInformation', 'getTemp');
                     call_user_func_array($handler, []);
             }
         }
