@@ -1,5 +1,4 @@
 <?php
-    require 'databaseHandler.php';
     class modalAction {
         public function modalAction () {
         }
