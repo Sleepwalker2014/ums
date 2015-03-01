@@ -26,9 +26,26 @@
                 $raceDb = new race();
                 $raceDb->sex  = $row['sex'];
                 $raceDb->code = $row['code'];
-                $raceDb->name = $row['code'];
+                $raceDb->name = $row['name'];
             }
             return $raceDb;
+        }
+
+        public static function getRaces () {
+            $races = [];
+
+            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+
+            $sql = 'SELECT *
+                    FROM
+                    races;';
+            $result = $db->query($sql);
+
+            while ($row = $result->fetch_assoc()) {
+                $races[] = ['code' => $row['code'],
+                            'name' => $row['name']];
+            }
+            return $races;
         }
 
         public function getRace () {

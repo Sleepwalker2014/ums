@@ -33,10 +33,21 @@
                                                   'description'     => $notification->getDescription()]);
                         echo $th->getHTML();
                     }
+                break;
                 case 3:
+                    require 'race.php';
                     $th = templateHandler::getTemplateHandler('../html/newNotificationModal.html');
 
+                    $th->addContent('modal', ['races' => race::getRaces()]);
+
                     echo $th->getHTML();
+                break;
+                case 4:
+                    require_once 'notification.php';
+                    $notification = new notification();
+
+                    $notification->persist();
+                break;
             }
         }
     }

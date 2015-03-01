@@ -83,9 +83,7 @@
 
             $sql = 'INSERT INTO 
                     notifications
-                    VALUES (-34.397, 1, "2015-02-12", "mua", 1, 140.544)
-                    JOIN animals USING (animal)
-                    JOIN species s USING (species);';
+                    VALUES (null, -34.397, 1, "2015-02-12", "mua", 1, 140.544);';
             $result = $db->query($sql);
         }
     }

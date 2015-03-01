@@ -1,6 +1,6 @@
 <script>
     $('#saveNotBtn').click(function() {
-        ajaxCall('php/routingHandler.php', {'actionCode': "3", 'notificationType': 1}).success(function(result) {
+        ajaxCall('php/routingHandler.php', {'actionCode': "4", 'notificationType': 1}).success(function(result) {
         });
     });
 </script>
@@ -25,9 +25,10 @@
                     </div>
                     <div class="col-md-6">
                          <select class="form-control">
-                             <option value="BKH">BKH</option>
-                             <option value="REX">Rex</option>
-                        </select>
+                         {% for race in modal.races %}
+                             <option value="{{ race.code }}">{{ race.name }}</option>
+                         {% endfor %}
+                         </select>
                     </div>
                 </div>
             </div>
