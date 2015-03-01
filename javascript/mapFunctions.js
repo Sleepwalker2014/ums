@@ -15,9 +15,34 @@ function addMarker (map, position, title) {
     });
 }
 
-function setAllMarkers () {
+function googleMarker (position, title, id) {
+    this.map    = null;
+    this.marker = new google.maps.Marker({
+                                             position: position,
+                                             title: title
+                                        });
+
+    googleMarker.prototype.setIcon        = function (iconPath) { this.marker.setIcon(iconPath); return this };
+    google.maps.event.addListener(this.marker, 'click', function () { this.map.setZoom(19); 
+                                                                      this.map.setCenter(position);
+                                                                      ajaxCall('php/routingHandler.php', {'actionCode': "1", 'markerId': id}).success(function(result) {
+                                                                                                                                         $('#modalPlaceHolder').html(result);
+                                                                                                                                         $('#markerModal').modal('show');
+                                                                                                                                                          });
+   });
+}
+
+function getAllMarkers (gMap) {
     ajaxCall('php/routingHandler.php', {'actionCode': "2"}).success(function(result) {
-     });
+        var markerData = $.parseJSON(result);
+        $.each(markerData, function(key, value) {
+            console.log(key);
+            gMarker = new googleMarker(new google.maps.LatLng(value.latitude,
+                                                              value.longitude), "horst", key);
+            gMarker.setIcon(value.image);
+            gMap.addMarker(gMarker);
+        });
+    });
 }
 
 function googleMap () {
@@ -50,22 +75,12 @@ function googleMap () {
     }
 
     googleMap.prototype.addMarker = function (googleMarker) { googleMarker.marker.setMap (map); googleMarker.map = map };
-}
 
-function googleMarker (position, title) {
-    this.marker = new google.maps.Marker({
-                                             position: position,
-                                             title: title
-                                        });
-    this.map    = null;
-
-    googleMarker.prototype.setIcon        = function (iconPath) { this.marker.setIcon(iconPath); return this };
-    google.maps.event.addListener(this.marker, 'click', function () { this.map.setZoom(19); 
-                                                                      this.map.setCenter(position);
-                                                                      ajaxCall('php/routingHandler.php', {'actionCode': "1"}).success(function(result) {
-                                                                                                                                         $('#modalPlaceHolder').html(result);
-                                                                                                                                         $('#markerModal').modal('show');
-                                                                                                                                                          });
-   });
+    google.maps.event.addListener(map, 'click', function(event) {
+        ajaxCall('php/routingHandler.php', {'actionCode': "3"}).success(function(result) {
+            $('#modalPlaceHolder').html(result);
+            $('#markerModal').modal('show');
+        });
+    });
 }
 

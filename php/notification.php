@@ -26,14 +26,40 @@
                     FROM
                     notifications
                     WHERE id = '.$id.';';
-            $result = $db->query($sql, false);
+            $result = $db->query($sql);
 
-            $notification = new notification();
-            $notification->animal       = $result['animal'];
-            $notification->creationDate = $result['creationDate'];
-            $notification->description  = $result['description'];
+            if ($row = $result->fetch_assoc()) {
+                $notification = new notification();
+                $notification->animal       = $row['animal'];
+                $notification->creationDate = $row['creationDate'];
+                $notification->description  = $row['description'];
+            }
 
             return $notification;
+        }
+
+        /**
+         * @return mixed[] $output
+         */
+        public static function getAllMarkerInformation () {
+            $output = [];
+
+            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+
+            $sql = 'SELECT latitude, longitude, id, s.code as species
+                    FROM
+                    notifications
+                    JOIN animals USING (animal)
+                    JOIN species s USING (species);';
+            $result = $db->query($sql);
+
+            while ($row = $result->fetch_assoc()) {
+                $output[$row['id']] = ['latitude'  => $row['latitude'],
+                                       'longitude' => $row['longitude'],
+                                       'image'     => 'public/images/'.$row['species'].'.png'];
+            }
+
+            echo json_encode($output);
         }
 
         public function getAnimal ($byId = false) {
@@ -50,5 +76,16 @@
 
         public function getDescription () {
             return $this->description;
+        }
+
+        public function persist () {
+            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+
+            $sql = 'INSERT INTO 
+                    notifications
+                    VALUES (-34.397, 1, "2015-02-12", "mua", 1, 140.544)
+                    JOIN animals USING (animal)
+                    JOIN species s USING (species);';
+            $result = $db->query($sql);
         }
     }

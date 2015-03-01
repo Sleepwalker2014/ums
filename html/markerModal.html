@@ -6,13 +6,17 @@
                     data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">{% for dateId, creaDate in modal.creationDate %}
-                                            {{ creaDate }}
-                                        {% endfor %}</h4>
+                <h4 class="modal-title">Annonce vom {{ modal.creationDate }}</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
+                        <div class="panel panel-default">
+                           <div class="panel-heading">Beschreibung</div>
+                           <div class="panel-body">
+                                {{ modal.description }}
+                           </div>
+                        </div>
                         <div class="panel panel-default">
                            <div class="panel-heading">Steckbrief</div>
                            <div class="panel-body">
@@ -35,39 +39,48 @@
                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="pwd">Rasse:</label>
-                                            {% for animalName in modal.name %}
-                                                {{ animalName }}
-                                            {% endfor %}
+                                            {{ modal.animalRace }}
                                         </div>
                                    </div>
                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="pwd">Grösse:</label>
-                                            {% for animalName in modal.birthday %}
-                                                {{ birthday }}
-                                            {% endfor %}
+                                                <input type="range" min="0" max="255" value="{{ modal.size }}" />
                                         </div>
                                    </div>
                                </div>
 
-                               {% for furColour in modal.furColour %}
-                                  <div class="row">
-                                       <div class="col-md-6">
-                                          <img src="public/images/eye_blue.png">
-                                       </div>
-                                       <div class="col-md-6">
-                                          {{ furColour }}
+                               <div class="row">
+                                   <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="pwd">Augenfarbe:</label>
+                                            <img src="{{ modal.eyeColour }}">
+                                        </div>
+                                   </div>
+                                   <div class="col-md-6">
+                                        <div class="form-group">
+                                            <div class="form-group">
+                                                <label for="pwd">Fellfarbe:</label>
+                                                <img src="{{ modal.furColour }}">
+                                            </div>
+                                        </div>
+                                   </div>
+                               </div>
+
+                               <div class="row">
+                                   <div class="col-md-12">
+                                       <div class="form-group">
+                                           <label for="pwd">Merkmale:</label>
+                                           {{ modal.specification }}
                                        </div>
                                    </div>
-                               {% endfor %}
+                               </div>
                            </div>
                         </div>
                         <div class="panel panel-default">
                            <div class="panel-heading">Geschlecht</div>
                            <div class="panel-body">
-                               {% for sex in modal.sex %}
-                                    {{ sex }}
-                               {% endfor %}
+                               <img src="public/images/female.png">
                            </div>
                         </div>
                     </div>
@@ -76,7 +89,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default pull-left"
                     data-dismiss="modal">Schließen</button>
-                <button type="button" class="btn btn-primary pull-left">Speichern</button>
             </div>
         </div>
     </div>
