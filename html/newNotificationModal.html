@@ -1,6 +1,8 @@
 <script>
     $('#saveNotBtn').click(function() {
-        ajaxCall('php/routingHandler.php', {'actionCode': "4", 'notificationType': 1}).success(function(result) {
+        var modalData = {name: $('#name').val(),
+                         eyeColor: "blue"};
+        ajaxCall('php/routingHandler.php', {'actionCode': "4", 'modalData': modalData}).success(function(result) {
         });
     });
 </script>
@@ -18,13 +20,13 @@
                 <div class="row">
                     <h3 class="col-md-12">Example heading</h3>
                     <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Rufname">
+                        <input type="text" id="name" class="form-control" placeholder="Rufname">
                     </div>
                     <div class="col-md-6">
                         <input type="text" class="form-control" placeholder="Geburtsdaum">
                     </div>
                     <div class="col-md-6">
-                         <select class="form-control">
+                         <select class="form-control" id="race">
                          {% for race in modal.races %}
                              <option value="{{ race.code }}">{{ race.name }}</option>
                          {% endfor %}

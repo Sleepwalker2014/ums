@@ -1,5 +1,9 @@
 <?php
-    class race {
+    require_once 'db.php';
+    class race extends db {
+        private static $reference = 'races';
+        private static $idField = 'race';
+        private static $unique = 'code';
         private $race = null;
         private $code = null;
         private $name = null;
@@ -58,5 +62,9 @@
 
         public function getName () {
             return $this->name;
+        }
+
+        public static function getIdByCode ($code) {
+            parent::getIdByCode($code, self::$unique, self::$reference, self::$idField);
         }
     }

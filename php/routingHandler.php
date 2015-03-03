@@ -46,6 +46,7 @@
                     require_once 'notification.php';
                     $notification = new notification();
 
+                    syslog(0, race::getIdByCode('BKH'));
                     $notification->persist();
                 break;
             }
