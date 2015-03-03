@@ -28,7 +28,6 @@
 
             if ($row = $result->fetch_assoc()) {
                 $raceDb = new race();
-                $raceDb->sex  = $row['sex'];
                 $raceDb->code = $row['code'];
                 $raceDb->name = $row['name'];
             }
@@ -65,6 +64,6 @@
         }
 
         public static function getIdByCode ($code) {
-            parent::getIdByCode($code, self::$unique, self::$reference, self::$idField);
+            return parent::getIdByCode($code, self::$unique, self::$reference, self::$idField);
         }
     }

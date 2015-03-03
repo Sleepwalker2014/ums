@@ -8,8 +8,7 @@ class db {
         $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
 
         $result = $db->query($sql);
-        if ($row = $result->fetch_assoc()) {
-            syslog(0, print_r($row,true));
+        while ($row = $result->fetch_assoc()) {
             return $row[$idField];
         }
     }

@@ -44,6 +44,7 @@
                 break;
                 case 4:
                     require_once 'notification.php';
+                    require_once 'race.php';
                     $notification = new notification();
 
                     syslog(0, race::getIdByCode('BKH'));
