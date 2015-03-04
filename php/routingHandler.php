@@ -10,6 +10,7 @@
         if (!empty($urlParams['actionCode'])) {
             switch ($urlParams['actionCode']) {
                 case 2:
+                    syslog(0,  "je");
                     require_once 'notification.php';
                     notification::getAllMarkerInformation();
                 break;

@@ -1,3 +1,11 @@
+$(document).ready(function() {
+    var gMap = new googleMap();
+    /*                            var tmpMarker = new googleMarker (new google.maps.LatLng(-25.363882,131.044922), "Ok");
+                               tmpMarker.setIcon('public/images/cat.png');
+                               gMap.addMarker(tmpMarker);*/
+                               getAllMarkers(gMap);
+});
+
 function addMarker (map, position, title) {
     marker = new google.maps.Marker({
         position: position,
