@@ -1,6 +1,6 @@
 <?php
-    require_once 'templateHandler.php';
-    require_once 'databaseHandler.php';
+    require_once $GLOBALS['root'].'/php/templateHandler.php';
+    require_once $GLOBALS['root'].'/php/databaseHandler.php';
     $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
     if (!empty($_POST)) {
         resolveUrl($_POST);

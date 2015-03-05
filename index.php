@@ -1,6 +1,13 @@
 <?php
-    require_once 'php/templateHandler.php';
-    $template = new templateHandler('html/map.html');
+    $root = dirname(__FILE__);
 
-    echo $template->getHTML();
-?>
+    require_once $root.'/php/templateHandler.php';
+    require_once $root.'/php/databaseHandler.php';
+
+    if (!empty($_GET['action'])) {
+
+    } else {
+        $template = new templateHandler('html/map.html');
+
+        echo $template->getHTML();
+    }

@@ -1,5 +1,5 @@
 <?php
-    require_once 'h2o-php-master/h2o.php';
+    require_once $root.'/h2o-php-master/h2o.php';
     class templateHandler {
         private $inputFile = null;
         private static $templateHandler = null;
@@ -26,4 +26,3 @@
             }
         }
     }
-?>
