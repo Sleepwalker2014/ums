@@ -1,9 +1,6 @@
 $(document).ready(function() {
     var gMap = new googleMap();
-    /*                            var tmpMarker = new googleMarker (new google.maps.LatLng(-25.363882,131.044922), "Ok");
-                               tmpMarker.setIcon('public/images/cat.png');
-                               gMap.addMarker(tmpMarker);*/
-                               getAllMarkers(gMap);
+    getAllMarkers(gMap);
 });
 
 function addMarker (map, position, title) {
@@ -33,7 +30,7 @@ function googleMarker (position, title, id) {
     googleMarker.prototype.setIcon        = function (iconPath) { this.marker.setIcon(iconPath); return this };
     google.maps.event.addListener(this.marker, 'click', function () { this.map.setZoom(19); 
                                                                       this.map.setCenter(position);
-                                                                      ajaxCall('php/routingHandler.php', {'actionCode': "1", 'markerId': id}).success(function(result) {
+                                                                      ajaxCall('http://localhost/marcel/ums/index.php?action=3', {'actionCode': "1", 'markerId': id}).success(function(result) {
                                                                                                                                          $('#modalPlaceHolder').html(result);
                                                                                                                                          $('#markerModal').modal('show');
                                                                                                                                                           });
@@ -41,7 +38,7 @@ function googleMarker (position, title, id) {
 }
 
 function getAllMarkers (gMap) {
-    ajaxCall('php/routingHandler.php', {'actionCode': "2"}).success(function(result) {
+    ajaxCall('http://localhost/marcel/ums/index.php?action=2', {'actionCode': "2"}).success(function(result) {
         var markerData = $.parseJSON(result);
         $.each(markerData, function(key, value) {
             console.log(key);
@@ -85,7 +82,7 @@ function googleMap () {
     googleMap.prototype.addMarker = function (googleMarker) { googleMarker.marker.setMap (map); googleMarker.map = map };
 
     google.maps.event.addListener(map, 'click', function(event) {
-        ajaxCall('php/routingHandler.php', {'actionCode': "3"}).success(function(result) {
+        ajaxCall('http://localhost/marcel/ums/index.php?action=4', {'actionCode': "3"}).success(function(result) {
             $('#modalPlaceHolder').html(result);
             $('#markerModal').modal('show');
         });
