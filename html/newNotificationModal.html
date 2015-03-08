@@ -1,12 +1,25 @@
 <script>
     $('#saveNotBtn').click(function() {
-        var modalData = {name: $('#name').val(),
-                         eyeColor: "blue"};
-        ajaxCall('php/routingHandler.php', {'actionCode': "4", 'modalData': modalData}).success(function(result) {
+        ajaxCall('http://localhost/marcel/ums/index.php?action=5', getNotificationModalData()).success(function(result) {
         });
     });
+
+    $('.radioOption').click(function() {
+        $(this).addClass('active').removeClass('mouseOver');
+        $('.radioOption').not(this).removeClass('active');
+    });
+
+    function getNotificationModalData () {
+        var newNotificationData = {"notificationData": {"latitude": lastMapClickPosition.lat(), 
+                                                        "longitude": lastMapClickPosition.lng(),
+                                                        "description": lastMapClickPosition.lng(),
+                                                       }
+                                  };
+
+        return newNotificationData;
+    }
 </script>
-<div class="modal fade" id="markerModal">
+<div class="modal fade" id="newNotificationModal">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -19,18 +32,38 @@
             <div class="modal-body">
                 <div class="row">
                     <h3 class="col-md-12">Example heading</h3>
-                    <div class="col-md-6">
+                    <div class="col-md-12 form-group">
+                        <textarea rows="4" id="description" class="form-control" placeholder="Beschreibung..." style="resize: none;"></textarea>
+                    </div>
+                    <div class="col-md-6 form-group">
                         <input type="text" id="name" class="form-control" placeholder="Rufname">
                     </div>
-                    <div class="col-md-6">
-                        <input type="text" class="form-control" placeholder="Geburtsdaum">
+                    <div class="col-md-6 form-group">
+                        <input type="date" class="form-control" placeholder="Geburtsdatum">
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-6 form-group">
                          <select class="form-control" id="race">
                          {% for race in modal.races %}
                              <option value="{{ race.code }}">{{ race.name }}</option>
                          {% endfor %}
                          </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                         <select class="form-control" id="race">
+                         {% for race in modal.races %}
+                             <option value="{{ race.code }}">{{ race.name }}</option>
+                         {% endfor %}
+                         </select>
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <img class="radioOption active" src="public/images/female.png">
+                        <img class="mouseOver radioOption" src="public/images/male.png">
+                    </div>
+                    <div class="col-md-6 form-group">
+                        <input type="range" min="0" max="255" />
+                    </div>
+                    <div class="col-md-12 form-group">
+                        <textarea rows="4" id="specification" class="form-control" placeholder="Merkmale..." style="resize: none;"></textarea>
                     </div>
                 </div>
             </div>

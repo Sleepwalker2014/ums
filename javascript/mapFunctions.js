@@ -1,4 +1,6 @@
 $(document).ready(function() {
+    lastMapClickPosition = null;
+
     var gMap = new googleMap();
     getAllMarkers(gMap);
 });
@@ -83,8 +85,9 @@ function googleMap () {
 
     google.maps.event.addListener(map, 'click', function(event) {
         ajaxCall('http://localhost/marcel/ums/index.php?action=4', {'actionCode': "3"}).success(function(result) {
+            lastMapClickPosition = event.latLng;
             $('#modalPlaceHolder').html(result);
-            $('#markerModal').modal('show');
+            $('#newNotificationModal').modal('show');
         });
     });
 }
