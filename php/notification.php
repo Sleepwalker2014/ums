@@ -8,8 +8,12 @@
         private $creationDate = null;
         private $description  = null;
 
-        public function notification () {
-            
+        public function notification ($latitude, $longitude, $animal, $creationDate, $description) {
+            $this->latitude = $latitude;
+            $this->longitude = $longitude;
+            $this->animal = $animal;
+            $this->creationDate = $creationDate;
+            $this->description = $description;
         }
 
         /**
@@ -71,7 +75,7 @@
         }
 
         public function getCreationDate () {
-                return $this->creationDate;
+            return $this->creationDate;
         }
 
         public function getDescription () {
@@ -83,7 +87,8 @@
 
             $sql = 'INSERT INTO 
                     notifications
-                    VALUES (null, -34.397, 1, "2015-02-12", "mua", 1, 140.544);';
+                    VALUES (null,'.$this->latitude.', 1, NOW(),'.
+                                  $this->description.'1,'.$this->longitude.');';
             $result = $db->query($sql);
         }
     }

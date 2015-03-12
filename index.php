@@ -54,10 +54,10 @@
                 echo $th->getHTML();
                 break;
             case 5:
-                syslog(0, print_r($_POST,true));
                 require_once dirname(__FILE__).'/php/notification.php';
                 require_once dirname(__FILE__).'/php/race.php';
                 $notification = new notification();
+
 
                 syslog(0, race::getIdByCode('BKH'));
                 $notification->persist();
