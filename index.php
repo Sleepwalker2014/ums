@@ -55,9 +55,11 @@
                 break;
             case 5:
                 require_once dirname(__FILE__).'/php/notification.php';
+                require_once dirname(__FILE__).'/php/animal.php';
                 require_once dirname(__FILE__).'/php/race.php';
-                $notification = new notification();
-
+syslog(0, print_r($_POST,true));
+                $animal = new animal($_POST['notificationData']['name'], $_POST['notificationData']['birthDay'], $_POST['notificationData']['sex'], $_POST['notificationData']['furColour'], $_POST['notificationData']['eyeColour'], $_POST['notificationData']['species'], $_POST['notificationData']['race'], $_POST['notificationData']['specification']);
+                $notification = new notification($_POST['notificationData']['latitude'], $_POST['notificationData']['longitude'], 1, null, $_POST['notificationData']['description']);
 
                 syslog(0, race::getIdByCode('BKH'));
                 $notification->persist();

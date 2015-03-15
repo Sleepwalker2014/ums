@@ -1,6 +1,10 @@
 <script>
+$(function() {
+    $("#race").select2();
+
     $('#saveNotBtn').click(function() {
         ajaxCall('http://localhost/marcel/ums/index.php?action=5', getNotificationModalData()).success(function(result) {
+            $('#newNotificationModal').hide();
         });
     });
 
@@ -25,8 +29,9 @@
     }
 
     function getOptionValue () {
-        alert($('.radioOption.active').attr('id'));
+        return $('.radioOption.active').attr('id');
     }
+});
 </script>
 <div class="modal fade" id="newNotificationModal">
     <div class="modal-dialog">
@@ -50,8 +55,8 @@
                     <div class="col-md-6 form-group">
                         <input type="date" id="birthDay" class="form-control date" placeholder="Geburtsdatum">
                     </div>
-                    <div class="col-md-6 form-group">
-                         <select class="form-control" id="race">
+                    <div class="col-md-6">
+                         <select class="form-control" id="race" style="width: 100%;">
                          {% for race in modal.races %}
                              <option value="{{ race.code }}">{{ race.name }}</option>
                          {% endfor %}

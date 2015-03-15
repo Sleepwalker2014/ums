@@ -9,12 +9,20 @@
         private $specification = null;
         private $sex         = null;
         private $race        = null;
+        private $species     = null;
         private $size        = null;
         private $furColour   = null;
         private $eyeColour   = null;
 
-        public function animal () {
-            
+        public function animal ($name, $birthDay, $sex, $furColour, $eyeColour, $species, $race, $specification) {
+            $this->name = $name;
+            $this->birthDay = $birthDay;
+            $this->sex = $sex;
+            $this->furColour = $furColour;
+            $this->eyeColour = $eyeColour;
+            $this->species = $species;
+            $this->race = $race;
+            $this->specification = $specification;
         }
 
         /**
@@ -41,6 +49,7 @@
                 $animalDb->birthDay  = $row['birthDay'];
                 $animalDb->furColour = $row['furColour'];
                 $animalDb->eyeColour = $row['eyeColour'];
+                $animalDb->species   = $row['species'];
                 $animalDb->specification = $row['specification'];
             }
             return $animalDb;

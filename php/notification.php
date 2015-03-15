@@ -82,13 +82,25 @@
             return $this->description;
         }
 
+        public function setAnimal ($animal) {
+            $this->animal = $animal;
+        }
+
+        public function setCreationDate ($creationDate) {
+            $this->creationDate = $creationDate;
+        }
+
+        public function setDescription ($description) {
+            $this->description = $description;
+        }
+
         public function persist () {
             $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
 
             $sql = 'INSERT INTO 
                     notifications
-                    VALUES (null,'.$this->latitude.', 1, NOW(),'.
-                                  $this->description.'1,'.$this->longitude.');';
+                    VALUES (null,'.$this->latitude.', 1, NOW(),"'.
+                                  $this->description.'",1,'.$this->longitude.');';
             $result = $db->query($sql);
         }
     }
