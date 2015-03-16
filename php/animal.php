@@ -90,4 +90,14 @@
         public function getSpecification () {
             return $this->specification;
         }
+
+        private function persist () {
+            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+
+            $sql = 'INSERT INTO
+                    animals
+                    VALUES (null,'.$this->name.','.$this->birthDay.','.$this->sex.','.
+                                $this->furColour.','.$this->eyeColour.','.$this->species.');';
+            $result = $db->query($sql);
+        }
     }
