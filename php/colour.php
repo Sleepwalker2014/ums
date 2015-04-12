@@ -36,4 +36,20 @@
         public function getCode () {
             return $this->code;
         }
+
+        public static function getAllColours () {
+            $colours = [];
+            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $sql = 'SELECT *
+                    FROM
+                    colours;';
+            $result = $db->query($sql);
+
+            while ($row = $result->fetch_assoc()) {
+                $colours[] = ['colour' => $row['colour'],
+                              'name' => $row['name']];
+            }
+
+            return $colours;
+        }
     }

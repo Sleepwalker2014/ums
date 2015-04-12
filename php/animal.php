@@ -91,13 +91,14 @@
             return $this->specification;
         }
 
-        private function persist () {
+        public function persist () {
             $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
 
             $sql = 'INSERT INTO
                     animals
-                    VALUES (null,'.$this->name.','.$this->birthDay.','.$this->sex.','.
-                                $this->furColour.','.$this->eyeColour.','.$this->species.');';
+                    VALUES (null,"'.$this->name.'","'.$this->birthDay.'",'.$this->sex.','.
+                                $this->furColour.','.$this->eyeColour.',1, 0, "'.$this->specification.'",1);';
+            syslog(0, $sql);
             $result = $db->query($sql);
         }
     }

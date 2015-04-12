@@ -100,7 +100,7 @@
             $sql = 'INSERT INTO 
                     notifications
                     VALUES (null,'.$this->latitude.', 1, NOW(),"'.
-                                  $this->description.'",1,'.$this->longitude.');';
+                                  $this->description.'",'.$this->animal.','.$this->longitude.');';
             $result = $db->query($sql);
         }
     }

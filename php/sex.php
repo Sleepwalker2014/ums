@@ -37,4 +37,19 @@
         public function getCode () {
             return $this->code;
         }
+
+        public static function getSexes () {
+            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $sexes = [];
+            $sql = 'SELECT sex, description, code
+                    FROM
+                    sexes;';
+            $result = $db->query($sql);
+
+            while ($row = $result->fetch_assoc()) {
+                $sexes[$row['code']] = ['sex' => $row['sex'],
+                                        'description' => $row['description']];
+            }
+            return $sexes;
+        }
     }

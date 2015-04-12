@@ -1,6 +1,6 @@
 <script>
 $(function() {
-    $("#race").select2();
+    $("#race, #furColour, #eyeColour").select2();
 
     $('#saveNotBtn').click(function() {
         ajaxCall('http://localhost/marcel/ums/index.php?action=5', getNotificationModalData()).success(function(result) {
@@ -18,10 +18,14 @@ $(function() {
                                                         "longitude": lastMapClickPosition.lng(),
                                                         "description": $('#description').val(),
                                                         "name": $('#name').val(),
+                                                        "eyeColour": $('#eyeColour').val(),
+                                                        "furColour": $('#eyeColour').val(),
                                                         "birthDay": $('#birthDay').val(),
                                                         "race": $('#race').val(),
                                                         "size": $('#size').val(),
-                                                        "sex": getOptionValue()
+                                                        "sex": getOptionValue(),
+                                                        "specification": $('#specification').val(),
+                                                        "species": 1
                                                        }
                                   };
 
@@ -63,11 +67,25 @@ $(function() {
                          </select>
                     </div>
                     <div class="col-md-6 form-group">
-                        <img class="radioOption active" id="f" src="public/images/female.png">
-                        <img class="mouseOver radioOption" id="m" src="public/images/male.png">
+                        <img class="radioOption active" id="{{ modal.femaleSex }}" src="public/images/female.png">
+                        <img class="mouseOver radioOption" id="{{ modal.maleSex }}" src="public/images/male.png">
                     </div>
                     <div class="col-md-6 form-group">
                         <input type="range" id="size" min="0" max="255" />
+                    </div>
+                    <div class="col-md-6">
+                         <select class="form-control" id="furColour" style="width: 100%;">
+                             {% for colour in modal.colours %}
+                                 <option value="{{ colour.colour }}">{{ colour.name }}</option>
+                             {% endfor %}
+                         </select>
+                    </div>
+                    <div class="col-md-6">
+                         <select class="form-control" id="eyeColour" style="width: 100%;">
+                             {% for colour in modal.colours %}
+                                 <option value="{{ colour.colour }}">{{ colour.name }}</option>
+                             {% endfor %}
+                         </select>
                     </div>
                     <div class="col-md-12 form-group">
                         <textarea rows="4" id="specification" class="form-control" placeholder="Merkmale..." style="resize: none;"></textarea>

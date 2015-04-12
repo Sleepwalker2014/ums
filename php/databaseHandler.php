@@ -40,6 +40,18 @@
             return $output;
         }
 
+        public function getLastInsertId () {
+            $insertId = null;
+            $sql = 'SELECT LAST_INSERT_ID() as insertId;';
+
+            $result = $this->mysqli->query($sql);
+            while ($row = $result->fetch_assoc()) {
+                $insertId = $row['insertId'];
+            }
+
+            return $insertId;
+        }
+
         public function query ($sql) {
             return $this->mysqli->query($sql);
         }

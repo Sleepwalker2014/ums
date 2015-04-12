@@ -47,9 +47,16 @@
                 break;
             case 4:
                 require dirname(__FILE__).'/php/race.php';
+                require dirname(__FILE__).'/php/colour.php';
+                require dirname(__FILE__).'/php/sex.php';
+
+                $sexes = sex::getSexes();
                 $th = templateHandler::getTemplateHandler(dirname(__FILE__).'/html/newNotificationModal.html');
 
-                $th->addContent('modal', ['races' => race::getRaces()]);
+                $th->addContent('modal', ['races'   => race::getRaces(),
+                                          'colours' => colour::getAllColours(),
+                                          'maleSex' => $sexes['male']['sex'],
+                                          'femaleSex' => $sexes['female']['sex']]);
 
                 echo $th->getHTML();
                 break;
@@ -57,11 +64,15 @@
                 require_once dirname(__FILE__).'/php/notification.php';
                 require_once dirname(__FILE__).'/php/animal.php';
                 require_once dirname(__FILE__).'/php/race.php';
-syslog(0, print_r($_POST,true));
-                $animal = new animal($_POST['notificationData']['name'], $_POST['notificationData']['birthDay'], $_POST['notificationData']['sex'], $_POST['notificationData']['furColour'], $_POST['notificationData']['eyeColour'], $_POST['notificationData']['species'], $_POST['notificationData']['race'], $_POST['notificationData']['specification']);
-                $notification = new notification($_POST['notificationData']['latitude'], $_POST['notificationData']['longitude'], 1, null, $_POST['notificationData']['description']);
+                $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
 
-                syslog(0, race::getIdByCode('BKH'));
+                $animal = new animal($_POST['notificationData']['name'], $_POST['notificationData']['birthDay'], $_POST['notificationData']['sex'], $_POST['notificationData']['furColour'], $_POST['notificationData']['eyeColour'], $_POST['notificationData']['species'], $_POST['notificationData']['race'], $_POST['notificationData']['specification']);
+                $animal->persist();
+
+                $animalId = $db->getLastInsertId();
+
+                $notification = new notification($_POST['notificationData']['latitude'], $_POST['notificationData']['longitude'], $animalId, null, $_POST['notificationData']['description']);
+
                 $notification->persist();
         }
     }
