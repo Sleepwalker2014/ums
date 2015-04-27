@@ -8,4 +8,9 @@ $(document).ready(function() {
             $('#mainContainer').html(result);
         });
     });
+
+    $(".mapAction").click(function() {
+        $('#choseModal').modal('hide');
+        getMarkerModal();
+    });
 });

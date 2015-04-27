@@ -3,8 +3,9 @@ $(function() {
     $("#race, #furColour, #eyeColour").select2();
 
     $('#saveNotBtn').click(function() {
-        ajaxCall('http://localhost/marcel/ums/index.php?action=5', getNotificationModalData()).success(function(result) {
+        ajaxCall('http://localhost/marcel/ums/index.php?action=5', getNotificationModalData(), true).always(function(result) {
             $('#newNotificationModal').hide();
+            gMap.addMarker(new googleMarker(lastMapClickPosition, 'Katze', result.id));
         });
     });
 
@@ -49,7 +50,6 @@ $(function() {
             </div>
             <div class="modal-body">
                 <div class="row">
-                    <h3 class="col-md-12">Example heading</h3>
                     <div class="col-md-12 form-group">
                         <textarea rows="4" id="description" class="form-control" placeholder="Beschreibung..." style="resize: none;"></textarea>
                     </div>

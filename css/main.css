@@ -10,3 +10,28 @@
 .active {
     
 }
+
+#sideBar {
+    left: 0px;
+    top: 10%;
+    height: 75%;
+    width: 8%;
+    background-color: #FF0000;
+    position: fixed;
+    z-index: 1000;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    box-shadow: 6px 6px 5px #888888;
+}
+
+#sideBarInner {
+    top: 20%;
+    height: 40%;
+    width: 20px;
+    background-color: #FFDD00;
+    position: relative;
+    z-index: -1;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    float: right;
+}

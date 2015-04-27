@@ -1,7 +1,6 @@
 $(document).ready(function() {
     lastMapClickPosition = null;
-
-    var gMap = new googleMap();
+    gMap = new googleMap();
     getAllMarkers(gMap);
 });
 
@@ -84,11 +83,19 @@ function googleMap () {
     googleMap.prototype.addMarker = function (googleMarker) { googleMarker.marker.setMap (map); googleMarker.map = map };
 
     google.maps.event.addListener(map, 'click', function(event) {
-        ajaxCall('http://localhost/marcel/ums/index.php?action=4', {'actionCode': "3"}).success(function(result) {
-            lastMapClickPosition = event.latLng;
-            $('#modalPlaceHolder').html(result);
-            $('#newNotificationModal').modal('show');
-        });
+        getActionModal(event);
+    });
+}
+
+function getActionModal(event) {
+    $('#choseModal').modal('show');
+    lastMapClickPosition = event.latLng;
+}
+
+function getMarkerModal() {
+    ajaxCall('http://localhost/marcel/ums/index.php?action=4', {'actionCode': "3"}).success(function(result) {
+        $('#modalPlaceHolder').html(result);
+        $('#newNotificationModal').modal('show');
     });
 }
 

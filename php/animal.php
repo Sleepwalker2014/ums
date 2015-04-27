@@ -97,8 +97,7 @@
             $sql = 'INSERT INTO
                     animals
                     VALUES (null,"'.$this->name.'","'.$this->birthDay.'",'.$this->sex.','.
-                                $this->furColour.','.$this->eyeColour.',1, 0, "'.$this->specification.'",1);';
-            syslog(0, $sql);
+                                $this->furColour.','.$this->eyeColour.',1, 0, "'.$this->specification.'",'.$this->race.');';
             $result = $db->query($sql);
         }
     }

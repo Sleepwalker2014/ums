@@ -74,5 +74,7 @@
                 $notification = new notification($_POST['notificationData']['latitude'], $_POST['notificationData']['longitude'], $animalId, null, $_POST['notificationData']['description']);
 
                 $notification->persist();
+
+                echo json_encode(['id' => $db->getLastInsertId()]);
         }
     }
