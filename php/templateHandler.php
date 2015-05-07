@@ -18,11 +18,15 @@
             return $this->h2o->render($this->templateContents);
         }
 
+        public function setTemplate ($file) {
+            $this->h2o->loadTemplate($file);
+        }
+
+        public function loadSubTemplate($file) {
+            $this->h2o->loadSubTemplate($file);
+        }
+
         public static function getTemplateHandler ($templateFile) {
-            if (self::$templateHandler) {
-                return self::$templateHandler;
-            } else {
-                return self::$templateHandler = new templateHandler($templateFile);
-            }
+            return new templateHandler($templateFile);
         }
     }

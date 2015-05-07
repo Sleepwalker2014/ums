@@ -45,7 +45,7 @@
             $result = $db->query($sql);
 
             while ($row = $result->fetch_assoc()) {
-                $races[] = ['code' => $row['race'],
+                $races[] = ['id' => $row['race'],
                             'name' => $row['name']];
             }
             return $races;

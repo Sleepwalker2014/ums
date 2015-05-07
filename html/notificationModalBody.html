@@ -1,0 +1,147 @@
+<div class="row">
+    <div class="col-md-12 form-group">
+        <textarea rows="4" id="description" class="form-control"
+            placeholder="Beschreibung..." style="resize: none;"></textarea>
+    </div>
+    <div class="col-md-6 form-group">
+        <input type="text" id="name" class="form-control"
+            placeholder="Rufname">
+    </div>
+    <div class='col-md-6'>
+        <div class="form-group">
+            <div class='input-group date' id='birthDay'>
+                <input type='text' class="form-control"
+                    placeholder="Geburtsdatum" /> <span
+                    class="input-group-addon"> <span
+                    class="glyphicon glyphicon-calendar"></span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+                    $(function() {
+                        $('#birthDay').datetimepicker({
+                            locale : 'de-DE'
+                        });
+                    });
+                </script>
+
+    <div class="col-md-6">
+        <select class="form-control" id="race" style="width: 100%;" tabindex=-1></select>
+    </div>
+    <div class="col-md-6 form-group">
+        <img class="radioOption active" id="{{ modal.femaleSex }}"
+            src="public/images/female.png"> <img
+            class="mouseOver radioOption" id="{{ modal.maleSex }}"
+            src="public/images/male.png">
+    </div>
+    <div class="col-md-6 form-group">
+        <input type="range" id="size" min="0" max="255" />
+    </div>
+    <div class="col-md-6">
+        <select class="form-control" id="furColour" style="width: 100%;">
+            {% for colour in modal.colours %}
+            <option value="{{ colour.colour }}">{{ colour.name
+                }}</option> {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-6">
+        <select class="form-control" id="eyeColour" style="width: 100%;">
+            {% for colour in modal.colours %}
+            <option value="{{ colour.colour }}">{{ colour.name
+                }}</option> {% endfor %}
+        </select>
+    </div>
+    <div class="col-md-12 form-group">
+        <textarea rows="4" id="specification" class="form-control"
+            placeholder="Merkmale..." style="resize: none;"></textarea>
+    </div>
+</div>
+<link href="vendor/select2/select2/dist/css/select2.min.css" rel="stylesheet">
+<script src="vendor/select2/select2/dist/js/select2.full.min.js"></script>
+<script>
+    $(function() {
+        $("#race").select2({
+            ajax : {
+                url : "php/routingHandler.php",
+                dataType : 'json',
+                delay : 250,
+                method : 'POST',
+                data : function(params) {
+                    return {
+//                         q : params.term, // search term
+//                         page : params.page,
+                        actionCode : 6
+                    };
+                },
+                processResults : function(data) {
+                    return {
+                        results : data
+                    };
+                },
+                cache : true
+            },
+            id: function(data){
+                return data.id;
+             },
+            escapeMarkup : function(markup) {
+                return markup;
+            }, // let our custom formatter work
+            templateResult : raceResults,
+            templateSelection : raceSelection
+        // omitted for brevity, see the source of this page
+        });
+
+        function raceResults (data) {
+            return '<b>'+data.name+'</b>';
+        }
+
+        function raceSelection (data) {
+            return data.name;
+        }
+
+        $("#furColour, #eyeColour").select2();
+
+        $('#saveNotBtn').click(
+                function() {
+                    ajaxCall('http://localhost/marcel/ums/index.php?action=5',
+                            getNotificationModalData(), true).always(
+                            function(result) {
+                                $('#newNotificationModal').hide();
+                                gMap.addMarker(new googleMarker(
+                                        lastMapClickPosition, 'Katze',
+                                        result.id));
+                            });
+                });
+
+        $('.radioOption').click(function() {
+            $(this).addClass('active').removeClass('mouseOver');
+            $('.radioOption').not(this).removeClass('active');
+        });
+
+        function getNotificationModalData() {
+            var newNotificationData = {
+                "notificationData" : {
+                    "latitude" : lastMapClickPosition.lat(),
+                    "longitude" : lastMapClickPosition.lng(),
+                    "description" : $('#description').val(),
+                    "name" : $('#name').val(),
+                    "eyeColour" : $('#eyeColour').val(),
+                    "furColour" : $('#eyeColour').val(),
+                    "birthDay" : $('#birthDay').val(),
+                    "race" : $('#race').val(),
+                    "size" : $('#size').val(),
+                    "sex" : getOptionValue(),
+                    "specification" : $('#specification').val(),
+                    "species" : 1
+                }
+            };
+
+            return newNotificationData;
+        }
+
+        function getOptionValue() {
+            return $('.radioOption.active').attr('id');
+        }
+    });
+</script>

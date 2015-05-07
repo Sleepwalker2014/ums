@@ -93,9 +93,11 @@ function getActionModal(event) {
 }
 
 function getMarkerModal() {
-    ajaxCall('http://localhost/marcel/ums/index.php?action=4', {'actionCode': "3"}).success(function(result) {
-        $('#modalPlaceHolder').html(result);
-        $('#newNotificationModal').modal('show');
+    ajaxCall('php/routingHandler.php', {'actionCode': "3"}, true).success(function(result) {
+        $('#choseModal .modal-body').html(result.modalBody);
+        $('#choseModal .modal-footer').html(result.modalFooter);
+        //$('#modalPlaceHolder').html(result);
+        //$('#newNotificationModal').modal('show');
     });
 }
 

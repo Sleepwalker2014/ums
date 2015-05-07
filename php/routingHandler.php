@@ -1,6 +1,8 @@
 <?php
-    require_once $GLOBALS['root'].'/php/templateHandler.php';
-    require_once $GLOBALS['root'].'/php/databaseHandler.php';
+    $root = realpath('../').'/';
+
+    require_once 'templateHandler.php';
+    require_once 'databaseHandler.php';
     $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
     if (!empty($_POST)) {
         resolveUrl($_POST);
@@ -10,7 +12,6 @@
         if (!empty($urlParams['actionCode'])) {
             switch ($urlParams['actionCode']) {
                 case 2:
-                    syslog(0,  "je");
                     require_once 'notification.php';
                     notification::getAllMarkerInformation();
                 break;
@@ -32,25 +33,37 @@
                                                   'furColour' => 'public/images/'.colour::getFromDb($animal->getFurColour())->getCode().'_eye.png',
                                                   'creationDate'    => $notification->getCreationDate(),
                                                   'description'     => $notification->getDescription()]);
-                        echo $th->getHTML();
+                       echo $th->getHTML();
                     }
                 break;
                 case 3:
-                    require 'race.php';
-                    $th = templateHandler::getTemplateHandler('../html/newNotificationModal.html');
+                    require_once 'race.php';
+                    require_once 'colour.php';
+                    $output = [];
+                    $th = templateHandler::getTemplateHandler('../html/notificationModalBody.html');
 
-                    $th->addContent('modal', ['races' => race::getRaces()]);
+                    $th->addContent('modal', ['races'   => race::getRaces(),
+                                              'colours' => colour::getAllColours()]);
 
-                    echo $th->getHTML();
+                    $output['modalBody'] = $th->getHTML();
+
+                    $th->setTemplate('../html/saveButton.html');
+                    $output['modalFooter'] = $th->getHTML();
+
+                    echo json_encode($output, true);
                 break;
                 case 4:
                     require_once 'notification.php';
                     require_once 'race.php';
                     $notification = new notification();
 
-                    syslog(0, race::getIdByCode('BKH'));
                     $notification->persist();
                 break;
+                case 6:
+                    require_once 'race.php';
+
+                    echo json_encode(race::getRaces(), true);
+                    break;
             }
         }
     }

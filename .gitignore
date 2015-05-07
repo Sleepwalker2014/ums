@@ -2,3 +2,5 @@
 .directory
 .project
 .settings/
+
+/vendor/
