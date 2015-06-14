@@ -21,7 +21,8 @@
     <script type="text/javascript">
                     $(function() {
                         $('#birthDay').datetimepicker({
-                            locale : 'de-DE'
+                            locale : 'de-DE',
+                            format : 'DD.MM.YYYY'
                         });
                     });
                 </script>
@@ -30,9 +31,9 @@
         <select class="form-control" id="race" style="width: 100%;" tabindex=-1></select>
     </div>
     <div class="col-md-6 form-group">
-        <img class="radioOption active" id="{{ modal.femaleSex }}"
+        <img class="radioOption active" id="{{ modal.sexes.female }}"
             src="public/images/female.png"> <img
-            class="mouseOver radioOption" id="{{ modal.maleSex }}"
+            class="mouseOver radioOption" id="{{ modal.sexes.male }}"
             src="public/images/male.png">
     </div>
     <div class="col-md-6 form-group">
@@ -41,15 +42,15 @@
     <div class="col-md-6">
         <select class="form-control" id="furColour" style="width: 100%;">
             {% for colour in modal.colours %}
-            <option value="{{ colour.colour }}">{{ colour.name
-                }}</option> {% endfor %}
+                <option value="{{ colour.colour }}">{{ colour.name }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="col-md-6">
         <select class="form-control" id="eyeColour" style="width: 100%;">
             {% for colour in modal.colours %}
-            <option value="{{ colour.colour }}">{{ colour.name
-                }}</option> {% endfor %}
+                <option value="{{ colour.colour }}">{{ colour.name }}</option>
+            {% endfor %}
         </select>
     </div>
     <div class="col-md-12 form-group">
@@ -63,6 +64,10 @@
     $(function() {
         $("#race").select2({
             ajax : {
+                placeholder: {
+                    id: "-1",
+                    placeholder: "Select an option"
+                    },
                 url : "php/routingHandler.php",
                 dataType : 'json',
                 delay : 250,
@@ -102,46 +107,9 @@
 
         $("#furColour, #eyeColour").select2();
 
-        $('#saveNotBtn').click(
-                function() {
-                    ajaxCall('http://localhost/marcel/ums/index.php?action=5',
-                            getNotificationModalData(), true).always(
-                            function(result) {
-                                $('#newNotificationModal').hide();
-                                gMap.addMarker(new googleMarker(
-                                        lastMapClickPosition, 'Katze',
-                                        result.id));
-                            });
-                });
-
         $('.radioOption').click(function() {
             $(this).addClass('active').removeClass('mouseOver');
             $('.radioOption').not(this).removeClass('active');
         });
-
-        function getNotificationModalData() {
-            var newNotificationData = {
-                "notificationData" : {
-                    "latitude" : lastMapClickPosition.lat(),
-                    "longitude" : lastMapClickPosition.lng(),
-                    "description" : $('#description').val(),
-                    "name" : $('#name').val(),
-                    "eyeColour" : $('#eyeColour').val(),
-                    "furColour" : $('#eyeColour').val(),
-                    "birthDay" : $('#birthDay').val(),
-                    "race" : $('#race').val(),
-                    "size" : $('#size').val(),
-                    "sex" : getOptionValue(),
-                    "specification" : $('#specification').val(),
-                    "species" : 1
-                }
-            };
-
-            return newNotificationData;
-        }
-
-        function getOptionValue() {
-            return $('.radioOption.active').attr('id');
-        }
     });
 </script>

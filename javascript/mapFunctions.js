@@ -1,9 +1,3 @@
-$(document).ready(function() {
-    lastMapClickPosition = null;
-    gMap = new googleMap();
-    getAllMarkers(gMap);
-});
-
 function addMarker (map, position, title) {
     marker = new google.maps.Marker({
         position: position,
@@ -14,10 +8,10 @@ function addMarker (map, position, title) {
     google.maps.event.addListener(marker,'click',function() {
         map.setZoom(19); 
         map.setCenter(marker.getPosition());
-        ajaxCall('php/routingHandler.php', {'actionCode': "34"}).success(function(result) {
-            $('#modalPlaceHolder').html(result);
-            $('#markerModal').modal('show');
-        });
+//        ajaxCall('php/routingHandler.php', {'actionCode': "1"}).success(function(result) {
+//            $('#modalPlaceHolder').html(result);
+//            $('#markerModal').modal('show');
+//        });
     });
 }
 
@@ -31,7 +25,7 @@ function googleMarker (position, title, id) {
     googleMarker.prototype.setIcon        = function (iconPath) { this.marker.setIcon(iconPath); return this };
     google.maps.event.addListener(this.marker, 'click', function () { this.map.setZoom(19); 
                                                                       this.map.setCenter(position);
-                                                                      ajaxCall('http://localhost/marcel/ums/index.php?action=3', {'actionCode': "1", 'markerId': id}).success(function(result) {
+                                                                      ajaxCall('php/routingHandler.php', {'actionCode': "1", 'markerId': id}).success(function(result) {
                                                                                                                                          $('#modalPlaceHolder').html(result);
                                                                                                                                          $('#markerModal').modal('show');
                                                                                                                                                           });
@@ -39,10 +33,9 @@ function googleMarker (position, title, id) {
 }
 
 function getAllMarkers (gMap) {
-    ajaxCall('http://localhost/marcel/ums/index.php?action=2', {'actionCode': "2"}).success(function(result) {
+    ajaxCall('php/routingHandler.php', {'actionCode': "2"}).success(function(result) {
         var markerData = $.parseJSON(result);
         $.each(markerData, function(key, value) {
-            console.log(key);
             gMarker = new googleMarker(new google.maps.LatLng(value.latitude,
                                                               value.longitude), "horst", key);
             gMarker.setIcon(value.image);
@@ -53,6 +46,7 @@ function getAllMarkers (gMap) {
 
 function googleMap () {
     var map;
+
     var mapOptions = {
         zoom : 4,
         center : new google.maps.LatLng(-34.397, 150.644),
@@ -60,7 +54,6 @@ function googleMap () {
     };
     map = new google.maps.Map(document.getElementById('map-canvas'),
                               mapOptions);
-
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
                                                      var pos = new google.maps.LatLng(position.coords.latitude,
@@ -88,16 +81,15 @@ function googleMap () {
 }
 
 function getActionModal(event) {
-    $('#choseModal').modal('show');
+    getMarkerModal();
+    $('#customModal').modal('show');
     lastMapClickPosition = event.latLng;
 }
 
 function getMarkerModal() {
     ajaxCall('php/routingHandler.php', {'actionCode': "3"}, true).success(function(result) {
-        $('#choseModal .modal-body').html(result.modalBody);
-        $('#choseModal .modal-footer').html(result.modalFooter);
-        //$('#modalPlaceHolder').html(result);
-        //$('#newNotificationModal').modal('show');
+        $('#customModal .modal-body').html(result.modalBody);
+        $('#customModal .modal-footer').html(result.modalFooter);
     });
 }
 

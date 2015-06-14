@@ -33,10 +33,11 @@
             $result = $db->query($sql);
 
             if ($row = $result->fetch_assoc()) {
-                $notification = new notification();
-                $notification->animal       = $row['animal'];
-                $notification->creationDate = $row['creationDate'];
-                $notification->description  = $row['description'];
+                $notification = new notification($row['latitude'],
+                                                 $row['longitude'],
+                                                 $row['animal'],
+                                                 $row['creationDate'],
+                                                 $row['description']);
             }
 
             return $notification;
@@ -102,5 +103,6 @@
                     VALUES (null,'.$this->latitude.', 1, NOW(),"'.
                                   $this->description.'",'.$this->animal.','.$this->longitude.');';
             $result = $db->query($sql);
+            return $db->getLastInsertId();
         }
     }

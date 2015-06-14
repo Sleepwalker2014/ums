@@ -40,17 +40,16 @@
             $result = $db->query($sql);
 
             if ($row = $result->fetch_assoc()) {
-                $animalDb = new animal();
+                $animalDb = new animal($row['name'],
+                                       $row['birthDay'],
+                                       $row['sex'],
+                                       $row['furColour'],
+                                       $row['eyeColour'],
+                                       $row['species'],
+                                       $row['race'],
+                                       $row['specification']);
                 $animalDb->animal    = $row['animal'];
-                $animalDb->name      = $row['name'];
-                $animalDb->sex       = $row['sex'];
-                $animalDb->race      = $row['race'];
                 $animalDb->size      = $row['size'];
-                $animalDb->birthDay  = $row['birthDay'];
-                $animalDb->furColour = $row['furColour'];
-                $animalDb->eyeColour = $row['eyeColour'];
-                $animalDb->species   = $row['species'];
-                $animalDb->specification = $row['specification'];
             }
             return $animalDb;
         }
@@ -92,6 +91,7 @@
         }
 
         public function persist () {
+            $result = null;
             $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
 
             $sql = 'INSERT INTO
@@ -99,5 +99,7 @@
                     VALUES (null,"'.$this->name.'","'.$this->birthDay.'",'.$this->sex.','.
                                 $this->furColour.','.$this->eyeColour.',1, 0, "'.$this->specification.'",'.$this->race.');';
             $result = $db->query($sql);
+
+            return $db->getLastInsertId();
         }
     }

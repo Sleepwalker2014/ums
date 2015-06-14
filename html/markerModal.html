@@ -2,86 +2,115 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close"
-                    data-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-dismiss="modal"
+                    aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <h4 class="modal-title">Annonce vom {{ modal.creationDate }}</h4>
+                <h4 class="modal-title">Annonce vom {{
+                    modal.creationDate }}</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="panel panel-default">
-                           <div class="panel-heading">Beschreibung</div>
-                           <div class="panel-body">
-                                {{ modal.description }}
-                           </div>
+                            <div class="panel-heading">
+                                Beschreibung
+                                <icon class="fa fa-lg fa-pencil"></icon>
+                            </div>
+                            <div class="panel-body">{{
+                                modal.description }}</div>
                         </div>
                         <div class="panel panel-default">
-                           <div class="panel-heading">Steckbrief</div>
-                           <div class="panel-body">
-                               <div class="row">
-                                   <div class="col-md-6">
+                            <div class="panel-heading">Steckbrief</div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="pwd">Name:</label>
                                             {{ modal.animalName }}
                                         </div>
-                                   </div>
-                                   <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="pwd">Geburtsdatum:</label>
                                             {{ modal.animalBirthDay }}
                                         </div>
-                                   </div>
-                               </div>
+                                    </div>
+                                </div>
 
-                               <div class="row">
-                                   <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="pwd">Rasse:</label>
                                             {{ modal.animalRace }}
                                         </div>
-                                   </div>
-                                   <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="pwd">Grösse:</label>
-                                            <input type="range" min="0" max="255" value="{{ modal.size }}" disabled/>
+                                            <input type="range" min="0"
+                                                max="255"
+                                                value="{{ modal.size }}"
+                                                disabled />
                                         </div>
-                                   </div>
-                               </div>
+                                    </div>
+                                </div>
 
-                               <div class="row">
-                                   <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <label for="pwd">Augenfarbe:</label>
-                                            <img src="{{ modal.eyeColour }}">
+                                            <img
+                                                src="{{ modal.eyeColour }}">
                                         </div>
-                                   </div>
-                                   <div class="col-md-6">
+                                    </div>
+                                    <div class="col-md-6">
                                         <div class="form-group">
                                             <div class="form-group">
                                                 <label for="pwd">Fellfarbe:</label>
-                                                <img src="{{ modal.furColour }}">
+                                                <img
+                                                    src="{{ modal.furColour }}">
                                             </div>
                                         </div>
-                                   </div>
-                               </div>
+                                    </div>
+                                </div>
 
-                               <div class="row">
-                                   <div class="col-md-12">
-                                       <div class="form-group">
-                                           <label for="pwd">Merkmale:</label>
-                                           {{ modal.specification }}
-                                       </div>
-                                   </div>
-                               </div>
-                           </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label for="pwd">Merkmale:</label>
+                                            {{ modal.specification }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="panel panel-default">
-                           <div class="panel-heading">Geschlecht</div>
-                           <div class="panel-body">
-                               <img src="public/images/female.png">
-                           </div>
+                            <div class="panel-heading">
+                                Geschlecht
+                                <icon class="fa fa-lg fa-transgender"></icon>
+                            </div>
+                            <div class="panel-body">
+                                <img src="{{ modal.sexCode }}">
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <ul class="social-network social-circle">
+                                <li><a href="#" class="icoRss"
+                                    title="Rss"><i class="fa fa-rss"></i></a></li>
+                                <li><a href="#" class="icoFacebook"
+                                    title="Facebook"><i
+                                        class="fa fa-facebook"></i></a></li>
+                                <li><a href="#" class="icoTwitter"
+                                    title="Twitter"><i
+                                        class="fa fa-twitter"></i></a></li>
+                                <li><a href="#" class="icoGoogle"
+                                    title="Google +"><i
+                                        class="fa fa-google-plus"></i></a></li>
+                                <li><a href="#" class="icoLinkedin"
+                                    title="Linkedin"><i
+                                        class="fa fa-linkedin"></i></a></li>
+                            </ul>
                         </div>
                     </div>
                 </div>

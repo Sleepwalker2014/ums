@@ -1,3 +1,41 @@
 <button type="button" class="btn btn-default pull-left"
     data-dismiss="modal">Schließen</button>
 <button type="button" id="saveNotBtn" class="btn btn-primary">Speichern</button>
+<script>
+    $(function() {
+        $('#saveNotBtn').click(
+                function() {
+                    ajaxCall('php/routingHandler.php',
+                            getNotificationModalData(), true).always(
+                            function(result) {
+                                $('#customModal').modal('hide');
+                                var tmpMarker = new googleMarker(lastMapClickPosition, 'Katze',
+                                                                 result.id);
+                                tmpMarker.setIcon(result.iconPath);
+                                gMap.addMarker(tmpMarker);
+                            });
+                });
+
+        function getNotificationModalData() {
+            return {
+                "latitude" : lastMapClickPosition.lat(),
+                "longitude" : lastMapClickPosition.lng(),
+                "description" : $('#description').val(),
+                "name" : $('#name').val(),
+                "eyeColour" : $('#eyeColour').val(),
+                "furColour" : $('#eyeColour').val(),
+                "birthDay" : $('#birthDay').data('date'),
+                "race" : $('#race').val(),
+                "size" : $('#size').val(),
+                "sex" : getOptionValue(),
+                "specification" : $('#specification').val(),
+                "species" : 1,
+                "actionCode" : 4
+            };
+        }
+
+        function getOptionValue() {
+            return $('.radioOption.active').attr('id');
+        }
+    });
+</script>
