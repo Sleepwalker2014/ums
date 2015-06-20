@@ -12,7 +12,7 @@
         private $species     = null;
         private $size        = null;
         private $furColour   = null;
-        private $eyeColour   = null;
+        public $h2o_safe     = ['getName'];
 
         public function animal ($name, $birthDay, $sex, $furColour, $eyeColour, $species, $race, $specification) {
             $this->name = $name;
@@ -48,6 +48,35 @@
                                        $row['species'],
                                        $row['race'],
                                        $row['specification']);
+                $animalDb->animal    = $row['animal'];
+                $animalDb->size      = $row['size'];
+            }
+            return $animalDb;
+        }
+
+        /**
+         * @param int $id
+         */
+        public static function getAllAnimals ($id) {
+            $animalDb = null;
+        
+            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+        
+            $sql = 'SELECT *
+                    FROM
+                    animals
+                    WHERE animal = '.$id.';';
+            $result = $db->query($sql);
+        
+            if ($row = $result->fetch_assoc()) {
+                $animalDb = new animal($row['name'],
+                        $row['birthDay'],
+                        $row['sex'],
+                        $row['furColour'],
+                        $row['eyeColour'],
+                        $row['species'],
+                        $row['race'],
+                        $row['specification']);
                 $animalDb->animal    = $row['animal'];
                 $animalDb->size      = $row['size'];
             }

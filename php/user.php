@@ -1,4 +1,5 @@
 <?php
+require_once 'animal.php';
 class userDb {
     private $user = null;
     private $name = null;
@@ -49,6 +50,25 @@ class userDb {
         }
 
         return $userDb;
+    }
+
+    /**
+     */
+    public function getAnimals () {
+        $animals = [];
+        $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+
+        $sql = 'SELECT animal
+                FROM
+                animals;';
+
+        $result = $db->query($sql);
+
+        while ($row = $result->fetch_assoc()) {
+            $animals[] = animal::getFromDb($row['animal']);
+        }
+
+        return $animals;
     }
 
     public function getUser () {

@@ -10,9 +10,8 @@
 <link
     href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet">
-<div id="content"></div>
 <div class="row">
-    <nav class="navbar navbar-default navbar-fixed-top">
+    <nav class="navbar navbar-default navbar-static-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed"
@@ -26,13 +25,12 @@
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    <li> <a href="#">Home</a></li>
-                    <li class="dropdown">
-                        <a href="#"
+                    <li><a href="#">Home</a></li>
+                    <li class="dropdown"><a href="#"
                         class="dropdown-toggle" data-toggle="dropdown"
                         role="button" aria-expanded="false">Dropdown
                             <span class="caret"></span>
-                        </a>
+                    </a>
                         <ul class="dropdown-menu" role="menu">
                             <li><a href="#">Another action</a></li>
                             <li><a href="#">Something else here</a></li>
@@ -41,72 +39,76 @@
                             <li><a href="#">Separated link</a></li>
                             <li><a href="#">One more separated
                                     link</a></li>
-                        </ul>
-                    </li>
+                        </ul></li>
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-                            <i class="fa fa-user"></i>
-                        </a>
+                    <li class="dropdown"><a href="#"
+                        class="dropdown-toggle" data-toggle="dropdown"
+                        role="button" aria-expanded="false"> <i
+                            class="fa fa-user"></i>
+                    </a>
                         <ul class="dropdown-menu" role="menu">
+                            <li><a href="#" id="settingsBtn"><i
+                                    class="fa fa-gears"></i>
+                                    Einstellungen</a></li>
                             <li><a href="#" id="logoutBtn">Logout</a></li>
                         </ul>
+                    <li><a href="#"><i class="fa fa-envelope"></i></a></li>
+                    <li><a href="#" id="editAnimalsBtn"><i class="fa fa-paw"></i></a></li>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 </div>
-<div class="col-md-12" id="map-canvas" style="height: 800px"></div>
+<div id="content">
+    <div class="col-md-12" id="map-canvas" style="height: 800px"></div>
 
-<div id="sideBar">
-    <div id="sideBarInner">
-        <span class="glyphicon glyphicon-chevron-right"
-            aria-hidden="true"></span>
+    <div id="sideBar">
+        <div id="sideBarInner">
+            <span class="glyphicon glyphicon-chevron-right"
+                aria-hidden="true"></span>
+        </div>
     </div>
-</div>
-<div id="modalPlaceHolder" tabindex="-1"></div>
-<div id="contentPlaceHolder"></div>
+    <div id="modalPlaceHolder" tabindex="-1"></div>
 
-<div class="modal fade" id="customModal" tabindex="-1">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"
-                    aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">Was möchten Sie tun?</h4>
-            </div>
-            <div class="modal-body">
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <span
-                            class="mapAction glyphicon glyphicon-search btn btn-default btn-lg"
-                            aria-hidden="true" data-action="miss"></span>
-                        vermisstes Tier
+    <div class="modal fade" id="customModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close"
+                        data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Was möchten Sie tun?</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <span
+                                class="mapAction glyphicon glyphicon-search btn btn-default btn-lg"
+                                aria-hidden="true" data-action="miss"></span>
+                            vermisstes Tier
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <span
+                                class="mapAction glyphicon glyphicon-euro btn btn-default btn-lg"
+                                aria-hidden="true" data-action="buy"></span>
+                            Tier kaufen
+                        </div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-12 form-group">
-                        <span
-                            class="mapAction glyphicon glyphicon-euro btn btn-default btn-lg"
-                            aria-hidden="true" data-action="buy"></span>
-                        Tier kaufen
-                    </div>
+                <div class="modal-footer">
+                    <button type="button"
+                        class="btn btn-default pull-left"
+                        data-dismiss="modal">Abbrechen</button>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default pull-left"
-                    data-dismiss="modal">Abbrechen</button>
             </div>
         </div>
-        <!-- /.modal-content -->
     </div>
-    <!-- /.modal-dialog -->
 </div>
-<!-- /.modal -->
 
 <script
     src="/marcel/ums/vendor/select2/select2/dist/js/select2.full.min.js"></script>

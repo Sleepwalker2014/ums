@@ -5,6 +5,7 @@
     require_once 'databaseHandler.php';
     require_once 'sessionHandler.php';
     require_once 'user.php';
+    require_once $root.'/vendor/endroid/qrcode/src/Endroid/QrCode/QrCode.php';
 
     $sessionHandler = new session();
     $errorMessage = null;
@@ -113,6 +114,19 @@
                     break;
                 case 7:
                     $sessionHandler->closeSession();
+                    header('Location: http://www.example.com/');
+                    break;
+                case 8:
+                    $th = templateHandler::getTemplateHandler('../html/settings.html');
+                    echo $th->getHTML();
+                    break;
+                case 9:
+                    $th = templateHandler::getTemplateHandler('../html/editAnimals.html');
+                    $userAnimals = userDb::getFromDb($sessionHandler->getSessionUser())->getAnimals();
+
+                    $th->addContent('animals', $userAnimals);
+
+                    echo $th->getHTML();
                     break;
             }
         }
