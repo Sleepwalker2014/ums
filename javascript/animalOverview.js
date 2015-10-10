@@ -3,6 +3,11 @@ $(document).ready(function() {
         editAnimal($(this).data('animal'));
     });
 
+    $(".searchAnimal").click(function() {
+        alert("muh");
+    });
+
+
 /*    $(".removable").click(function() {
         removeItem($(this));
     });*/
