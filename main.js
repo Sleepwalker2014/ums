@@ -18,6 +18,12 @@ $(document).ready(function() {
             $('#content').html(result);
         });
     });
+
+    $("#announcementsBtn").click(function() {
+        ajaxCall('php/routingHandler.php', {'actionCode': "14"}).done(function(result) {
+            $('#content').html(result);
+        });
+    });
 });
 
 function logoutUser () {

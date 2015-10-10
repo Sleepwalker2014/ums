@@ -1,14 +1,20 @@
 {
     "name": "root/ums",
     "require": {
-        "twbs/bootstrap": "dev-master",
-        "select2/select2": "dev-master",
-        "endroid/qrcode": "dev-master"
+                "twbs/bootstrap": "dev-master",
+        "select2/select2": "3.5.3",
+        "endroid/qrcode": "dev-master",
+        "propel/propel": "dev-master",
+        "twig/twig": "dev-master",
+        "bootstrap-select/bootstrap-select": "dev-master"
     },
+      "autoload": {
+    "classmap": ["db/"]
+  },
     "authors": [
         {
-            "name": "John Smith",
-            "email": "john@example.com"
+            "name": "Marcel Roa",
+            "email": "marcel.roa@gmx.de"
         }
     ]
 }

@@ -1,0 +1,156 @@
+<div class="container">
+    <input type="hidden" id="animalId" value={{animal.animal}}></input>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1>Meine Tiere!</h1>
+                <p>Muhzeit</p>
+            </div>
+        </div>
+    </div>
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Allgemein</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="callingName">Rufname</label> <input
+                        type="text" class="form-control"
+                        id="callingName" placeholder="Rufname..."
+                        value={{animal.name}}>
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label for="race">Tierart</label> <input
+                        class="form-control" type="hidden" id="species"
+                        value="{{ animal.speciesId }}"
+                        data-name="{{ animal.species }}">
+                </div>
+                <div class="form-group col-md-6">
+                    <label for="race">Rasse</label> <input
+                        class="form-control" type="hidden" id="race"
+                        value="{{ animal.raceId }}"
+                        data-name="{{ animal.race }}">
+                </div>
+            </div>
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label for="birthDay">Geburtsdatum</label>
+                    <div class='input-group date'>
+                        <input type='text' id='birthDay'
+                            class="form-control"
+                            placeholder="Geburtsdatum"
+                            value={{animal.birthDay}}> <span
+                            class="input-group-addon"> <span
+                            class="glyphicon glyphicon-calendar"></span>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Körpermerkmale</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="col-md-2 form-group">
+                    <label for="sex">Geschlecht</label>
+                    <div id="sexGroup" class="btn-group"
+                        data-toggle="buttons">
+                        <label
+                            class="btn btn-primary {% if animal.sex == 'male' %} active {% endif %}">
+                            <input type="radio" id="maleBtn"
+                            value={{sexes.male}}> <i
+                            class="fa fa-male"></i>
+                        </label> <label
+                            class="btn btn-primary {% if animal.sex == 'female' %} active {% endif %}">
+                            <input type="radio" id="femaleBtn"
+                            value={{sexes.female}}><i
+                            class="fa fa-female"></i>
+                        </label> <label class="btn btn-primary"> <input
+                            type="radio" id="unknownBtn" value=0>k.A.
+                        </label>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label for="furColour">Fellfarbe</label> <select
+                        class="form-control" id="furColour"
+                        style="width: 100%;">
+                        {% for colourId, colourName in colours %}
+                        <option value={{ colourId }} {% if colourId == animal.furColour %}selected="selected"{% endif %}>
+                            {{ colourName }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <label for="eyeColour">Augenfarbe</label> <select
+                        class="form-control form-group" id="eyeColour"
+                        style="width: 100%;">
+                        {% for colourId, colourName in colours %}
+                        <option value={{ colourId }} {% if colourId == animal.eyeColour %}selected="selected"{% endif %}>
+                            {{ colourName }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <label for="weight">Gewicht (kg)</label> <input
+                        type="number" name="weight" class="form-control"
+                        id="weight" min="1" max="5"
+                        value="{{animal.size}}">
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h3 class="panel-title">Weiteres</h3>
+        </div>
+        <div class="panel-body">
+            <div class="row">
+                <div class="btn-group col-md-12" data-toggle="buttons">
+                    <label class="btn btn-primary active"> <input
+                        type="radio" name="inputWalls" id="inputWalls"
+                        value="Excellent" checked> Excellent
+                    </label> <label class="btn btn-primary"> <input
+                        type="radio" name="inputWalls" id="inputWalls"
+                        value="Good"> Good
+                    </label> <label class="btn btn-primary"> <input
+                        type="radio" name="inputWalls" id="inputWalls"
+                        value="Poor"> Poor
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 form-group">
+                    <textarea rows="4" id="specification"
+                        class="form-control" placeholder="Merkmale..."
+                        style="resize: none;">{{animal.specification}}</textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <button id="animalOverviewBtn" type="button"
+                class="btn btn-primary active">Zur Übersicht</button>
+        </div>
+        <div class="col-md-6">
+            <button type="button" class="btn btn-primary"
+                id="saveAnimalBtn">Speichern</button>
+        </div>
+    </div>
+    <script src="/marcel/ums/javascript/editAnimal.js"></script>

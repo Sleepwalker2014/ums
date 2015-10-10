@@ -1,5 +1,6 @@
 <?php
     require_once $root.'/h2o-php-master/h2o.php';
+   // require_once 'vendor/autoload.php';
     class templateHandler {
         private $inputFile = null;
         private static $templateHandler = null;
@@ -29,4 +30,11 @@
         public static function getTemplateHandler ($templateFile) {
             return new templateHandler($templateFile);
         }
+
+/*         public function templateHandler() {
+            Twig_Autoloader::register();
+
+            $loader = new Twig_Loader_Filesystem($root.'/html');
+            $twig = new Twig_Environment($loader, ['cache' => '/tmp']);
+        } */
     }

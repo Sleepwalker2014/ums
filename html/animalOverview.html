@@ -1,0 +1,40 @@
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1>Meine Tiere!</h1>
+                <p>Muhzeit</p>
+            </div>
+        </div>
+    </div>
+
+    <button type="button" class="btn btn-primary editAnimal"
+        data-animal=null>neues Tier</button>
+    <div class="row">
+        {% for animal in animals %}
+        <div class="col-sm-6 col-md-4 removable">
+            <div class="thumbnail">
+                <img class="editAnimal" data-animal={{
+                    animal.getAnimal }}
+                    src="http://media.einfachtierisch.de/thumbnail/600/0/media.einfachtierisch.de/images/2013/01/Junge-Katze-Erziehen.jpg"
+                    alt="bild">
+                <div class="caption">
+                    <h3>{{ animal.getName }}</h3>
+                    <p>sd</p>
+                    <p>
+                        <button type="button"
+                            class="btn btn-primary editAnimal"
+                            data-animal={{animal.getAnimal}}>Bearbeiten</button>
+                        <a href="#" class="btn btn-default"
+                            role="button">Button</a>
+                    </p>
+                </div>
+                <icon class="glyphicon glyphicon-search btn btn-default"></icon>
+                <icon class="glyphicon glyphicon-search btn btn-default"></icon>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+<script src="/marcel/ums/javascript/animalOverview.js"></script>

@@ -1,7 +1,7 @@
 <link
     href="/marcel/ums/vendor/twbs/bootstrap/dist/css/bootstrap.min.css"
     rel="stylesheet">
-<link href="/marcel/ums/vendor/select2/select2/dist/css/select2.min.css"
+<link href="/marcel/ums/vendor/select2/select2/select2.css"
     rel="stylesheet">
 <link
     href="/marcel/ums/bootstrap-datetimepicker-master/build/css/bootstrap-datetimepicker.min.css"
@@ -10,67 +10,66 @@
 <link
     href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css"
     rel="stylesheet">
-<div class="row">
-    <nav class="navbar navbar-default navbar-static-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle collapsed"
-                    data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
-                    <span class="sr-only">Toggle navigation</span> <span
-                        class="icon-bar"></span> <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="#">Project name</a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li><a href="#">Home</a></li>
-                    <li class="dropdown"><a href="#"
-                        class="dropdown-toggle" data-toggle="dropdown"
-                        role="button" aria-expanded="false">Dropdown
-                            <span class="caret"></span>
-                    </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#">Another action</a></li>
-                            <li><a href="#">Something else here</a></li>
-                            <li class="divider"></li>
-                            <li class="dropdown-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated
-                                    link</a></li>
-                        </ul></li>
-                </ul>
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown"><a href="#"
-                        class="dropdown-toggle" data-toggle="dropdown"
-                        role="button" aria-expanded="false"> <i
-                            class="fa fa-user"></i>
-                    </a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="#" id="settingsBtn"><i
-                                    class="fa fa-gears"></i>
-                                    Einstellungen</a></li>
-                            <li><a href="#" id="logoutBtn">Logout</a></li>
-                        </ul>
-                    <li><a href="#"><i class="fa fa-envelope"></i></a></li>
-                    <li><a href="#" id="editAnimalsBtn"><i class="fa fa-paw"></i></a></li>
-                    </li>
-                </ul>
-            </div>
+<nav class="navbar navbar-default navbar-static-top">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed"
+                data-toggle="collapse" data-target="#navbar"
+                aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span> <span
+                    class="icon-bar"></span> <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Project name</a>
         </div>
-    </nav>
-</div>
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="#">Home</a></li>
+                <li class="dropdown"><a href="#"
+                    class="dropdown-toggle" data-toggle="dropdown"
+                    role="button" aria-expanded="false">Dropdown <span
+                        class="caret"></span>
+                </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#">Another action</a></li>
+                        <li><a href="#">Something else here</a></li>
+                        <li class="divider"></li>
+                        <li class="dropdown-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                    </ul></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown"><a href="#"
+                    class="dropdown-toggle" data-toggle="dropdown"
+                    role="button" aria-expanded="false"> <i
+                        class="fa fa-user"></i>
+                </a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="#" id="settingsBtn"><i
+                                class="fa fa-gears"></i> Einstellungen</a></li>
+                        <li><a href="#" id="logoutBtn">Logout</a></li>
+                    </ul>
+                <li><a href="#"><i class="fa fa-envelope"></i>
+                        <span class="badge">2</span></a></li>
+                <li><a href="#" id="editAnimalsBtn"><i
+                        class="fa fa-paw"></i></a></li>
+                <li><a href="#" id="announcementsBtn"><i
+                        class="fa fa-comments"></i></a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
 <div id="content">
     <div class="col-md-12" id="map-canvas" style="height: 800px"></div>
 
-    <div id="sideBar">
+    <!--     <div id="sideBar">
         <div id="sideBarInner">
             <span class="glyphicon glyphicon-chevron-right"
                 aria-hidden="true"></span>
         </div>
     </div>
-    <div id="modalPlaceHolder" tabindex="-1"></div>
+    <div id="modalPlaceHolder" tabindex="-1"></div> -->
 
     <div class="modal fade" id="customModal" tabindex="-1">
         <div class="modal-dialog">
@@ -110,8 +109,7 @@
     </div>
 </div>
 
-<script
-    src="/marcel/ums/vendor/select2/select2/dist/js/select2.full.min.js"></script>
+<script src="/marcel/ums/vendor/select2/select2/select2.min.js"></script>
 <script src="/marcel/ums/javascript/moment.js"></script>
 <script src="/marcel/ums/javascript/de.js"></script>
 <script

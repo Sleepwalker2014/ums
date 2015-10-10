@@ -1,7 +1,6 @@
 <?php
     require_once 'colour.php';
     require_once 'sex.php';
-    require_once 'race.php';
     class animal {
         private $animal = null;
         private $name        = null;
@@ -12,7 +11,7 @@
         private $species     = null;
         private $size        = null;
         private $furColour   = null;
-        public $h2o_safe     = ['getName'];
+        public $h2o_safe     = ['getName', 'getAnimal', 'getBirthDay'];
 
         public function animal ($name, $birthDay, $sex, $furColour, $eyeColour, $species, $race, $specification) {
             $this->name = $name;
@@ -92,7 +91,7 @@
         }
 
         public function getBirthDay () {
-            return $this->birthDay;
+            return date('d.m.Y', strtotime($this->birthDay));
         }
 
         public function getSex () {
@@ -127,8 +126,21 @@
                     animals
                     VALUES (null,"'.$this->name.'","'.$this->birthDay.'",'.$this->sex.','.
                                 $this->furColour.','.$this->eyeColour.',1, 0, "'.$this->specification.'",'.$this->race.');';
+
             $result = $db->query($sql);
 
             return $db->getLastInsertId();
         }
+
+//         public function update () {
+//             $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+
+//             $sql = 'UPDATE animals
+//                     SET name='Alfred Schmidt', City='Hamburg'
+//                     WHERE animal='.$this->getAnimal().';';
+
+//             $result = $db->query($sql);
+
+//             return $this->getAnimal();
+//         }
     }
