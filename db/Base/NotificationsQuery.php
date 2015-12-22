@@ -64,7 +64,17 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotificationsQuery rightJoinWithAnimals() Adds a RIGHT JOIN clause and with to the query using the Animals relation
  * @method     ChildNotificationsQuery innerJoinWithAnimals() Adds a INNER JOIN clause and with to the query using the Animals relation
  *
- * @method     \NotificationtypeQuery|\AnimalsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     ChildNotificationsQuery leftJoinSearchnotifications($relationAlias = null) Adds a LEFT JOIN clause to the query using the Searchnotifications relation
+ * @method     ChildNotificationsQuery rightJoinSearchnotifications($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Searchnotifications relation
+ * @method     ChildNotificationsQuery innerJoinSearchnotifications($relationAlias = null) Adds a INNER JOIN clause to the query using the Searchnotifications relation
+ *
+ * @method     ChildNotificationsQuery joinWithSearchnotifications($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Searchnotifications relation
+ *
+ * @method     ChildNotificationsQuery leftJoinWithSearchnotifications() Adds a LEFT JOIN clause and with to the query using the Searchnotifications relation
+ * @method     ChildNotificationsQuery rightJoinWithSearchnotifications() Adds a RIGHT JOIN clause and with to the query using the Searchnotifications relation
+ * @method     ChildNotificationsQuery innerJoinWithSearchnotifications() Adds a INNER JOIN clause and with to the query using the Searchnotifications relation
+ *
+ * @method     \NotificationtypeQuery|\AnimalsQuery|\SearchnotificationsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildNotifications findOne(ConnectionInterface $con = null) Return the first ChildNotifications matching the query
  * @method     ChildNotifications findOneOrCreate(ConnectionInterface $con = null) Return the first ChildNotifications matching the query, or a new ChildNotifications object populated from the query conditions when no match is found
@@ -711,6 +721,79 @@ abstract class NotificationsQuery extends ModelCriteria
         return $this
             ->joinAnimals($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Animals', '\AnimalsQuery');
+    }
+
+    /**
+     * Filter the query by a related \Searchnotifications object
+     *
+     * @param \Searchnotifications|ObjectCollection $searchnotifications the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildNotificationsQuery The current query, for fluid interface
+     */
+    public function filterBySearchnotifications($searchnotifications, $comparison = null)
+    {
+        if ($searchnotifications instanceof \Searchnotifications) {
+            return $this
+                ->addUsingAlias(NotificationsTableMap::COL_NOTIFICATION, $searchnotifications->getNotification(), $comparison);
+        } elseif ($searchnotifications instanceof ObjectCollection) {
+            return $this
+                ->useSearchnotificationsQuery()
+                ->filterByPrimaryKeys($searchnotifications->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterBySearchnotifications() only accepts arguments of type \Searchnotifications or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Searchnotifications relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildNotificationsQuery The current query, for fluid interface
+     */
+    public function joinSearchnotifications($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Searchnotifications');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Searchnotifications');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Searchnotifications relation Searchnotifications object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \SearchnotificationsQuery A secondary query class using the current class as primary query
+     */
+    public function useSearchnotificationsQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinSearchnotifications($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Searchnotifications', '\SearchnotificationsQuery');
     }
 
     /**

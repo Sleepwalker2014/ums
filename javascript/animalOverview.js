@@ -4,17 +4,24 @@ $(document).ready(function() {
     });
 
     $(".searchAnimal").click(function() {
-        alert("muh");
+        ajaxCall('php/routingHandler.php', {
+            'actionCode' : "15",
+            'animalId' : $(this).data('animal')
+        }).done(function(result) {
+            $('#content').html(result);
+        });
     });
 
-
-/*    $(".removable").click(function() {
-        removeItem($(this));
-    });*/
+    /*
+     * $(".removable").click(function() { removeItem($(this)); });
+     */
 });
 
 function editAnimal(animalId) {
-    ajaxCall('php/routingHandler.php', {'actionCode': "10", 'animal': animalId}).done(function(result) {
+    ajaxCall('php/routingHandler.php', {
+        'actionCode' : "10",
+        'animal' : animalId
+    }).done(function(result) {
         $('#content').html(result);
     });
 }

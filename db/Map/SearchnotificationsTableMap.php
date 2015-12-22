@@ -2,8 +2,8 @@
 
 namespace Map;
 
-use \Notifications;
-use \NotificationsQuery;
+use \Searchnotifications;
+use \SearchnotificationsQuery;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\InstancePoolTrait;
@@ -16,7 +16,7 @@ use Propel\Runtime\Map\TableMapTrait;
 
 
 /**
- * This class defines the structure of the 'notifications' table.
+ * This class defines the structure of the 'searchNotifications' table.
  *
  *
  *
@@ -26,7 +26,7 @@ use Propel\Runtime\Map\TableMapTrait;
  * (i.e. if it's a text column type).
  *
  */
-class NotificationsTableMap extends TableMap
+class SearchnotificationsTableMap extends TableMap
 {
     use InstancePoolTrait;
     use TableMapTrait;
@@ -34,7 +34,7 @@ class NotificationsTableMap extends TableMap
     /**
      * The (dot-path) name of this class
      */
-    const CLASS_NAME = '.Map.NotificationsTableMap';
+    const CLASS_NAME = '.Map.SearchnotificationsTableMap';
 
     /**
      * The default database name for this class
@@ -44,22 +44,22 @@ class NotificationsTableMap extends TableMap
     /**
      * The table name for this class
      */
-    const TABLE_NAME = 'notifications';
+    const TABLE_NAME = 'searchNotifications';
 
     /**
      * The related Propel class for this table
      */
-    const OM_CLASS = '\\Notifications';
+    const OM_CLASS = '\\Searchnotifications';
 
     /**
      * A class that can be returned by this tableMap
      */
-    const CLASS_DEFAULT = 'Notifications';
+    const CLASS_DEFAULT = 'Searchnotifications';
 
     /**
      * The total number of columns
      */
-    const NUM_COLUMNS = 7;
+    const NUM_COLUMNS = 5;
 
     /**
      * The number of lazy-loaded columns
@@ -69,42 +69,32 @@ class NotificationsTableMap extends TableMap
     /**
      * The number of columns to hydrate (NUM_COLUMNS - NUM_LAZY_LOAD_COLUMNS)
      */
-    const NUM_HYDRATE_COLUMNS = 7;
+    const NUM_HYDRATE_COLUMNS = 5;
+
+    /**
+     * the column name for the searchNotification field
+     */
+    const COL_SEARCHNOTIFICATION = 'searchNotifications.searchNotification';
 
     /**
      * the column name for the notification field
      */
-    const COL_NOTIFICATION = 'notifications.notification';
+    const COL_NOTIFICATION = 'searchNotifications.notification';
 
     /**
-     * the column name for the latitude field
+     * the column name for the missingDate field
      */
-    const COL_LATITUDE = 'notifications.latitude';
+    const COL_MISSINGDATE = 'searchNotifications.missingDate';
 
     /**
-     * the column name for the notificationTypeId field
+     * the column name for the additionalInformation field
      */
-    const COL_NOTIFICATIONTYPEID = 'notifications.notificationTypeId';
+    const COL_ADDITIONALINFORMATION = 'searchNotifications.additionalInformation';
 
     /**
-     * the column name for the creationDate field
+     * the column name for the reward field
      */
-    const COL_CREATIONDATE = 'notifications.creationDate';
-
-    /**
-     * the column name for the description field
-     */
-    const COL_DESCRIPTION = 'notifications.description';
-
-    /**
-     * the column name for the animalId field
-     */
-    const COL_ANIMALID = 'notifications.animalId';
-
-    /**
-     * the column name for the longitude field
-     */
-    const COL_LONGITUDE = 'notifications.longitude';
+    const COL_REWARD = 'searchNotifications.reward';
 
     /**
      * The default string format for model objects of the related table
@@ -118,11 +108,11 @@ class NotificationsTableMap extends TableMap
      * e.g. self::$fieldNames[self::TYPE_PHPNAME][0] = 'Id'
      */
     protected static $fieldNames = array (
-        self::TYPE_PHPNAME       => array('Notification', 'Latitude', 'Notificationtypeid', 'Creationdate', 'Description', 'Animalid', 'Longitude', ),
-        self::TYPE_CAMELNAME     => array('notification', 'latitude', 'notificationtypeid', 'creationdate', 'description', 'animalid', 'longitude', ),
-        self::TYPE_COLNAME       => array(NotificationsTableMap::COL_NOTIFICATION, NotificationsTableMap::COL_LATITUDE, NotificationsTableMap::COL_NOTIFICATIONTYPEID, NotificationsTableMap::COL_CREATIONDATE, NotificationsTableMap::COL_DESCRIPTION, NotificationsTableMap::COL_ANIMALID, NotificationsTableMap::COL_LONGITUDE, ),
-        self::TYPE_FIELDNAME     => array('notification', 'latitude', 'notificationTypeId', 'creationDate', 'description', 'animalId', 'longitude', ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Searchnotification', 'Notification', 'Missingdate', 'Additionalinformation', 'Reward', ),
+        self::TYPE_CAMELNAME     => array('searchnotification', 'notification', 'missingdate', 'additionalinformation', 'reward', ),
+        self::TYPE_COLNAME       => array(SearchnotificationsTableMap::COL_SEARCHNOTIFICATION, SearchnotificationsTableMap::COL_NOTIFICATION, SearchnotificationsTableMap::COL_MISSINGDATE, SearchnotificationsTableMap::COL_ADDITIONALINFORMATION, SearchnotificationsTableMap::COL_REWARD, ),
+        self::TYPE_FIELDNAME     => array('searchNotification', 'notification', 'missingDate', 'additionalInformation', 'reward', ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -132,11 +122,11 @@ class NotificationsTableMap extends TableMap
      * e.g. self::$fieldKeys[self::TYPE_PHPNAME]['Id'] = 0
      */
     protected static $fieldKeys = array (
-        self::TYPE_PHPNAME       => array('Notification' => 0, 'Latitude' => 1, 'Notificationtypeid' => 2, 'Creationdate' => 3, 'Description' => 4, 'Animalid' => 5, 'Longitude' => 6, ),
-        self::TYPE_CAMELNAME     => array('notification' => 0, 'latitude' => 1, 'notificationtypeid' => 2, 'creationdate' => 3, 'description' => 4, 'animalid' => 5, 'longitude' => 6, ),
-        self::TYPE_COLNAME       => array(NotificationsTableMap::COL_NOTIFICATION => 0, NotificationsTableMap::COL_LATITUDE => 1, NotificationsTableMap::COL_NOTIFICATIONTYPEID => 2, NotificationsTableMap::COL_CREATIONDATE => 3, NotificationsTableMap::COL_DESCRIPTION => 4, NotificationsTableMap::COL_ANIMALID => 5, NotificationsTableMap::COL_LONGITUDE => 6, ),
-        self::TYPE_FIELDNAME     => array('notification' => 0, 'latitude' => 1, 'notificationTypeId' => 2, 'creationDate' => 3, 'description' => 4, 'animalId' => 5, 'longitude' => 6, ),
-        self::TYPE_NUM           => array(0, 1, 2, 3, 4, 5, 6, )
+        self::TYPE_PHPNAME       => array('Searchnotification' => 0, 'Notification' => 1, 'Missingdate' => 2, 'Additionalinformation' => 3, 'Reward' => 4, ),
+        self::TYPE_CAMELNAME     => array('searchnotification' => 0, 'notification' => 1, 'missingdate' => 2, 'additionalinformation' => 3, 'reward' => 4, ),
+        self::TYPE_COLNAME       => array(SearchnotificationsTableMap::COL_SEARCHNOTIFICATION => 0, SearchnotificationsTableMap::COL_NOTIFICATION => 1, SearchnotificationsTableMap::COL_MISSINGDATE => 2, SearchnotificationsTableMap::COL_ADDITIONALINFORMATION => 3, SearchnotificationsTableMap::COL_REWARD => 4, ),
+        self::TYPE_FIELDNAME     => array('searchNotification' => 0, 'notification' => 1, 'missingDate' => 2, 'additionalInformation' => 3, 'reward' => 4, ),
+        self::TYPE_NUM           => array(0, 1, 2, 3, 4, )
     );
 
     /**
@@ -149,20 +139,18 @@ class NotificationsTableMap extends TableMap
     public function initialize()
     {
         // attributes
-        $this->setName('notifications');
-        $this->setPhpName('Notifications');
+        $this->setName('searchNotifications');
+        $this->setPhpName('Searchnotifications');
         $this->setIdentifierQuoting(false);
-        $this->setClassName('\\Notifications');
+        $this->setClassName('\\Searchnotifications');
         $this->setPackage('');
         $this->setUseIdGenerator(true);
         // columns
-        $this->addPrimaryKey('notification', 'Notification', 'INTEGER', true, 10, null);
-        $this->addColumn('latitude', 'Latitude', 'DOUBLE', true, null, null);
-        $this->addForeignKey('notificationTypeId', 'Notificationtypeid', 'INTEGER', 'notificationType', 'notificationType', true, 10, null);
-        $this->addColumn('creationDate', 'Creationdate', 'DATE', true, null, null);
-        $this->addColumn('description', 'Description', 'VARCHAR', true, 2048, null);
-        $this->addForeignKey('animalId', 'Animalid', 'INTEGER', 'animals', 'animal', true, null, null);
-        $this->addColumn('longitude', 'Longitude', 'DOUBLE', true, null, null);
+        $this->addPrimaryKey('searchNotification', 'Searchnotification', 'INTEGER', true, 10, null);
+        $this->addForeignKey('notification', 'Notification', 'INTEGER', 'notifications', 'notification', true, 10, null);
+        $this->addColumn('missingDate', 'Missingdate', 'DATE', true, null, null);
+        $this->addColumn('additionalInformation', 'Additionalinformation', 'VARCHAR', true, 1024, null);
+        $this->addColumn('reward', 'Reward', 'INTEGER', true, 10, null);
     } // initialize()
 
     /**
@@ -170,27 +158,13 @@ class NotificationsTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Notificationtype', '\\Notificationtype', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':notificationTypeId',
-    1 => ':notificationType',
-  ),
-), null, 'CASCADE', null, false);
-        $this->addRelation('Animals', '\\Animals', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':animalId',
-    1 => ':animal',
-  ),
-), null, 'CASCADE', null, false);
-        $this->addRelation('Searchnotifications', '\\Searchnotifications', RelationMap::ONE_TO_MANY, array (
+        $this->addRelation('Notifications', '\\Notifications', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
     0 => ':notification',
     1 => ':notification',
   ),
-), null, 'CASCADE', 'Searchnotificationss', false);
+), null, 'CASCADE', null, false);
     } // buildRelations()
 
     /**
@@ -209,11 +183,11 @@ class NotificationsTableMap extends TableMap
     public static function getPrimaryKeyHashFromRow($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
         // If the PK cannot be derived from the row, return NULL.
-        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Notification', TableMap::TYPE_PHPNAME, $indexType)] === null) {
+        if ($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Searchnotification', TableMap::TYPE_PHPNAME, $indexType)] === null) {
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Notification', TableMap::TYPE_PHPNAME, $indexType)];
+        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('Searchnotification', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**
@@ -233,7 +207,7 @@ class NotificationsTableMap extends TableMap
         return (int) $row[
             $indexType == TableMap::TYPE_NUM
                 ? 0 + $offset
-                : self::translateFieldName('Notification', TableMap::TYPE_PHPNAME, $indexType)
+                : self::translateFieldName('Searchnotification', TableMap::TYPE_PHPNAME, $indexType)
         ];
     }
 
@@ -250,7 +224,7 @@ class NotificationsTableMap extends TableMap
      */
     public static function getOMClass($withPrefix = true)
     {
-        return $withPrefix ? NotificationsTableMap::CLASS_DEFAULT : NotificationsTableMap::OM_CLASS;
+        return $withPrefix ? SearchnotificationsTableMap::CLASS_DEFAULT : SearchnotificationsTableMap::OM_CLASS;
     }
 
     /**
@@ -264,22 +238,22 @@ class NotificationsTableMap extends TableMap
      *
      * @throws PropelException Any exceptions caught during processing will be
      *                         rethrown wrapped into a PropelException.
-     * @return array           (Notifications object, last column rank)
+     * @return array           (Searchnotifications object, last column rank)
      */
     public static function populateObject($row, $offset = 0, $indexType = TableMap::TYPE_NUM)
     {
-        $key = NotificationsTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
-        if (null !== ($obj = NotificationsTableMap::getInstanceFromPool($key))) {
+        $key = SearchnotificationsTableMap::getPrimaryKeyHashFromRow($row, $offset, $indexType);
+        if (null !== ($obj = SearchnotificationsTableMap::getInstanceFromPool($key))) {
             // We no longer rehydrate the object, since this can cause data loss.
             // See http://www.propelorm.org/ticket/509
             // $obj->hydrate($row, $offset, true); // rehydrate
-            $col = $offset + NotificationsTableMap::NUM_HYDRATE_COLUMNS;
+            $col = $offset + SearchnotificationsTableMap::NUM_HYDRATE_COLUMNS;
         } else {
-            $cls = NotificationsTableMap::OM_CLASS;
-            /** @var Notifications $obj */
+            $cls = SearchnotificationsTableMap::OM_CLASS;
+            /** @var Searchnotifications $obj */
             $obj = new $cls();
             $col = $obj->hydrate($row, $offset, false, $indexType);
-            NotificationsTableMap::addInstanceToPool($obj, $key);
+            SearchnotificationsTableMap::addInstanceToPool($obj, $key);
         }
 
         return array($obj, $col);
@@ -302,18 +276,18 @@ class NotificationsTableMap extends TableMap
         $cls = static::getOMClass(false);
         // populate the object(s)
         while ($row = $dataFetcher->fetch()) {
-            $key = NotificationsTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
-            if (null !== ($obj = NotificationsTableMap::getInstanceFromPool($key))) {
+            $key = SearchnotificationsTableMap::getPrimaryKeyHashFromRow($row, 0, $dataFetcher->getIndexType());
+            if (null !== ($obj = SearchnotificationsTableMap::getInstanceFromPool($key))) {
                 // We no longer rehydrate the object, since this can cause data loss.
                 // See http://www.propelorm.org/ticket/509
                 // $obj->hydrate($row, 0, true); // rehydrate
                 $results[] = $obj;
             } else {
-                /** @var Notifications $obj */
+                /** @var Searchnotifications $obj */
                 $obj = new $cls();
                 $obj->hydrate($row);
                 $results[] = $obj;
-                NotificationsTableMap::addInstanceToPool($obj, $key);
+                SearchnotificationsTableMap::addInstanceToPool($obj, $key);
             } // if key exists
         }
 
@@ -334,21 +308,17 @@ class NotificationsTableMap extends TableMap
     public static function addSelectColumns(Criteria $criteria, $alias = null)
     {
         if (null === $alias) {
-            $criteria->addSelectColumn(NotificationsTableMap::COL_NOTIFICATION);
-            $criteria->addSelectColumn(NotificationsTableMap::COL_LATITUDE);
-            $criteria->addSelectColumn(NotificationsTableMap::COL_NOTIFICATIONTYPEID);
-            $criteria->addSelectColumn(NotificationsTableMap::COL_CREATIONDATE);
-            $criteria->addSelectColumn(NotificationsTableMap::COL_DESCRIPTION);
-            $criteria->addSelectColumn(NotificationsTableMap::COL_ANIMALID);
-            $criteria->addSelectColumn(NotificationsTableMap::COL_LONGITUDE);
+            $criteria->addSelectColumn(SearchnotificationsTableMap::COL_SEARCHNOTIFICATION);
+            $criteria->addSelectColumn(SearchnotificationsTableMap::COL_NOTIFICATION);
+            $criteria->addSelectColumn(SearchnotificationsTableMap::COL_MISSINGDATE);
+            $criteria->addSelectColumn(SearchnotificationsTableMap::COL_ADDITIONALINFORMATION);
+            $criteria->addSelectColumn(SearchnotificationsTableMap::COL_REWARD);
         } else {
+            $criteria->addSelectColumn($alias . '.searchNotification');
             $criteria->addSelectColumn($alias . '.notification');
-            $criteria->addSelectColumn($alias . '.latitude');
-            $criteria->addSelectColumn($alias . '.notificationTypeId');
-            $criteria->addSelectColumn($alias . '.creationDate');
-            $criteria->addSelectColumn($alias . '.description');
-            $criteria->addSelectColumn($alias . '.animalId');
-            $criteria->addSelectColumn($alias . '.longitude');
+            $criteria->addSelectColumn($alias . '.missingDate');
+            $criteria->addSelectColumn($alias . '.additionalInformation');
+            $criteria->addSelectColumn($alias . '.reward');
         }
     }
 
@@ -361,7 +331,7 @@ class NotificationsTableMap extends TableMap
      */
     public static function getTableMap()
     {
-        return Propel::getServiceContainer()->getDatabaseMap(NotificationsTableMap::DATABASE_NAME)->getTable(NotificationsTableMap::TABLE_NAME);
+        return Propel::getServiceContainer()->getDatabaseMap(SearchnotificationsTableMap::DATABASE_NAME)->getTable(SearchnotificationsTableMap::TABLE_NAME);
     }
 
     /**
@@ -369,16 +339,16 @@ class NotificationsTableMap extends TableMap
      */
     public static function buildTableMap()
     {
-        $dbMap = Propel::getServiceContainer()->getDatabaseMap(NotificationsTableMap::DATABASE_NAME);
-        if (!$dbMap->hasTable(NotificationsTableMap::TABLE_NAME)) {
-            $dbMap->addTableObject(new NotificationsTableMap());
+        $dbMap = Propel::getServiceContainer()->getDatabaseMap(SearchnotificationsTableMap::DATABASE_NAME);
+        if (!$dbMap->hasTable(SearchnotificationsTableMap::TABLE_NAME)) {
+            $dbMap->addTableObject(new SearchnotificationsTableMap());
         }
     }
 
     /**
-     * Performs a DELETE on the database, given a Notifications or Criteria object OR a primary key value.
+     * Performs a DELETE on the database, given a Searchnotifications or Criteria object OR a primary key value.
      *
-     * @param mixed               $values Criteria or Notifications object or primary key or array of primary keys
+     * @param mixed               $values Criteria or Searchnotifications object or primary key or array of primary keys
      *              which is used to create the DELETE statement
      * @param  ConnectionInterface $con the connection to use
      * @return int             The number of affected rows (if supported by underlying database driver).  This includes CASCADE-related rows
@@ -389,27 +359,27 @@ class NotificationsTableMap extends TableMap
      public static function doDelete($values, ConnectionInterface $con = null)
      {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(NotificationsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SearchnotificationsTableMap::DATABASE_NAME);
         }
 
         if ($values instanceof Criteria) {
             // rename for clarity
             $criteria = $values;
-        } elseif ($values instanceof \Notifications) { // it's a model object
+        } elseif ($values instanceof \Searchnotifications) { // it's a model object
             // create criteria based on pk values
             $criteria = $values->buildPkeyCriteria();
         } else { // it's a primary key, or an array of pks
-            $criteria = new Criteria(NotificationsTableMap::DATABASE_NAME);
-            $criteria->add(NotificationsTableMap::COL_NOTIFICATION, (array) $values, Criteria::IN);
+            $criteria = new Criteria(SearchnotificationsTableMap::DATABASE_NAME);
+            $criteria->add(SearchnotificationsTableMap::COL_SEARCHNOTIFICATION, (array) $values, Criteria::IN);
         }
 
-        $query = NotificationsQuery::create()->mergeWith($criteria);
+        $query = SearchnotificationsQuery::create()->mergeWith($criteria);
 
         if ($values instanceof Criteria) {
-            NotificationsTableMap::clearInstancePool();
+            SearchnotificationsTableMap::clearInstancePool();
         } elseif (!is_object($values)) { // it's a primary key, or an array of pks
             foreach ((array) $values as $singleval) {
-                NotificationsTableMap::removeInstanceFromPool($singleval);
+                SearchnotificationsTableMap::removeInstanceFromPool($singleval);
             }
         }
 
@@ -417,20 +387,20 @@ class NotificationsTableMap extends TableMap
     }
 
     /**
-     * Deletes all rows from the notifications table.
+     * Deletes all rows from the searchNotifications table.
      *
      * @param ConnectionInterface $con the connection to use
      * @return int The number of affected rows (if supported by underlying database driver).
      */
     public static function doDeleteAll(ConnectionInterface $con = null)
     {
-        return NotificationsQuery::create()->doDeleteAll($con);
+        return SearchnotificationsQuery::create()->doDeleteAll($con);
     }
 
     /**
-     * Performs an INSERT on the database, given a Notifications or Criteria object.
+     * Performs an INSERT on the database, given a Searchnotifications or Criteria object.
      *
-     * @param mixed               $criteria Criteria or Notifications object containing data that is used to create the INSERT statement.
+     * @param mixed               $criteria Criteria or Searchnotifications object containing data that is used to create the INSERT statement.
      * @param ConnectionInterface $con the ConnectionInterface connection to use
      * @return mixed           The new primary key.
      * @throws PropelException Any exceptions caught during processing will be
@@ -439,22 +409,22 @@ class NotificationsTableMap extends TableMap
     public static function doInsert($criteria, ConnectionInterface $con = null)
     {
         if (null === $con) {
-            $con = Propel::getServiceContainer()->getWriteConnection(NotificationsTableMap::DATABASE_NAME);
+            $con = Propel::getServiceContainer()->getWriteConnection(SearchnotificationsTableMap::DATABASE_NAME);
         }
 
         if ($criteria instanceof Criteria) {
             $criteria = clone $criteria; // rename for clarity
         } else {
-            $criteria = $criteria->buildCriteria(); // build Criteria from Notifications object
+            $criteria = $criteria->buildCriteria(); // build Criteria from Searchnotifications object
         }
 
-        if ($criteria->containsKey(NotificationsTableMap::COL_NOTIFICATION) && $criteria->keyContainsValue(NotificationsTableMap::COL_NOTIFICATION) ) {
-            throw new PropelException('Cannot insert a value for auto-increment primary key ('.NotificationsTableMap::COL_NOTIFICATION.')');
+        if ($criteria->containsKey(SearchnotificationsTableMap::COL_SEARCHNOTIFICATION) && $criteria->keyContainsValue(SearchnotificationsTableMap::COL_SEARCHNOTIFICATION) ) {
+            throw new PropelException('Cannot insert a value for auto-increment primary key ('.SearchnotificationsTableMap::COL_SEARCHNOTIFICATION.')');
         }
 
 
         // Set the correct dbName
-        $query = NotificationsQuery::create()->mergeWith($criteria);
+        $query = SearchnotificationsQuery::create()->mergeWith($criteria);
 
         // use transaction because $criteria could contain info
         // for more than one table (I guess, conceivably)
@@ -463,7 +433,7 @@ class NotificationsTableMap extends TableMap
         });
     }
 
-} // NotificationsTableMap
+} // SearchnotificationsTableMap
 // This is the static code needed to register the TableMap for this table with the main Propel class.
 //
-NotificationsTableMap::buildTableMap();
+SearchnotificationsTableMap::buildTableMap();
