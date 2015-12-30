@@ -1,4 +1,5 @@
 <?php
+use Symfony\Component\Validator\Constraints\Date;
 $root = dirname ( dirname ( __FILE__ ) ) . '/';
 
 require_once 'templateHandler.php';
@@ -138,14 +139,14 @@ function resolveActions($urlParams, $sessionHandler) {
                 break;
             case 10 :
                 $th = templateHandler::getTemplateHandler ( '../html/editAnimal.html' );
-
+                
                 if (! empty ( $_POST ['animal'] )) {
                     $animalsQuery = new AnimalsQuery ();
                     $animal = $animalsQuery->findPk ( $_POST ['animal'] );
-
+                    
                     $sexes = [ ];
                     $colours = [ ];
-
+                    
                     $th->addContent ( 'animal', [ 
                             'animal' => $animal->getAnimal (),
                             'name' => $animal->getName (),
@@ -160,18 +161,17 @@ function resolveActions($urlParams, $sessionHandler) {
                             'eyeColour' => $animal->getEyecolourid (),
                             'furColour' => $animal->getFurcolourid () 
                     ] );
-
                 }
                 foreach ( SexesQuery::create ()->find () as $sex ) {
                     $sexes [$sex->getCode ()] = $sex->getSex ();
                 }
-
+                
                 foreach ( ColoursQuery::create ()->find () as $colour ) {
                     $colours [$colour->getColour ()] = $colour->getName ();
                 }
                 $th->addContent ( 'sexes', $sexes );
                 $th->addContent ( 'colours', $colours );
-
+                
                 echo $th->getHTML ();
                 break;
             case 11 :
@@ -261,9 +261,58 @@ function resolveActions($urlParams, $sessionHandler) {
             case 14 :
                 $th = templateHandler::getTemplateHandler ( '../html/announcesOverview.html' );
                 $userAnimals = userDb::getFromDb ( $sessionHandler->getSessionUser () )->getAnimals ();
-
+                
                 $th->addContent ( 'animals', $userAnimals );
+                
+                echo $th->getHTML ();
+                break;
+            case 15 :
+                $th = templateHandler::getTemplateHandler ( '../html/animalSearch.html' );
+                $th->addContent ( 'animalId', $_POST['animalId']);
+                
+                echo $th->getHTML ();
+                break;
+            case 16 :
+                $dateTime = new DateTime ();
+                $animalQuery = new AnimalsQuery ();
+                $animal = $animalQuery->findPk ( $_POST ['animalId'] );
 
+                $notificationTypeQuery = new NotificationtypeQuery ();
+                $notificationType = $notificationTypeQuery->findOneByCode ( 'missing' );
+
+                $missingDate = new DateTime($_POST ['missingDate']);
+
+                $notificationObject = new Notifications ();
+                $notificationObject->setNotificationtype ( $notificationType )
+                                   ->setCreationdate ( $dateTime->format ( 'Y-m-d' ) )
+                                   ->setDescription ( $_POST ['additionalInfo'] )
+                                   ->setAnimals ( $animal )
+                                   ->setLatitude ( 40.45 )
+                                   ->setLongitude ( 40.45 );
+
+                $searchNotificationObject = new Searchnotifications ();
+                $searchNotificationObject->setAdditionalinformation ( $_POST ['additionalInfo'])
+                                         ->setNotifications($notificationObject)
+                                         ->setMissingdate( $missingDate ->format ( 'Y-m-d' ))
+                                         ->setReward($_POST ['reward'])
+                                         ->save();
+
+                $th = templateHandler::getTemplateHandler ( '../html/animalSearch.html' );
+                echo $th->getHTML ();
+                break;
+            case 17 :
+                $notificationQuery = new NotificationsQuery();
+                $searchNotificationQuery = new SearchnotificationsQuery();
+                $animals = $notificationQuery->filterByNotificationtypeid(1)->useAnimalsQuery()->find();
+
+                $output= [];
+                foreach ($animals as $animal) {
+                    $output[] = ['name' => $animal->getName()];
+                }
+
+                
+                $th = templateHandler::getTemplateHandler ( '../html/searchOverview.html' );
+                $th->addContent('animals', $output);
                 echo $th->getHTML ();
                 break;
         }

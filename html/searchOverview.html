@@ -1,0 +1,18 @@
+<div class="row">
+    <div class="col-md-12">
+        {% for animal in animals %}
+        <div class="col-sm-6 col-md-4">
+            <div class="thumbnail">
+                <div class="caption">
+                    <img src="http://ingridwu.dmmdmcfatter.com/wp-content/uploads/2015/01/placeholder.png" class="img-thumbnail"
+                        alt="Cinque Terre">
+                    <h4>14.04.2015</h4>
+                    <h4>{{ animal.name }}  <span class="fa fa-mars" aria-hidden="true"></span></h4>
+                    zuletzt gesehen am: 14.03.2014<br> zuletzt
+                    gesehen in: Hannover <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
