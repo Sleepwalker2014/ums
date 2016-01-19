@@ -1,16 +1,41 @@
 <div class="row">
     <div class="col-md-12">
         {% for animal in animals %}
-        <div class="col-sm-6 col-md-4">
+        <div class="col-sm-12 col-md-6">
             <div class="thumbnail">
+                <img
+                    src="{% if animal.imagePath %}{{ animal.imagePath }}{% else %}pictures/placeholder.png{% endif %}"
+                    class="img-thumbnail" alt="Cinque Terre">
                 <div class="caption">
-                    <img src="http://ingridwu.dmmdmcfatter.com/wp-content/uploads/2015/01/placeholder.png" class="img-thumbnail"
-                        alt="Cinque Terre">
-                    <h4>14.04.2015</h4>
-                    <h4>{{ animal.name }}  <span class="fa fa-mars" aria-hidden="true"></span></h4>
-                    zuletzt gesehen am: 14.03.2014<br> zuletzt
-                    gesehen in: Hannover <span class="glyphicon glyphicon-map-marker" aria-hidden="true"></span>
+                    <h4>{{ animal.creationDate }}</h4>
+                    <h4>
+                        {{ animal.name }} <span
+                            class="glyphicon glyphicon-woman"
+                            aria-hidden="true"></span>
+                    </h4>
+                    zuletzt gesehen am: {{ animal.lastSeen }}<br>
+                    zuletzt gesehen in: Hannover <span
+                        class="glyphicon glyphicon-map-marker"
+                        aria-hidden="true"></span> <br> Finderlohn:
+                    {{ animal.reward }} <span
+                        class="glyphicon glyphicon-euro"
+                        aria-hidden="true"></span><br>
+                        <img src="{{ animal.qrUrl }}" alt="Cinque Terre">
                 </div>
+                <hr>
+                <ul class="social-network social-circle">
+                    <li><a href="#" class="icoRss" title="Rss"><i
+                            class="fa fa-rss"></i></a></li>
+                    <li><a href="#" class="icoFacebook"
+                        title="Facebook"><i class="fa fa-facebook"></i></a></li>
+                    <li><a href="#" class="icoTwitter"
+                        title="Twitter"><i class="fa fa-twitter"></i></a></li>
+                    <li><a href="#" class="icoGoogle"
+                        title="Google +"><i
+                            class="fa fa-google-plus"></i></a></li>
+                    <li><a href="#" class="icoLinkedin"
+                        title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
+                </ul>
             </div>
         </div>
         {% endfor %}

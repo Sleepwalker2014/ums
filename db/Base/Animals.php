@@ -14,6 +14,8 @@ use \Sexes as ChildSexes;
 use \SexesQuery as ChildSexesQuery;
 use \Species as ChildSpecies;
 use \SpeciesQuery as ChildSpeciesQuery;
+use \Users as ChildUsers;
+use \UsersQuery as ChildUsersQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -75,68 +77,97 @@ abstract class Animals implements ActiveRecordInterface
 
     /**
      * The value for the animal field.
+     *
      * @var        int
      */
     protected $animal;
 
     /**
      * The value for the name field.
+     *
      * @var        string
      */
     protected $name;
 
     /**
      * The value for the birthday field.
+     *
      * @var        \DateTime
      */
     protected $birthday;
 
     /**
      * The value for the sexid field.
+     *
      * @var        int
      */
     protected $sexid;
 
     /**
      * The value for the furcolourid field.
+     *
      * @var        int
      */
     protected $furcolourid;
 
     /**
      * The value for the eyecolourid field.
+     *
      * @var        int
      */
     protected $eyecolourid;
 
     /**
      * The value for the speciesid field.
+     *
      * @var        int
      */
     protected $speciesid;
 
     /**
      * The value for the size field.
+     *
      * @var        int
      */
     protected $size;
 
     /**
      * The value for the specification field.
+     *
      * @var        string
      */
     protected $specification;
 
     /**
      * The value for the raceid field.
+     *
      * @var        int
      */
     protected $raceid;
 
     /**
+     * The value for the userid field.
+     *
+     * @var        int
+     */
+    protected $userid;
+
+    /**
+     * The value for the image field.
+     *
+     * @var        string
+     */
+    protected $image;
+
+    /**
      * @var        ChildRaces
      */
     protected $aRaces;
+
+    /**
+     * @var        ChildUsers
+     */
+    protected $aUsers;
 
     /**
      * @var        ChildSpecies
@@ -392,7 +423,15 @@ abstract class Animals implements ActiveRecordInterface
     {
         $this->clearAllReferences();
 
-        return array_keys(get_object_vars($this));
+        $cls = new \ReflectionClass($this);
+        $propertyNames = [];
+        $serializableProperties = array_diff($cls->getProperties(), $cls->getProperties(\ReflectionProperty::IS_STATIC));
+
+        foreach($serializableProperties as $property) {
+            $propertyNames[] = $property->getName();
+        }
+
+        return $propertyNames;
     }
 
     /**
@@ -503,6 +542,26 @@ abstract class Animals implements ActiveRecordInterface
     public function getRaceid()
     {
         return $this->raceid;
+    }
+
+    /**
+     * Get the [userid] column value.
+     *
+     * @return int
+     */
+    public function getUserid()
+    {
+        return $this->userid;
+    }
+
+    /**
+     * Get the [image] column value.
+     *
+     * @return string
+     */
+    public function getImage()
+    {
+        return $this->image;
     }
 
     /**
@@ -726,6 +785,50 @@ abstract class Animals implements ActiveRecordInterface
     } // setRaceid()
 
     /**
+     * Set the value of [userid] column.
+     *
+     * @param int $v new value
+     * @return $this|\Animals The current object (for fluent API support)
+     */
+    public function setUserid($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->userid !== $v) {
+            $this->userid = $v;
+            $this->modifiedColumns[AnimalsTableMap::COL_USERID] = true;
+        }
+
+        if ($this->aUsers !== null && $this->aUsers->getUser() !== $v) {
+            $this->aUsers = null;
+        }
+
+        return $this;
+    } // setUserid()
+
+    /**
+     * Set the value of [image] column.
+     *
+     * @param string $v new value
+     * @return $this|\Animals The current object (for fluent API support)
+     */
+    public function setImage($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->image !== $v) {
+            $this->image = $v;
+            $this->modifiedColumns[AnimalsTableMap::COL_IMAGE] = true;
+        }
+
+        return $this;
+    } // setImage()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -793,6 +896,12 @@ abstract class Animals implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 9 + $startcol : AnimalsTableMap::translateFieldName('Raceid', TableMap::TYPE_PHPNAME, $indexType)];
             $this->raceid = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 10 + $startcol : AnimalsTableMap::translateFieldName('Userid', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->userid = (null !== $col) ? (int) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 11 + $startcol : AnimalsTableMap::translateFieldName('Image', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->image = (null !== $col) ? (string) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -801,7 +910,7 @@ abstract class Animals implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 10; // 10 = AnimalsTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 12; // 12 = AnimalsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Animals'), 0, $e);
@@ -837,6 +946,9 @@ abstract class Animals implements ActiveRecordInterface
         }
         if ($this->aRaces !== null && $this->raceid !== $this->aRaces->getRace()) {
             $this->aRaces = null;
+        }
+        if ($this->aUsers !== null && $this->userid !== $this->aUsers->getUser()) {
+            $this->aUsers = null;
         }
     } // ensureConsistency
 
@@ -878,6 +990,7 @@ abstract class Animals implements ActiveRecordInterface
         if ($deep) {  // also de-associate any related objects?
 
             $this->aRaces = null;
+            $this->aUsers = null;
             $this->aSpecies = null;
             $this->aSexes = null;
             $this->aColoursRelatedByFurcolourid = null;
@@ -995,6 +1108,13 @@ abstract class Animals implements ActiveRecordInterface
                 $this->setRaces($this->aRaces);
             }
 
+            if ($this->aUsers !== null) {
+                if ($this->aUsers->isModified() || $this->aUsers->isNew()) {
+                    $affectedRows += $this->aUsers->save($con);
+                }
+                $this->setUsers($this->aUsers);
+            }
+
             if ($this->aSpecies !== null) {
                 if ($this->aSpecies->isModified() || $this->aSpecies->isNew()) {
                     $affectedRows += $this->aSpecies->save($con);
@@ -1107,6 +1227,12 @@ abstract class Animals implements ActiveRecordInterface
         if ($this->isColumnModified(AnimalsTableMap::COL_RACEID)) {
             $modifiedColumns[':p' . $index++]  = 'raceId';
         }
+        if ($this->isColumnModified(AnimalsTableMap::COL_USERID)) {
+            $modifiedColumns[':p' . $index++]  = 'userId';
+        }
+        if ($this->isColumnModified(AnimalsTableMap::COL_IMAGE)) {
+            $modifiedColumns[':p' . $index++]  = 'image';
+        }
 
         $sql = sprintf(
             'INSERT INTO animals (%s) VALUES (%s)',
@@ -1147,6 +1273,12 @@ abstract class Animals implements ActiveRecordInterface
                         break;
                     case 'raceId':
                         $stmt->bindValue($identifier, $this->raceid, PDO::PARAM_INT);
+                        break;
+                    case 'userId':
+                        $stmt->bindValue($identifier, $this->userid, PDO::PARAM_INT);
+                        break;
+                    case 'image':
+                        $stmt->bindValue($identifier, $this->image, PDO::PARAM_STR);
                         break;
                 }
             }
@@ -1240,6 +1372,12 @@ abstract class Animals implements ActiveRecordInterface
             case 9:
                 return $this->getRaceid();
                 break;
+            case 10:
+                return $this->getUserid();
+                break;
+            case 11:
+                return $this->getImage();
+                break;
             default:
                 return null;
                 break;
@@ -1280,13 +1418,11 @@ abstract class Animals implements ActiveRecordInterface
             $keys[7] => $this->getSize(),
             $keys[8] => $this->getSpecification(),
             $keys[9] => $this->getRaceid(),
+            $keys[10] => $this->getUserid(),
+            $keys[11] => $this->getImage(),
         );
-
-        $utc = new \DateTimeZone('utc');
         if ($result[$keys[2]] instanceof \DateTime) {
-            // When changing timezone we don't want to change existing instances
-            $dateTime = clone $result[$keys[2]];
-            $result[$keys[2]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+            $result[$keys[2]] = $result[$keys[2]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1309,6 +1445,21 @@ abstract class Animals implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aRaces->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aUsers) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'users';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'users';
+                        break;
+                    default:
+                        $key = 'Users';
+                }
+
+                $result[$key] = $this->aUsers->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->aSpecies) {
 
@@ -1449,6 +1600,12 @@ abstract class Animals implements ActiveRecordInterface
             case 9:
                 $this->setRaceid($value);
                 break;
+            case 10:
+                $this->setUserid($value);
+                break;
+            case 11:
+                $this->setImage($value);
+                break;
         } // switch()
 
         return $this;
@@ -1504,6 +1661,12 @@ abstract class Animals implements ActiveRecordInterface
         }
         if (array_key_exists($keys[9], $arr)) {
             $this->setRaceid($arr[$keys[9]]);
+        }
+        if (array_key_exists($keys[10], $arr)) {
+            $this->setUserid($arr[$keys[10]]);
+        }
+        if (array_key_exists($keys[11], $arr)) {
+            $this->setImage($arr[$keys[11]]);
         }
     }
 
@@ -1575,6 +1738,12 @@ abstract class Animals implements ActiveRecordInterface
         }
         if ($this->isColumnModified(AnimalsTableMap::COL_RACEID)) {
             $criteria->add(AnimalsTableMap::COL_RACEID, $this->raceid);
+        }
+        if ($this->isColumnModified(AnimalsTableMap::COL_USERID)) {
+            $criteria->add(AnimalsTableMap::COL_USERID, $this->userid);
+        }
+        if ($this->isColumnModified(AnimalsTableMap::COL_IMAGE)) {
+            $criteria->add(AnimalsTableMap::COL_IMAGE, $this->image);
         }
 
         return $criteria;
@@ -1671,6 +1840,8 @@ abstract class Animals implements ActiveRecordInterface
         $copyObj->setSize($this->getSize());
         $copyObj->setSpecification($this->getSpecification());
         $copyObj->setRaceid($this->getRaceid());
+        $copyObj->setUserid($this->getUserid());
+        $copyObj->setImage($this->getImage());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1762,6 +1933,57 @@ abstract class Animals implements ActiveRecordInterface
         }
 
         return $this->aRaces;
+    }
+
+    /**
+     * Declares an association between this object and a ChildUsers object.
+     *
+     * @param  ChildUsers $v
+     * @return $this|\Animals The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setUsers(ChildUsers $v = null)
+    {
+        if ($v === null) {
+            $this->setUserid(NULL);
+        } else {
+            $this->setUserid($v->getUser());
+        }
+
+        $this->aUsers = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUsers object, it will not be re-added.
+        if ($v !== null) {
+            $v->addAnimals($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildUsers object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUsers The associated ChildUsers object.
+     * @throws PropelException
+     */
+    public function getUsers(ConnectionInterface $con = null)
+    {
+        if ($this->aUsers === null && ($this->userid !== null)) {
+            $this->aUsers = ChildUsersQuery::create()->findPk($this->userid, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUsers->addAnimalss($this);
+             */
+        }
+
+        return $this->aUsers;
     }
 
     /**
@@ -2168,6 +2390,10 @@ abstract class Animals implements ActiveRecordInterface
 
         if (!$this->collNotificationss->contains($l)) {
             $this->doAddNotifications($l);
+
+            if ($this->notificationssScheduledForDeletion and $this->notificationssScheduledForDeletion->contains($l)) {
+                $this->notificationssScheduledForDeletion->remove($this->notificationssScheduledForDeletion->search($l));
+            }
         }
 
         return $this;
@@ -2237,6 +2463,9 @@ abstract class Animals implements ActiveRecordInterface
         if (null !== $this->aRaces) {
             $this->aRaces->removeAnimals($this);
         }
+        if (null !== $this->aUsers) {
+            $this->aUsers->removeAnimals($this);
+        }
         if (null !== $this->aSpecies) {
             $this->aSpecies->removeAnimals($this);
         }
@@ -2259,6 +2488,8 @@ abstract class Animals implements ActiveRecordInterface
         $this->size = null;
         $this->specification = null;
         $this->raceid = null;
+        $this->userid = null;
+        $this->image = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -2286,6 +2517,7 @@ abstract class Animals implements ActiveRecordInterface
 
         $this->collNotificationss = null;
         $this->aRaces = null;
+        $this->aUsers = null;
         $this->aSpecies = null;
         $this->aSexes = null;
         $this->aColoursRelatedByFurcolourid = null;

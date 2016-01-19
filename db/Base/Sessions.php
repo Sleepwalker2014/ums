@@ -61,18 +61,21 @@ abstract class Sessions implements ActiveRecordInterface
 
     /**
      * The value for the session field.
+     *
      * @var        int
      */
     protected $session;
 
     /**
      * The value for the user field.
+     *
      * @var        int
      */
     protected $user;
 
     /**
      * The value for the sessionid field.
+     *
      * @var        string
      */
     protected $sessionid;
@@ -299,7 +302,15 @@ abstract class Sessions implements ActiveRecordInterface
     {
         $this->clearAllReferences();
 
-        return array_keys(get_object_vars($this));
+        $cls = new \ReflectionClass($this);
+        $propertyNames = [];
+        $serializableProperties = array_diff($cls->getProperties(), $cls->getProperties(\ReflectionProperty::IS_STATIC));
+
+        foreach($serializableProperties as $property) {
+            $propertyNames[] = $property->getName();
+        }
+
+        return $propertyNames;
     }
 
     /**

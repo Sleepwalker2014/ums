@@ -61,12 +61,14 @@ abstract class Sizes implements ActiveRecordInterface
 
     /**
      * The value for the size field.
+     *
      * @var        int
      */
     protected $size;
 
     /**
      * The value for the description field.
+     *
      * @var        string
      */
     protected $description;
@@ -293,7 +295,15 @@ abstract class Sizes implements ActiveRecordInterface
     {
         $this->clearAllReferences();
 
-        return array_keys(get_object_vars($this));
+        $cls = new \ReflectionClass($this);
+        $propertyNames = [];
+        $serializableProperties = array_diff($cls->getProperties(), $cls->getProperties(\ReflectionProperty::IS_STATIC));
+
+        foreach($serializableProperties as $property) {
+            $propertyNames[] = $property->getName();
+        }
+
+        return $propertyNames;
     }
 
     /**

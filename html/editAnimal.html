@@ -84,9 +84,9 @@
                         class="form-control" id="furColour"
                         style="width: 100%;">
                         {% for colourId, colourName in colours %}
-                        <option value={{ colourId }} {% if colourId == animal.furColour %}selected="selected"{% endif %}>
-                            {{ colourName }}
-                        </option>
+                            <option value="{{ colourId }}" {% if colourId==animal.furColour %}selected="selected"{% endif %}>
+                                {{ colourName }}
+                            </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -97,9 +97,9 @@
                         class="form-control form-group" id="eyeColour"
                         style="width: 100%;">
                         {% for colourId, colourName in colours %}
-                        <option value={{ colourId }} {% if colourId == animal.eyeColour %}selected="selected"{% endif %}>
-                            {{ colourName }}
-                        </option>
+                            <option value="{{ colourId }}" {% if colourId == animal.eyeColour %}selected="selected"{% endif %}>
+                                {{ colourName }}
+                            </option>
                         {% endfor %}
                     </select>
                 </div>
@@ -153,4 +153,17 @@
                 id="saveAnimalBtn">Speichern</button>
         </div>
     </div>
+
+    <div class="row">
+        <div class="col-sm-6 col-md-6">
+            <div class="thumbnail">
+                <img id="animalPreview"
+                    src="pictures/{{ animal.image }}"
+                    alt="...">
+                    <span id="removeImage" class="glyphicon glyphicon-ban-circle btn"></span>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="animalImg" name="animalImg" />
     <script src="/marcel/ums/javascript/editAnimal.js"></script>

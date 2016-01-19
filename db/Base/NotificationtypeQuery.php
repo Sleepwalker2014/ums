@@ -128,7 +128,7 @@ abstract class NotificationtypeQuery extends ModelCriteria
         if ($key === null) {
             return null;
         }
-        if ((null !== ($obj = NotificationtypeTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
+        if ((null !== ($obj = NotificationtypeTableMap::getInstanceFromPool(null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key))) && !$this->formatter) {
             // the object is already in the instance pool
             return $obj;
         }
@@ -172,7 +172,7 @@ abstract class NotificationtypeQuery extends ModelCriteria
             /** @var ChildNotificationtype $obj */
             $obj = new ChildNotificationtype();
             $obj->hydrate($row);
-            NotificationtypeTableMap::addInstanceToPool($obj, (string) $key);
+            NotificationtypeTableMap::addInstanceToPool($obj, null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key);
         }
         $stmt->closeCursor();
 

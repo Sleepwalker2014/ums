@@ -128,7 +128,7 @@ abstract class RacesQuery extends ModelCriteria
         if ($key === null) {
             return null;
         }
-        if ((null !== ($obj = RacesTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
+        if ((null !== ($obj = RacesTableMap::getInstanceFromPool(null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key))) && !$this->formatter) {
             // the object is already in the instance pool
             return $obj;
         }
@@ -172,7 +172,7 @@ abstract class RacesQuery extends ModelCriteria
             /** @var ChildRaces $obj */
             $obj = new ChildRaces();
             $obj->hydrate($row);
-            RacesTableMap::addInstanceToPool($obj, (string) $key);
+            RacesTableMap::addInstanceToPool($obj, null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key);
         }
         $stmt->closeCursor();
 

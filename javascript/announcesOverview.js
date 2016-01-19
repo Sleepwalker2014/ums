@@ -1,5 +1,5 @@
 $(document).ready(function() {
-    $(".nav-tabs li a").click(function() {
+    $("a").click(function() {
         var navContent = $($(this).attr('href'));
         var postData = {
             'actionCode' : "17",

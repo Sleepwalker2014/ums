@@ -146,6 +146,13 @@ class UsersTableMap extends TableMap
      */
     public function buildRelations()
     {
+        $this->addRelation('Animals', '\\Animals', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':userId',
+    1 => ':user',
+  ),
+), null, 'CASCADE', 'Animalss', false);
     } // buildRelations()
 
     /**
@@ -168,7 +175,7 @@ class UsersTableMap extends TableMap
             return null;
         }
 
-        return (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)];
+        return null === $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)] || is_scalar($row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)]) || is_callable([$row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)], '__toString']) ? (string) $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)] : $row[TableMap::TYPE_NUM == $indexType ? 0 + $offset : static::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)];
     }
 
     /**

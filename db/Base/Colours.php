@@ -65,18 +65,21 @@ abstract class Colours implements ActiveRecordInterface
 
     /**
      * The value for the colour field.
+     *
      * @var        int
      */
     protected $colour;
 
     /**
      * The value for the code field.
+     *
      * @var        string
      */
     protected $code;
 
     /**
      * The value for the name field.
+     *
      * @var        string
      */
     protected $name;
@@ -327,7 +330,15 @@ abstract class Colours implements ActiveRecordInterface
     {
         $this->clearAllReferences();
 
-        return array_keys(get_object_vars($this));
+        $cls = new \ReflectionClass($this);
+        $propertyNames = [];
+        $serializableProperties = array_diff($cls->getProperties(), $cls->getProperties(\ReflectionProperty::IS_STATIC));
+
+        foreach($serializableProperties as $property) {
+            $propertyNames[] = $property->getName();
+        }
+
+        return $propertyNames;
     }
 
     /**
@@ -1344,6 +1355,10 @@ abstract class Colours implements ActiveRecordInterface
 
         if (!$this->collAnimalssRelatedByFurcolourid->contains($l)) {
             $this->doAddAnimalsRelatedByFurcolourid($l);
+
+            if ($this->animalssRelatedByFurcolouridScheduledForDeletion and $this->animalssRelatedByFurcolouridScheduledForDeletion->contains($l)) {
+                $this->animalssRelatedByFurcolouridScheduledForDeletion->remove($this->animalssRelatedByFurcolouridScheduledForDeletion->search($l));
+            }
         }
 
         return $this;
@@ -1399,6 +1414,31 @@ abstract class Colours implements ActiveRecordInterface
     {
         $query = ChildAnimalsQuery::create(null, $criteria);
         $query->joinWith('Races', $joinBehavior);
+
+        return $this->getAnimalssRelatedByFurcolourid($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Colours is new, it will return
+     * an empty collection; or if this Colours has previously
+     * been saved, it will retrieve related AnimalssRelatedByFurcolourid from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Colours.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
+     */
+    public function getAnimalssRelatedByFurcolouridJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildAnimalsQuery::create(null, $criteria);
+        $query->joinWith('Users', $joinBehavior);
 
         return $this->getAnimalssRelatedByFurcolourid($query, $con);
     }
@@ -1637,6 +1677,10 @@ abstract class Colours implements ActiveRecordInterface
 
         if (!$this->collAnimalssRelatedByEyecolourid->contains($l)) {
             $this->doAddAnimalsRelatedByEyecolourid($l);
+
+            if ($this->animalssRelatedByEyecolouridScheduledForDeletion and $this->animalssRelatedByEyecolouridScheduledForDeletion->contains($l)) {
+                $this->animalssRelatedByEyecolouridScheduledForDeletion->remove($this->animalssRelatedByEyecolouridScheduledForDeletion->search($l));
+            }
         }
 
         return $this;
@@ -1692,6 +1736,31 @@ abstract class Colours implements ActiveRecordInterface
     {
         $query = ChildAnimalsQuery::create(null, $criteria);
         $query->joinWith('Races', $joinBehavior);
+
+        return $this->getAnimalssRelatedByEyecolourid($query, $con);
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Colours is new, it will return
+     * an empty collection; or if this Colours has previously
+     * been saved, it will retrieve related AnimalssRelatedByEyecolourid from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Colours.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
+     */
+    public function getAnimalssRelatedByEyecolouridJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildAnimalsQuery::create(null, $criteria);
+        $query->joinWith('Users', $joinBehavior);
 
         return $this->getAnimalssRelatedByEyecolourid($query, $con);
     }

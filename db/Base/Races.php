@@ -65,18 +65,21 @@ abstract class Races implements ActiveRecordInterface
 
     /**
      * The value for the race field.
+     *
      * @var        int
      */
     protected $race;
 
     /**
      * The value for the code field.
+     *
      * @var        string
      */
     protected $code;
 
     /**
      * The value for the name field.
+     *
      * @var        string
      */
     protected $name;
@@ -315,7 +318,15 @@ abstract class Races implements ActiveRecordInterface
     {
         $this->clearAllReferences();
 
-        return array_keys(get_object_vars($this));
+        $cls = new \ReflectionClass($this);
+        $propertyNames = [];
+        $serializableProperties = array_diff($cls->getProperties(), $cls->getProperties(\ReflectionProperty::IS_STATIC));
+
+        foreach($serializableProperties as $property) {
+            $propertyNames[] = $property->getName();
+        }
+
+        return $propertyNames;
     }
 
     /**
@@ -1290,6 +1301,10 @@ abstract class Races implements ActiveRecordInterface
 
         if (!$this->collAnimalss->contains($l)) {
             $this->doAddAnimals($l);
+
+            if ($this->animalssScheduledForDeletion and $this->animalssScheduledForDeletion->contains($l)) {
+                $this->animalssScheduledForDeletion->remove($this->animalssScheduledForDeletion->search($l));
+            }
         }
 
         return $this;
@@ -1322,6 +1337,31 @@ abstract class Races implements ActiveRecordInterface
         }
 
         return $this;
+    }
+
+
+    /**
+     * If this collection has already been initialized with
+     * an identical criteria, it returns the collection.
+     * Otherwise if this Races is new, it will return
+     * an empty collection; or if this Races has previously
+     * been saved, it will retrieve related Animalss from storage.
+     *
+     * This method is protected by default in order to keep the public
+     * api reasonable.  You can provide public methods for those you
+     * actually need in Races.
+     *
+     * @param      Criteria $criteria optional Criteria object to narrow the query
+     * @param      ConnectionInterface $con optional connection object
+     * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
+     * @return ObjectCollection|ChildAnimals[] List of ChildAnimals objects
+     */
+    public function getAnimalssJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    {
+        $query = ChildAnimalsQuery::create(null, $criteria);
+        $query->joinWith('Users', $joinBehavior);
+
+        return $this->getAnimalss($query, $con);
     }
 
 

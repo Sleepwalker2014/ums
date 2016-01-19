@@ -65,30 +65,35 @@ abstract class Searchnotifications implements ActiveRecordInterface
 
     /**
      * The value for the searchnotification field.
+     *
      * @var        int
      */
     protected $searchnotification;
 
     /**
      * The value for the notification field.
+     *
      * @var        int
      */
     protected $notification;
 
     /**
      * The value for the missingdate field.
+     *
      * @var        \DateTime
      */
     protected $missingdate;
 
     /**
      * The value for the additionalinformation field.
+     *
      * @var        string
      */
     protected $additionalinformation;
 
     /**
      * The value for the reward field.
+     *
      * @var        int
      */
     protected $reward;
@@ -320,7 +325,15 @@ abstract class Searchnotifications implements ActiveRecordInterface
     {
         $this->clearAllReferences();
 
-        return array_keys(get_object_vars($this));
+        $cls = new \ReflectionClass($this);
+        $propertyNames = [];
+        $serializableProperties = array_diff($cls->getProperties(), $cls->getProperties(\ReflectionProperty::IS_STATIC));
+
+        foreach($serializableProperties as $property) {
+            $propertyNames[] = $property->getName();
+        }
+
+        return $propertyNames;
     }
 
     /**
@@ -915,12 +928,8 @@ abstract class Searchnotifications implements ActiveRecordInterface
             $keys[3] => $this->getAdditionalinformation(),
             $keys[4] => $this->getReward(),
         );
-
-        $utc = new \DateTimeZone('utc');
         if ($result[$keys[2]] instanceof \DateTime) {
-            // When changing timezone we don't want to change existing instances
-            $dateTime = clone $result[$keys[2]];
-            $result[$keys[2]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+            $result[$keys[2]] = $result[$keys[2]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;

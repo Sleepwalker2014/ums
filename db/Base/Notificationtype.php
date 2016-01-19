@@ -65,18 +65,21 @@ abstract class Notificationtype implements ActiveRecordInterface
 
     /**
      * The value for the notificationtype field.
+     *
      * @var        int
      */
     protected $notificationtype;
 
     /**
      * The value for the code field.
+     *
      * @var        string
      */
     protected $code;
 
     /**
      * The value for the description field.
+     *
      * @var        string
      */
     protected $description;
@@ -315,7 +318,15 @@ abstract class Notificationtype implements ActiveRecordInterface
     {
         $this->clearAllReferences();
 
-        return array_keys(get_object_vars($this));
+        $cls = new \ReflectionClass($this);
+        $propertyNames = [];
+        $serializableProperties = array_diff($cls->getProperties(), $cls->getProperties(\ReflectionProperty::IS_STATIC));
+
+        foreach($serializableProperties as $property) {
+            $propertyNames[] = $property->getName();
+        }
+
+        return $propertyNames;
     }
 
     /**
@@ -1289,6 +1300,10 @@ abstract class Notificationtype implements ActiveRecordInterface
 
         if (!$this->collNotificationss->contains($l)) {
             $this->doAddNotifications($l);
+
+            if ($this->notificationssScheduledForDeletion and $this->notificationssScheduledForDeletion->contains($l)) {
+                $this->notificationssScheduledForDeletion->remove($this->notificationssScheduledForDeletion->search($l));
+            }
         }
 
         return $this;

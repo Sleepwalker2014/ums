@@ -10,6 +10,7 @@ use Map\UsersTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
+use Propel\Runtime\ActiveQuery\ModelJoin;
 use Propel\Runtime\Collection\ObjectCollection;
 use Propel\Runtime\Connection\ConnectionInterface;
 use Propel\Runtime\Exception\PropelException;
@@ -34,6 +35,18 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildUsersQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
  * @method     ChildUsersQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildUsersQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ *
+ * @method     ChildUsersQuery leftJoinAnimals($relationAlias = null) Adds a LEFT JOIN clause to the query using the Animals relation
+ * @method     ChildUsersQuery rightJoinAnimals($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Animals relation
+ * @method     ChildUsersQuery innerJoinAnimals($relationAlias = null) Adds a INNER JOIN clause to the query using the Animals relation
+ *
+ * @method     ChildUsersQuery joinWithAnimals($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Animals relation
+ *
+ * @method     ChildUsersQuery leftJoinWithAnimals() Adds a LEFT JOIN clause and with to the query using the Animals relation
+ * @method     ChildUsersQuery rightJoinWithAnimals() Adds a RIGHT JOIN clause and with to the query using the Animals relation
+ * @method     ChildUsersQuery innerJoinWithAnimals() Adds a INNER JOIN clause and with to the query using the Animals relation
+ *
+ * @method     \AnimalsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildUsers findOne(ConnectionInterface $con = null) Return the first ChildUsers matching the query
  * @method     ChildUsers findOneOrCreate(ConnectionInterface $con = null) Return the first ChildUsers matching the query, or a new ChildUsers object populated from the query conditions when no match is found
@@ -115,7 +128,7 @@ abstract class UsersQuery extends ModelCriteria
         if ($key === null) {
             return null;
         }
-        if ((null !== ($obj = UsersTableMap::getInstanceFromPool((string) $key))) && !$this->formatter) {
+        if ((null !== ($obj = UsersTableMap::getInstanceFromPool(null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key))) && !$this->formatter) {
             // the object is already in the instance pool
             return $obj;
         }
@@ -159,7 +172,7 @@ abstract class UsersQuery extends ModelCriteria
             /** @var ChildUsers $obj */
             $obj = new ChildUsers();
             $obj->hydrate($row);
-            UsersTableMap::addInstanceToPool($obj, (string) $key);
+            UsersTableMap::addInstanceToPool($obj, null === $key || is_scalar($key) || is_callable([$key, '__toString']) ? (string) $key : $key);
         }
         $stmt->closeCursor();
 
@@ -332,6 +345,79 @@ abstract class UsersQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(UsersTableMap::COL_PASSWORD, $password, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \Animals object
+     *
+     * @param \Animals|ObjectCollection $animals the related object to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return ChildUsersQuery The current query, for fluid interface
+     */
+    public function filterByAnimals($animals, $comparison = null)
+    {
+        if ($animals instanceof \Animals) {
+            return $this
+                ->addUsingAlias(UsersTableMap::COL_USER, $animals->getUserid(), $comparison);
+        } elseif ($animals instanceof ObjectCollection) {
+            return $this
+                ->useAnimalsQuery()
+                ->filterByPrimaryKeys($animals->getPrimaryKeys())
+                ->endUse();
+        } else {
+            throw new PropelException('filterByAnimals() only accepts arguments of type \Animals or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Animals relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildUsersQuery The current query, for fluid interface
+     */
+    public function joinAnimals($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Animals');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Animals');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Animals relation Animals object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \AnimalsQuery A secondary query class using the current class as primary query
+     */
+    public function useAnimalsQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinAnimals($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Animals', '\AnimalsQuery');
     }
 
     /**

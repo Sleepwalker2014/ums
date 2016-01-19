@@ -12,9 +12,9 @@ $(document).ready(function() {
         });
     });
 
-    /*
-     * $(".removable").click(function() { removeItem($(this)); });
-     */
+    $(".printAnimal").click(function() {
+        window.print();
+    });
 });
 
 function editAnimal(animalId) {

@@ -71,42 +71,49 @@ abstract class Notifications implements ActiveRecordInterface
 
     /**
      * The value for the notification field.
+     *
      * @var        int
      */
     protected $notification;
 
     /**
      * The value for the latitude field.
+     *
      * @var        double
      */
     protected $latitude;
 
     /**
      * The value for the notificationtypeid field.
+     *
      * @var        int
      */
     protected $notificationtypeid;
 
     /**
      * The value for the creationdate field.
+     *
      * @var        \DateTime
      */
     protected $creationdate;
 
     /**
      * The value for the description field.
+     *
      * @var        string
      */
     protected $description;
 
     /**
      * The value for the animalid field.
+     *
      * @var        int
      */
     protected $animalid;
 
     /**
      * The value for the longitude field.
+     *
      * @var        double
      */
     protected $longitude;
@@ -355,7 +362,15 @@ abstract class Notifications implements ActiveRecordInterface
     {
         $this->clearAllReferences();
 
-        return array_keys(get_object_vars($this));
+        $cls = new \ReflectionClass($this);
+        $propertyNames = [];
+        $serializableProperties = array_diff($cls->getProperties(), $cls->getProperties(\ReflectionProperty::IS_STATIC));
+
+        foreach($serializableProperties as $property) {
+            $propertyNames[] = $property->getName();
+        }
+
+        return $propertyNames;
     }
 
     /**
@@ -1070,12 +1085,8 @@ abstract class Notifications implements ActiveRecordInterface
             $keys[5] => $this->getAnimalid(),
             $keys[6] => $this->getLongitude(),
         );
-
-        $utc = new \DateTimeZone('utc');
         if ($result[$keys[3]] instanceof \DateTime) {
-            // When changing timezone we don't want to change existing instances
-            $dateTime = clone $result[$keys[3]];
-            $result[$keys[3]] = $dateTime->setTimezone($utc)->format('Y-m-d\TH:i:s\Z');
+            $result[$keys[3]] = $result[$keys[3]]->format('c');
         }
 
         $virtualColumns = $this->virtualColumns;
@@ -1729,6 +1740,10 @@ abstract class Notifications implements ActiveRecordInterface
 
         if (!$this->collSearchnotificationss->contains($l)) {
             $this->doAddSearchnotifications($l);
+
+            if ($this->searchnotificationssScheduledForDeletion and $this->searchnotificationssScheduledForDeletion->contains($l)) {
+                $this->searchnotificationssScheduledForDeletion->remove($this->searchnotificationssScheduledForDeletion->search($l));
+            }
         }
 
         return $this;
