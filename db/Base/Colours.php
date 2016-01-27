@@ -8,6 +8,7 @@ use \Colours as ChildColours;
 use \ColoursQuery as ChildColoursQuery;
 use \Exception;
 use \PDO;
+use Map\AnimalsTableMap;
 use Map\ColoursTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -1210,7 +1211,10 @@ abstract class Colours implements ActiveRecordInterface
         if (null !== $this->collAnimalssRelatedByFurcolourid && !$overrideExisting) {
             return;
         }
-        $this->collAnimalssRelatedByFurcolourid = new ObjectCollection();
+
+        $collectionClassName = AnimalsTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collAnimalssRelatedByFurcolourid = new $collectionClassName;
         $this->collAnimalssRelatedByFurcolourid->setModel('\Animals');
     }
 
@@ -1532,7 +1536,10 @@ abstract class Colours implements ActiveRecordInterface
         if (null !== $this->collAnimalssRelatedByEyecolourid && !$overrideExisting) {
             return;
         }
-        $this->collAnimalssRelatedByEyecolourid = new ObjectCollection();
+
+        $collectionClassName = AnimalsTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collAnimalssRelatedByEyecolourid = new $collectionClassName;
         $this->collAnimalssRelatedByEyecolourid->setModel('\Animals');
     }
 

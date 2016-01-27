@@ -39,7 +39,7 @@
 
         public static function getAllColours () {
             $colours = [];
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
             $sql = 'SELECT *
                     FROM
                     colours;';

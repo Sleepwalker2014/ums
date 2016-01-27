@@ -8,6 +8,7 @@ use \Users as ChildUsers;
 use \UsersQuery as ChildUsersQuery;
 use \Exception;
 use \PDO;
+use Map\AnimalsTableMap;
 use Map\UsersTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -1155,7 +1156,10 @@ abstract class Users implements ActiveRecordInterface
         if (null !== $this->collAnimalss && !$overrideExisting) {
             return;
         }
-        $this->collAnimalss = new ObjectCollection();
+
+        $collectionClassName = AnimalsTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collAnimalss = new $collectionClassName;
         $this->collAnimalss->setModel('\Animals');
     }
 

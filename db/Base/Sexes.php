@@ -8,6 +8,7 @@ use \Sexes as ChildSexes;
 use \SexesQuery as ChildSexesQuery;
 use \Exception;
 use \PDO;
+use Map\AnimalsTableMap;
 use Map\SexesTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -1155,7 +1156,10 @@ abstract class Sexes implements ActiveRecordInterface
         if (null !== $this->collAnimalss && !$overrideExisting) {
             return;
         }
-        $this->collAnimalss = new ObjectCollection();
+
+        $collectionClassName = AnimalsTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collAnimalss = new $collectionClassName;
         $this->collAnimalss->setModel('\Animals');
     }
 

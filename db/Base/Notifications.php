@@ -14,6 +14,7 @@ use \DateTime;
 use \Exception;
 use \PDO;
 use Map\NotificationsTableMap;
+use Map\SearchnotificationsTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -1595,7 +1596,10 @@ abstract class Notifications implements ActiveRecordInterface
         if (null !== $this->collSearchnotificationss && !$overrideExisting) {
             return;
         }
-        $this->collSearchnotificationss = new ObjectCollection();
+
+        $collectionClassName = SearchnotificationsTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collSearchnotificationss = new $collectionClassName;
         $this->collSearchnotificationss->setModel('\Searchnotifications');
     }
 

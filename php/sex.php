@@ -14,7 +14,7 @@
         public static function getFromDb ($id) {
             $sexDb = null;
 
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
             $sql = 'SELECT *
                     FROM
@@ -39,7 +39,7 @@
         }
 
         public static function getSexes () {
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
             $sexes = [];
             $sql = 'SELECT sex, description, code
                     FROM

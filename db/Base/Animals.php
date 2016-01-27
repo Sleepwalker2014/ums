@@ -20,6 +20,7 @@ use \DateTime;
 use \Exception;
 use \PDO;
 use Map\AnimalsTableMap;
+use Map\NotificationsTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
 use Propel\Runtime\ActiveQuery\ModelCriteria;
@@ -2245,7 +2246,10 @@ abstract class Animals implements ActiveRecordInterface
         if (null !== $this->collNotificationss && !$overrideExisting) {
             return;
         }
-        $this->collNotificationss = new ObjectCollection();
+
+        $collectionClassName = NotificationsTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collNotificationss = new $collectionClassName;
         $this->collNotificationss->setModel('\Notifications');
     }
 

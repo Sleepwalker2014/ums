@@ -5,7 +5,7 @@
 
         public function getTemp () {
             $th = templateHandler::getTemplateHandler('../html/markerModal.html');
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
             $resultArray = $db->select('notifications', '*', "H");
             $resultArray['speciesCode'][0] .= '.png';

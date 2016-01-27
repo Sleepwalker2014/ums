@@ -4,7 +4,7 @@ class sessionDb {
     private $user = null;
 
     public function __construct ($sessionId, $user) {
-        $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+        $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
         start_session();
         if (!empty($_SESSION['user'])) {
             syslog(0, "user here");
@@ -18,7 +18,7 @@ class sessionDb {
      */
     public static function getFromDb ($id) {
         $sessionDb = null;
-        $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+        $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
         $sql = 'SELECT *
                 FROM

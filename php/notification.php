@@ -24,7 +24,7 @@
         public static function getFromDb ($id) {
             $notification = null;
 
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
             $sql = 'SELECT *
                     FROM
@@ -49,7 +49,7 @@
         public static function getAllMarkerInformation () {
             $output = [];
 
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
             $sql = 'SELECT latitude, longitude, id, s.code as species
                     FROM
@@ -96,7 +96,7 @@
         }
 
         public function persist () {
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
             $sql = 'INSERT INTO 
                     notifications

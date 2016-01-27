@@ -8,6 +8,7 @@ use \Notificationtype as ChildNotificationtype;
 use \NotificationtypeQuery as ChildNotificationtypeQuery;
 use \Exception;
 use \PDO;
+use Map\NotificationsTableMap;
 use Map\NotificationtypeTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -1155,7 +1156,10 @@ abstract class Notificationtype implements ActiveRecordInterface
         if (null !== $this->collNotificationss && !$overrideExisting) {
             return;
         }
-        $this->collNotificationss = new ObjectCollection();
+
+        $collectionClassName = NotificationsTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collNotificationss = new $collectionClassName;
         $this->collNotificationss->setModel('\Notifications');
     }
 

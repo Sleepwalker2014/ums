@@ -8,6 +8,7 @@ use \Species as ChildSpecies;
 use \SpeciesQuery as ChildSpeciesQuery;
 use \Exception;
 use \PDO;
+use Map\AnimalsTableMap;
 use Map\SpeciesTableMap;
 use Propel\Runtime\Propel;
 use Propel\Runtime\ActiveQuery\Criteria;
@@ -1155,7 +1156,10 @@ abstract class Species implements ActiveRecordInterface
         if (null !== $this->collAnimalss && !$overrideExisting) {
             return;
         }
-        $this->collAnimalss = new ObjectCollection();
+
+        $collectionClassName = AnimalsTableMap::getTableMap()->getCollectionClassName();
+
+        $this->collAnimalss = new $collectionClassName;
         $this->collAnimalss->setModel('\Animals');
     }
 

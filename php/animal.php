@@ -30,7 +30,7 @@
         public static function getFromDb ($id) {
             $animalDb = null;
 
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
             $sql = 'SELECT *
                     FROM
@@ -59,7 +59,7 @@
         public static function getAllAnimals ($id) {
             $animalDb = null;
         
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
         
             $sql = 'SELECT *
                     FROM
@@ -120,7 +120,7 @@
 
         public function persist () {
             $result = null;
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
             $sql = 'INSERT INTO
                     animals

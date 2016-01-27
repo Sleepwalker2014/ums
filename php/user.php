@@ -13,7 +13,7 @@ class userDb {
      */
     public static function getFromDb ($id) {
         $userDb = null;
-        $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+        $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
         $sql = 'SELECT *
                 FROM
@@ -34,7 +34,7 @@ class userDb {
      */
     public static function getUserByLogin ($name = null, $password = null) {
         $userDb = null;
-        $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+        $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
         $sql = 'SELECT *
                 FROM
@@ -56,7 +56,7 @@ class userDb {
      */
     public function getAnimals () {
         $animals = [];
-        $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+        $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
         $sql = 'SELECT animal
                 FROM
@@ -92,7 +92,7 @@ class userDb {
      */
     public function persist () {
             $result = null;
-            $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+            $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
             $sql = 'INSERT INTO
                     animals

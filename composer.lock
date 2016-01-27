@@ -13,12 +13,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/silviomoreto/bootstrap-select.git",
-                "reference": "427a722be89fc890a1af7be0229b883ded168edc"
+                "reference": "368aeeedbbd67e2402bf24dfc769c3d501d32e76"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/silviomoreto/bootstrap-select/zipball/427a722be89fc890a1af7be0229b883ded168edc",
-                "reference": "427a722be89fc890a1af7be0229b883ded168edc",
+                "url": "https://api.github.com/repos/silviomoreto/bootstrap-select/zipball/368aeeedbbd67e2402bf24dfc769c3d501d32e76",
+                "reference": "368aeeedbbd67e2402bf24dfc769c3d501d32e76",
                 "shasum": ""
             },
             "suggest": {
@@ -44,20 +44,20 @@
                 "replacement",
                 "select"
             ],
-            "time": "2015-12-18 17:40:48"
+            "time": "2016-01-05 22:43:53"
         },
         {
             "name": "components/jquery",
-            "version": "2.1.4",
+            "version": "2.2.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/components/jquery.git",
-                "reference": "7b1d1104656a092423fbfba13c5920e9bbba290c"
+                "reference": "d8b2ac0c1978e9ed8602789123976b1c7161ef96"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/components/jquery/zipball/7b1d1104656a092423fbfba13c5920e9bbba290c",
-                "reference": "7b1d1104656a092423fbfba13c5920e9bbba290c",
+                "url": "https://api.github.com/repos/components/jquery/zipball/d8b2ac0c1978e9ed8602789123976b1c7161ef96",
+                "reference": "d8b2ac0c1978e9ed8602789123976b1c7161ef96",
                 "shasum": ""
             },
             "type": "component",
@@ -86,7 +86,7 @@
             ],
             "description": "jQuery JavaScript Library",
             "homepage": "http://jquery.com",
-            "time": "2015-05-08 05:04:47"
+            "time": "2016-01-08 23:29:41"
         },
         {
             "name": "endroid/qrcode",
@@ -94,21 +94,17 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/endroid/QrCode.git",
-                "reference": "1b8dcdb327b0cca28e0f0ed34b0146881d2176c5"
+                "reference": "39a7e1ef0d7254d3c1be2398df2e9bf5df9ee446"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/endroid/QrCode/zipball/1b8dcdb327b0cca28e0f0ed34b0146881d2176c5",
-                "reference": "1b8dcdb327b0cca28e0f0ed34b0146881d2176c5",
+                "url": "https://api.github.com/repos/endroid/QrCode/zipball/39a7e1ef0d7254d3c1be2398df2e9bf5df9ee446",
+                "reference": "39a7e1ef0d7254d3c1be2398df2e9bf5df9ee446",
                 "shasum": ""
             },
             "require": {
                 "ext-gd": "*",
                 "php": ">=5.3.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "~4.0",
-                "symfony/var-dumper": "~2.3|~3.0"
             },
             "type": "library",
             "extra": {
@@ -140,7 +136,7 @@
                 "qr",
                 "qrcode"
             ],
-            "time": "2015-12-27 21:19:35"
+            "time": "2016-01-01 19:09:42"
         },
         {
             "name": "kriswallsmith/assetic",
@@ -225,16 +221,16 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/propelorm/Propel2.git",
-                "reference": "db5bbdad5eb962e60898a90006bd0ef4c81247ad"
+                "reference": "2951d2241fc69f3fb925ddc3d087cba0a04bed9a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/propelorm/Propel2/zipball/db5bbdad5eb962e60898a90006bd0ef4c81247ad",
-                "reference": "db5bbdad5eb962e60898a90006bd0ef4c81247ad",
+                "url": "https://api.github.com/repos/propelorm/Propel2/zipball/2951d2241fc69f3fb925ddc3d087cba0a04bed9a",
+                "reference": "2951d2241fc69f3fb925ddc3d087cba0a04bed9a",
                 "shasum": ""
             },
             "require": {
-                "php": ">=5.4",
+                "php": ">=5.5",
                 "psr/log": "~1.0",
                 "symfony/config": "~2.3||~3.0",
                 "symfony/console": "~2.3||~3.0",
@@ -275,14 +271,14 @@
                     "email": "william.durand1@gmail.com"
                 }
             ],
-            "description": "Propel2 is an open-source Object-Relational Mapping (ORM) for PHP 5.4",
+            "description": "Propel2 is an open-source Object-Relational Mapping (ORM) for PHP 5.5 and up.",
             "homepage": "http://www.propelorm.org/",
             "keywords": [
                 "Active Record",
                 "orm",
                 "persistence"
             ],
-            "time": "2015-12-24 15:05:35"
+            "time": "2016-01-15 18:29:53"
         },
         {
             "name": "psr/log",
@@ -920,12 +916,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twbs/bootstrap.git",
-                "reference": "b0ec851f802aba757c2b55d33774067eb0de05ab"
+                "reference": "7e0cac1b47a71dfdf2636242323bbff332b66ac5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/b0ec851f802aba757c2b55d33774067eb0de05ab",
-                "reference": "b0ec851f802aba757c2b55d33774067eb0de05ab",
+                "url": "https://api.github.com/repos/twbs/bootstrap/zipball/7e0cac1b47a71dfdf2636242323bbff332b66ac5",
+                "reference": "7e0cac1b47a71dfdf2636242323bbff332b66ac5",
                 "shasum": ""
             },
             "replace": {
@@ -963,7 +959,7 @@
                 "responsive",
                 "web"
             ],
-            "time": "2015-12-24 15:15:35"
+            "time": "2016-01-20 10:10:54"
         },
         {
             "name": "twig/twig",
@@ -971,12 +967,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/twigphp/Twig.git",
-                "reference": "1e90f3252f7a5b29c887b9efbfbacf831f45e632"
+                "reference": "aad9ebadbec3e97073ec71f03667d2662b99337a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/twigphp/Twig/zipball/1e90f3252f7a5b29c887b9efbfbacf831f45e632",
-                "reference": "1e90f3252f7a5b29c887b9efbfbacf831f45e632",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/aad9ebadbec3e97073ec71f03667d2662b99337a",
+                "reference": "aad9ebadbec3e97073ec71f03667d2662b99337a",
                 "shasum": ""
             },
             "require": {
@@ -1025,7 +1021,7 @@
             "keywords": [
                 "templating"
             ],
-            "time": "2015-12-26 21:39:16"
+            "time": "2016-01-19 12:30:57"
         }
     ],
     "packages-dev": [],

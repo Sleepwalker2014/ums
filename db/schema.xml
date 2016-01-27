@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore">
+  <table name="animals" idMethod="native" phpName="Animals">
+    <column name="animal" phpName="Animal" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="45" required="true"/>
+    <column name="birthDay" phpName="Birthday" type="DATE"/>
+    <column name="sexId" phpName="Sexid" type="INTEGER" required="true"/>
+    <column name="furColourId" phpName="Furcolourid" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
+    <column name="eyeColourId" phpName="Eyecolourid" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
+    <column name="speciesId" phpName="Speciesid" type="INTEGER" sqlType="int(11) unsigned" required="true"/>
+    <column name="size" phpName="Size" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="specification" phpName="Specification" type="VARCHAR" size="255" required="true"/>
+    <column name="raceId" phpName="Raceid" type="INTEGER" sqlType="int(11) unsigned"/>
+    <column name="userId" phpName="Userid" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="image" phpName="Image" type="VARCHAR" size="256"/>
+    <foreign-key foreignTable="races" name="animals_ibfk_10" onUpdate="CASCADE">
+      <reference local="raceId" foreign="race"/>
+    </foreign-key>
+    <foreign-key foreignTable="users" name="animals_ibfk_11" onUpdate="CASCADE">
+      <reference local="userId" foreign="user"/>
+    </foreign-key>
+    <foreign-key foreignTable="species" name="animals_ibfk_6" onUpdate="CASCADE">
+      <reference local="speciesId" foreign="species"/>
+    </foreign-key>
+    <foreign-key foreignTable="sexes" name="animals_ibfk_7" onUpdate="CASCADE">
+      <reference local="sexId" foreign="sex"/>
+    </foreign-key>
+    <foreign-key foreignTable="colours" name="animals_ibfk_8" onUpdate="CASCADE">
+      <reference local="furColourId" foreign="colour"/>
+    </foreign-key>
+    <foreign-key foreignTable="colours" name="animals_ibfk_9" onUpdate="CASCADE">
+      <reference local="eyeColourId" foreign="colour"/>
+    </foreign-key>
+    <index name="fk_sex">
+      <index-column name="sexId"/>
+    </index>
+    <index name="fk_furColour">
+      <index-column name="furColourId"/>
+    </index>
+    <index name="fk_eyeColour">
+      <index-column name="eyeColourId"/>
+    </index>
+    <index name="fk_race">
+      <index-column name="raceId"/>
+    </index>
+    <index name="fk_species">
+      <index-column name="speciesId"/>
+    </index>
+    <index name="userId">
+      <index-column name="userId"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="colours" idMethod="native" phpName="Colours">
+    <column name="colour" phpName="Colour" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="45" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="notificationType" idMethod="native" phpName="Notificationtype">
+    <column name="notificationType" phpName="Notificationtype" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="25" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="256" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="notifications" idMethod="native" phpName="Notifications">
+    <column name="notification" phpName="Notification" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="latitude" phpName="Latitude" type="DOUBLE" required="true"/>
+    <column name="notificationTypeId" phpName="Notificationtypeid" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="creationDate" phpName="Creationdate" type="DATE" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="2048" required="true"/>
+    <column name="animalId" phpName="Animalid" type="INTEGER" required="true"/>
+    <column name="longitude" phpName="Longitude" type="DOUBLE" required="true"/>
+    <foreign-key foreignTable="notificationType" name="notifications_ibfk_1" onUpdate="CASCADE">
+      <reference local="notificationTypeId" foreign="notificationType"/>
+    </foreign-key>
+    <foreign-key foreignTable="animals" name="notifications_ibfk_2" onUpdate="CASCADE">
+      <reference local="animalId" foreign="animal"/>
+    </foreign-key>
+    <index name="fk_animal">
+      <index-column name="animalId"/>
+    </index>
+    <index name="fk_notificationType">
+      <index-column name="notificationTypeId"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="races" idMethod="native" phpName="Races">
+    <column name="race" phpName="Race" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="15" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="25" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="searchNotifications" idMethod="native" phpName="Searchnotifications">
+    <column name="searchNotification" phpName="Searchnotification" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="notification" phpName="Notification" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="missingDate" phpName="Missingdate" type="DATE" required="true"/>
+    <column name="additionalInformation" phpName="Additionalinformation" type="VARCHAR" size="1024" required="true"/>
+    <column name="reward" phpName="Reward" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <foreign-key foreignTable="notifications" name="searchNotifications_ibfk_1" onUpdate="CASCADE">
+      <reference local="notification" foreign="notification"/>
+    </foreign-key>
+    <unique name="notification">
+      <unique-column name="notification"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="sessions" idMethod="native" phpName="Sessions">
+    <column name="session" phpName="Session" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="user" phpName="User" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <column name="sessionID" phpName="Sessionid" type="VARCHAR" size="45" required="true"/>
+    <unique name="user">
+      <unique-column name="user"/>
+      <unique-column name="sessionID"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="sexes" idMethod="native" phpName="Sexes">
+    <column name="sex" phpName="Sex" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="10" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="25" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="sizes" idMethod="native" phpName="Sizes">
+    <column name="size" phpName="Size" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="25" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="species" idMethod="native" phpName="Species">
+    <column name="species" phpName="Species" type="INTEGER" sqlType="int(11) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="code" phpName="Code" type="VARCHAR" size="25" required="true"/>
+    <column name="description" phpName="Description" type="VARCHAR" size="45" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="users" idMethod="native" phpName="Users">
+    <column name="user" phpName="User" type="INTEGER" size="10" sqlType="int(10) unsigned" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="name" phpName="Name" type="VARCHAR" size="64" required="true"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="128" required="true"/>
+    <index name="name">
+      <index-column name="name"/>
+      <index-column name="password"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>

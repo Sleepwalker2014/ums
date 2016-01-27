@@ -5,7 +5,7 @@ class db {
         $sql = 'SELECT '.$idField.'
                 FROM '.$tableName.'
                 WHERE '.$codeField.' = "'.mysql_escape_string($code).'";';
-        $db = databaseHandler::getInstance ('localhost', 'root', 'Deutschrock1', 'animal');
+        $db = databaseHandler::getInstance ('localhost', 'marcel', 'Deutschrock', 'animal');
 
         $result = $db->query($sql);
         while ($row = $result->fetch_assoc()) {
