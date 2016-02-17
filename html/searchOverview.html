@@ -1,11 +1,11 @@
 <div class="row">
     <div class="col-md-12">
         {% for animal in animals %}
-        <div class="col-sm-12 col-md-6">
+        <div class="col-sm-12 col-md-6 notification" data-notification={{ animal.notification }}>
             <div class="thumbnail">
                 <img
                     src="{% if animal.imagePath %}{{ animal.imagePath }}{% else %}pictures/placeholder.png{% endif %}"
-                    class="img-thumbnail" alt="Cinque Terre">
+                    class="img-thumbnail" alt="barcode">
                 <div class="caption">
                     <h4>{{ animal.creationDate }}</h4>
                     <h4>
@@ -14,13 +14,13 @@
                             aria-hidden="true"></span>
                     </h4>
                     zuletzt gesehen am: {{ animal.lastSeen }}<br>
-                    zuletzt gesehen in: Hannover <span
+                    zuletzt gesehen in: {{ animal.location }} <span
                         class="glyphicon glyphicon-map-marker"
                         aria-hidden="true"></span> <br> Finderlohn:
                     {{ animal.reward }} <span
                         class="glyphicon glyphicon-euro"
                         aria-hidden="true"></span><br>
-                        <img src="{{ animal.qrUrl }}" alt="Cinque Terre">
+                        <img src="{{ animal.qrUrl }}" alt="barcode">
                 </div>
                 <hr>
                 <ul class="social-network social-circle">
@@ -36,8 +36,12 @@
                     <li><a href="#" class="icoLinkedin"
                         title="Linkedin"><i class="fa fa-linkedin"></i></a></li>
                 </ul>
+                <span
+                        class="glyphicon glyphicon-remove-circle removeNotification"
+                        aria-hidden="true"></span>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
+<script src="javascript/searchOverview.js"></script>

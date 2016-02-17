@@ -27,6 +27,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotificationsQuery orderByDescription($order = Criteria::ASC) Order by the description column
  * @method     ChildNotificationsQuery orderByAnimalid($order = Criteria::ASC) Order by the animalId column
  * @method     ChildNotificationsQuery orderByLongitude($order = Criteria::ASC) Order by the longitude column
+ * @method     ChildNotificationsQuery orderByLocation($order = Criteria::ASC) Order by the location column
+ * @method     ChildNotificationsQuery orderByUser($order = Criteria::ASC) Order by the user column
  *
  * @method     ChildNotificationsQuery groupByNotification() Group by the notification column
  * @method     ChildNotificationsQuery groupByLatitude() Group by the latitude column
@@ -35,6 +37,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotificationsQuery groupByDescription() Group by the description column
  * @method     ChildNotificationsQuery groupByAnimalid() Group by the animalId column
  * @method     ChildNotificationsQuery groupByLongitude() Group by the longitude column
+ * @method     ChildNotificationsQuery groupByLocation() Group by the location column
+ * @method     ChildNotificationsQuery groupByUser() Group by the user column
  *
  * @method     ChildNotificationsQuery leftJoin($relation) Adds a LEFT JOIN clause to the query
  * @method     ChildNotificationsQuery rightJoin($relation) Adds a RIGHT JOIN clause to the query
@@ -43,6 +47,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotificationsQuery leftJoinWith($relation) Adds a LEFT JOIN clause and with to the query
  * @method     ChildNotificationsQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildNotificationsQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
+ *
+ * @method     ChildNotificationsQuery leftJoinUsers($relationAlias = null) Adds a LEFT JOIN clause to the query using the Users relation
+ * @method     ChildNotificationsQuery rightJoinUsers($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Users relation
+ * @method     ChildNotificationsQuery innerJoinUsers($relationAlias = null) Adds a INNER JOIN clause to the query using the Users relation
+ *
+ * @method     ChildNotificationsQuery joinWithUsers($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Users relation
+ *
+ * @method     ChildNotificationsQuery leftJoinWithUsers() Adds a LEFT JOIN clause and with to the query using the Users relation
+ * @method     ChildNotificationsQuery rightJoinWithUsers() Adds a RIGHT JOIN clause and with to the query using the Users relation
+ * @method     ChildNotificationsQuery innerJoinWithUsers() Adds a INNER JOIN clause and with to the query using the Users relation
  *
  * @method     ChildNotificationsQuery leftJoinNotificationtype($relationAlias = null) Adds a LEFT JOIN clause to the query using the Notificationtype relation
  * @method     ChildNotificationsQuery rightJoinNotificationtype($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Notificationtype relation
@@ -74,7 +88,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotificationsQuery rightJoinWithSearchnotifications() Adds a RIGHT JOIN clause and with to the query using the Searchnotifications relation
  * @method     ChildNotificationsQuery innerJoinWithSearchnotifications() Adds a INNER JOIN clause and with to the query using the Searchnotifications relation
  *
- * @method     \NotificationtypeQuery|\AnimalsQuery|\SearchnotificationsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \UsersQuery|\NotificationtypeQuery|\AnimalsQuery|\SearchnotificationsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildNotifications findOne(ConnectionInterface $con = null) Return the first ChildNotifications matching the query
  * @method     ChildNotifications findOneOrCreate(ConnectionInterface $con = null) Return the first ChildNotifications matching the query, or a new ChildNotifications object populated from the query conditions when no match is found
@@ -85,7 +99,9 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotifications findOneByCreationdate(string $creationDate) Return the first ChildNotifications filtered by the creationDate column
  * @method     ChildNotifications findOneByDescription(string $description) Return the first ChildNotifications filtered by the description column
  * @method     ChildNotifications findOneByAnimalid(int $animalId) Return the first ChildNotifications filtered by the animalId column
- * @method     ChildNotifications findOneByLongitude(double $longitude) Return the first ChildNotifications filtered by the longitude column *
+ * @method     ChildNotifications findOneByLongitude(double $longitude) Return the first ChildNotifications filtered by the longitude column
+ * @method     ChildNotifications findOneByLocation(string $location) Return the first ChildNotifications filtered by the location column
+ * @method     ChildNotifications findOneByUser(int $user) Return the first ChildNotifications filtered by the user column *
 
  * @method     ChildNotifications requirePk($key, ConnectionInterface $con = null) Return the ChildNotifications by primary key and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildNotifications requireOne(ConnectionInterface $con = null) Return the first ChildNotifications matching the query and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
@@ -97,6 +113,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotifications requireOneByDescription(string $description) Return the first ChildNotifications filtered by the description column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildNotifications requireOneByAnimalid(int $animalId) Return the first ChildNotifications filtered by the animalId column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  * @method     ChildNotifications requireOneByLongitude(double $longitude) Return the first ChildNotifications filtered by the longitude column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildNotifications requireOneByLocation(string $location) Return the first ChildNotifications filtered by the location column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
+ * @method     ChildNotifications requireOneByUser(int $user) Return the first ChildNotifications filtered by the user column and throws \Propel\Runtime\Exception\EntityNotFoundException when not found
  *
  * @method     ChildNotifications[]|ObjectCollection find(ConnectionInterface $con = null) Return ChildNotifications objects based on current ModelCriteria
  * @method     ChildNotifications[]|ObjectCollection findByNotification(int $notification) Return ChildNotifications objects filtered by the notification column
@@ -106,6 +124,8 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotifications[]|ObjectCollection findByDescription(string $description) Return ChildNotifications objects filtered by the description column
  * @method     ChildNotifications[]|ObjectCollection findByAnimalid(int $animalId) Return ChildNotifications objects filtered by the animalId column
  * @method     ChildNotifications[]|ObjectCollection findByLongitude(double $longitude) Return ChildNotifications objects filtered by the longitude column
+ * @method     ChildNotifications[]|ObjectCollection findByLocation(string $location) Return ChildNotifications objects filtered by the location column
+ * @method     ChildNotifications[]|ObjectCollection findByUser(int $user) Return ChildNotifications objects filtered by the user column
  * @method     ChildNotifications[]|\Propel\Runtime\Util\PropelModelPager paginate($page = 1, $maxPerPage = 10, ConnectionInterface $con = null) Issue a SELECT query based on the current ModelCriteria and uses a page and a maximum number of results per page to compute an offset and a limit
  *
  */
@@ -198,7 +218,7 @@ abstract class NotificationsQuery extends ModelCriteria
      */
     protected function findPkSimple($key, ConnectionInterface $con)
     {
-        $sql = 'SELECT notification, latitude, notificationTypeId, creationDate, description, animalId, longitude FROM notifications WHERE notification = :p0';
+        $sql = 'SELECT notification, latitude, notificationTypeId, creationDate, description, animalId, longitude, location, user FROM notifications WHERE notification = :p0';
         try {
             $stmt = $con->prepare($sql);
             $stmt->bindValue(':p0', $key, PDO::PARAM_INT);
@@ -567,6 +587,155 @@ abstract class NotificationsQuery extends ModelCriteria
         }
 
         return $this->addUsingAlias(NotificationsTableMap::COL_LONGITUDE, $longitude, $comparison);
+    }
+
+    /**
+     * Filter the query on the location column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByLocation('fooValue');   // WHERE location = 'fooValue'
+     * $query->filterByLocation('%fooValue%'); // WHERE location LIKE '%fooValue%'
+     * </code>
+     *
+     * @param     string $location The value to use as filter.
+     *              Accepts wildcards (* and % trigger a LIKE)
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildNotificationsQuery The current query, for fluid interface
+     */
+    public function filterByLocation($location = null, $comparison = null)
+    {
+        if (null === $comparison) {
+            if (is_array($location)) {
+                $comparison = Criteria::IN;
+            } elseif (preg_match('/[\%\*]/', $location)) {
+                $location = str_replace('*', '%', $location);
+                $comparison = Criteria::LIKE;
+            }
+        }
+
+        return $this->addUsingAlias(NotificationsTableMap::COL_LOCATION, $location, $comparison);
+    }
+
+    /**
+     * Filter the query on the user column
+     *
+     * Example usage:
+     * <code>
+     * $query->filterByUser(1234); // WHERE user = 1234
+     * $query->filterByUser(array(12, 34)); // WHERE user IN (12, 34)
+     * $query->filterByUser(array('min' => 12)); // WHERE user > 12
+     * </code>
+     *
+     * @see       filterByUsers()
+     *
+     * @param     mixed $user The value to use as filter.
+     *              Use scalar values for equality.
+     *              Use array values for in_array() equivalent.
+     *              Use associative array('min' => $minValue, 'max' => $maxValue) for intervals.
+     * @param     string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @return $this|ChildNotificationsQuery The current query, for fluid interface
+     */
+    public function filterByUser($user = null, $comparison = null)
+    {
+        if (is_array($user)) {
+            $useMinMax = false;
+            if (isset($user['min'])) {
+                $this->addUsingAlias(NotificationsTableMap::COL_USER, $user['min'], Criteria::GREATER_EQUAL);
+                $useMinMax = true;
+            }
+            if (isset($user['max'])) {
+                $this->addUsingAlias(NotificationsTableMap::COL_USER, $user['max'], Criteria::LESS_EQUAL);
+                $useMinMax = true;
+            }
+            if ($useMinMax) {
+                return $this;
+            }
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+        }
+
+        return $this->addUsingAlias(NotificationsTableMap::COL_USER, $user, $comparison);
+    }
+
+    /**
+     * Filter the query by a related \Users object
+     *
+     * @param \Users|ObjectCollection $users The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildNotificationsQuery The current query, for fluid interface
+     */
+    public function filterByUsers($users, $comparison = null)
+    {
+        if ($users instanceof \Users) {
+            return $this
+                ->addUsingAlias(NotificationsTableMap::COL_USER, $users->getUser(), $comparison);
+        } elseif ($users instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(NotificationsTableMap::COL_USER, $users->toKeyValue('PrimaryKey', 'User'), $comparison);
+        } else {
+            throw new PropelException('filterByUsers() only accepts arguments of type \Users or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Users relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildNotificationsQuery The current query, for fluid interface
+     */
+    public function joinUsers($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Users');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Users');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Users relation Users object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \UsersQuery A secondary query class using the current class as primary query
+     */
+    public function useUsersQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinUsers($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Users', '\UsersQuery');
     }
 
     /**

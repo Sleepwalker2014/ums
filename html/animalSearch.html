@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
-                <label for="missingDate">Vermisst seit</label>
+                <label for="missingDate">vermisst seit</label>
                 <div class='input-group date'>
                     <input type='text' id='missingDate'
                         class="form-control" placeholder="vermisst seit">
@@ -19,6 +19,12 @@
                     </span>
                 </div>
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12 form-group">
+            <label for="missingLocation">vermisst in</label>
+            <input id="missingLocation" class="form-control" placeholder="Geben Sie einen Ort ein" type="text"></input>
         </div>
     </div>
     <div class="row">
@@ -36,12 +42,10 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <button type="button" class="btn btn-primary">QR-Code
-                generieren</button>
             <button id="saveMissingAnnounce" type="button"
                 class="btn btn-primary">Speichern</button>
         </div>
     </div>
     <input type="hidden" id="animalId" value={{ animalId }}></input>
 </div>
-<script src="/marcel/ums/javascript/searchAnimal.js"></script>
+<script src="javascript/searchAnimal.js"></script>

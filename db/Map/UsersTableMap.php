@@ -153,6 +153,13 @@ class UsersTableMap extends TableMap
     1 => ':user',
   ),
 ), null, 'CASCADE', 'Animalss', false);
+        $this->addRelation('Notifications', '\\Notifications', RelationMap::ONE_TO_MANY, array (
+  0 =>
+  array (
+    0 => ':user',
+    1 => ':user',
+  ),
+), null, null, 'Notificationss', false);
     } // buildRelations()
 
     /**

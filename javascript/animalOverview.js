@@ -11,6 +11,15 @@ $(document).ready(function() {
             $('#content').html(result);
         });
     });
+    
+    $(".removeAnimal").click(function() {
+        ajaxCall('php/routingHandler.php', {
+            'actionCode' : "19",
+            'animalId' : $(this).data('animal')
+        }).done(function(result) {
+        	$(this).closest('.removable').remove();
+        });
+    });
 
     $(".printAnimal").click(function() {
         window.print();

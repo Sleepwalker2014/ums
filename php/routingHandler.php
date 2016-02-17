@@ -147,7 +147,7 @@ function resolveActions($urlParams, $sessionHandler, $root)
                         'race' => $animal->getRaces()->getName(),
                         'animal' => $animal->getAnimal(),
                         'specification' => $animal->getSpecification(),
-                        'imagePath' => 'pictures/1_gr.jpg'
+                        'imagePath' => 'pictures/'.$animal->getImage()
                     ];
                 }
                 
@@ -324,6 +324,7 @@ function resolveActions($urlParams, $sessionHandler, $root)
                 $notificationObject = new Notifications();
                 $notificationObject->setNotificationtype($notificationType)
                     ->setCreationdate($dateTime->format('Y-m-d'))
+                    ->setLocation($_POST['missingLocation'])
                     ->setDescription($_POST['additionalInfo'])
                     ->setAnimals($animal)
                     ->setLatitude(40.45)
@@ -338,8 +339,9 @@ function resolveActions($urlParams, $sessionHandler, $root)
                     ->save();
                 
                 $qrCode = new QrCode();
+                $qrCode->setSize(50);
                 $qrCode->setText('http://www.pawhub.de/notifications/' + (int) $notificationObject->getNotification())
-                    ->render('/tmp/test.png');
+                    ->render('../pictures/'.(int) $notificationObject->getNotification().'.png');
                 
                 $th = templateHandler::getTemplateHandler('../html/animalSearch.html');
                 echo $th->getHTML();
@@ -348,7 +350,9 @@ function resolveActions($urlParams, $sessionHandler, $root)
                 $root = dirname(dirname(__FILE__)) . '/';
                 $notificationQuery = new NotificationsQuery();
                 $searchNotificationQuery = new SearchnotificationsQuery();
-                $notifications = $notificationQuery->joinWithSearchnotifications()->find();
+                $notifications = $notificationQuery->
+                                 filterByUser($sessionHandler->getSessionUser())->
+                                 joinWithSearchnotifications()->find();
                 
                 $output = [];
                 foreach ($notifications as $notification) {
@@ -357,10 +361,12 @@ function resolveActions($urlParams, $sessionHandler, $root)
                     
                     $tmp = [
                         'name' => $notificationAnimal->getName(),
+                        'notification' => $notification->getNotification(),
                         'creationDate' => $notification->getCreationDate()->format('d.m.Y'),
                         'lastSeen' => $searchNotification[0]->getMissingDate()->format('d.m.Y'),
+                        'location' => $notification->getLocation(),
                         'reward' => $searchNotification[0]->getReward(),
-                        'qrUrl' => 'pictures/test.png'
+                        'qrUrl' => 'pictures/'.(int)$notification->getNotification().'.png'
                     ];
                     
                     if ($notificationAnimal->getImage()) {
@@ -373,6 +379,20 @@ function resolveActions($urlParams, $sessionHandler, $root)
                 $th->addContent('animals', $output);
                 echo $th->getHTML();
                 break;
+            case 18:
+                $notificationQuery = new NotificationsQuery();
+                $searchNotificationQuery = new SearchnotificationsQuery();
+                $searchNotificationQuery->filterByNotification($_POST['notification'])->delete();
+                
+                $notificationQuery->filterByPrimaryKey($_POST['notification'])->delete();
+                break;
+            case 19:
+		        $notificationQuery = new NotificationsQuery();
+		        $searchNotificationQuery = new SearchnotificationsQuery();
+		        $searchNotificationQuery->filterByNotification($_POST['notification'])->delete();
+		        
+		        $notificationQuery->filterByPrimaryKey($_POST['notification'])->delete();
+		        break;
         }
     }
 }

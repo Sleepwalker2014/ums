@@ -9,6 +9,7 @@ $(document).ready(function() {
             'actionCode' : "16",
             'reward' : $('#reward').val(),
             'missingDate' : $('#missingDate').val(),
+            'missingLocation' : $('#missingLocation').val(),
             'additionalInfo' : $('#additionalInfo').val(),
             'animalId' : $('#animalId').val()
         };
@@ -16,4 +17,14 @@ $(document).ready(function() {
             $('#content').html(result);
         });
     });
+    
+	initialize();
 });
+
+        var autocomplete;
+        function initialize() {
+          autocomplete = new google.maps.places.Autocomplete((document.getElementById('missingLocation')),
+              												{ types: ['geocode'] });
+		  google.maps.event.addListener(autocomplete, 'place_changed', function() {
+          });
+        }

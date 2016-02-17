@@ -77,6 +77,11 @@
     <column name="description" phpName="Description" type="VARCHAR" size="2048" required="true"/>
     <column name="animalId" phpName="Animalid" type="INTEGER" required="true"/>
     <column name="longitude" phpName="Longitude" type="DOUBLE" required="true"/>
+    <column name="location" phpName="Location" type="VARCHAR" size="255" required="true"/>
+    <column name="user" phpName="User" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
+    <foreign-key foreignTable="users" name="notifications_ibfk_3">
+      <reference local="user" foreign="user"/>
+    </foreign-key>
     <foreign-key foreignTable="notificationType" name="notifications_ibfk_1" onUpdate="CASCADE">
       <reference local="notificationTypeId" foreign="notificationType"/>
     </foreign-key>
@@ -88,6 +93,9 @@
     </index>
     <index name="fk_notificationType">
       <index-column name="notificationTypeId"/>
+    </index>
+    <index name="user">
+      <index-column name="user"/>
     </index>
     <vendor type="mysql">
       <parameter name="Engine" value="InnoDB"/>

@@ -17,7 +17,7 @@
             <div class="thumbnail">
                 <img class="editAnimal" data-animal={{
                     animal.animal }}
-                    src="http://media.einfachtierisch.de/thumbnail/600/0/media.einfachtierisch.de/images/2013/01/Junge-Katze-Erziehen.jpg"
+                    src="{{ animal.imagePath }}"
                     alt="bild">
                 <div class="caption">
                     <h3>{{ animal.name }}</h3>
@@ -34,9 +34,11 @@
                     animal.animal }} class="searchAnimal glyphicon glyphicon-search btn btn-default"></icon>
                 <icon data-animal={{
                     animal.animal }} class="printAnimal glyphicon glyphicon-print btn btn-default"></icon>
+                <icon data-animal={{
+                    animal.animal }} class="removeAnimal glyphicon glyphicon-remove btn-default"></icon>
             </div>
         </div>
         {% endfor %}
     </div>
 </div>
-<script src="/marcel/ums/javascript/animalOverview.js"></script>
+<script src="javascript/animalOverview.js"></script>

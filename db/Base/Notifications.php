@@ -10,6 +10,8 @@ use \Notificationtype as ChildNotificationtype;
 use \NotificationtypeQuery as ChildNotificationtypeQuery;
 use \Searchnotifications as ChildSearchnotifications;
 use \SearchnotificationsQuery as ChildSearchnotificationsQuery;
+use \Users as ChildUsers;
+use \UsersQuery as ChildUsersQuery;
 use \DateTime;
 use \Exception;
 use \PDO;
@@ -118,6 +120,25 @@ abstract class Notifications implements ActiveRecordInterface
      * @var        double
      */
     protected $longitude;
+
+    /**
+     * The value for the location field.
+     *
+     * @var        string
+     */
+    protected $location;
+
+    /**
+     * The value for the user field.
+     *
+     * @var        int
+     */
+    protected $user;
+
+    /**
+     * @var        ChildUsers
+     */
+    protected $aUsers;
 
     /**
      * @var        ChildNotificationtype
@@ -455,6 +476,26 @@ abstract class Notifications implements ActiveRecordInterface
     }
 
     /**
+     * Get the [location] column value.
+     *
+     * @return string
+     */
+    public function getLocation()
+    {
+        return $this->location;
+    }
+
+    /**
+     * Get the [user] column value.
+     *
+     * @return int
+     */
+    public function getUser()
+    {
+        return $this->user;
+    }
+
+    /**
      * Set the value of [notification] column.
      *
      * @param int $v new value
@@ -603,6 +644,50 @@ abstract class Notifications implements ActiveRecordInterface
     } // setLongitude()
 
     /**
+     * Set the value of [location] column.
+     *
+     * @param string $v new value
+     * @return $this|\Notifications The current object (for fluent API support)
+     */
+    public function setLocation($v)
+    {
+        if ($v !== null) {
+            $v = (string) $v;
+        }
+
+        if ($this->location !== $v) {
+            $this->location = $v;
+            $this->modifiedColumns[NotificationsTableMap::COL_LOCATION] = true;
+        }
+
+        return $this;
+    } // setLocation()
+
+    /**
+     * Set the value of [user] column.
+     *
+     * @param int $v new value
+     * @return $this|\Notifications The current object (for fluent API support)
+     */
+    public function setUser($v)
+    {
+        if ($v !== null) {
+            $v = (int) $v;
+        }
+
+        if ($this->user !== $v) {
+            $this->user = $v;
+            $this->modifiedColumns[NotificationsTableMap::COL_USER] = true;
+        }
+
+        if ($this->aUsers !== null && $this->aUsers->getUser() !== $v) {
+            $this->aUsers = null;
+        }
+
+        return $this;
+    } // setUser()
+
+    /**
      * Indicates whether the columns in this object are only set to default values.
      *
      * This method can be used in conjunction with isModified() to indicate whether an object is both
@@ -661,6 +746,12 @@ abstract class Notifications implements ActiveRecordInterface
 
             $col = $row[TableMap::TYPE_NUM == $indexType ? 6 + $startcol : NotificationsTableMap::translateFieldName('Longitude', TableMap::TYPE_PHPNAME, $indexType)];
             $this->longitude = (null !== $col) ? (double) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 7 + $startcol : NotificationsTableMap::translateFieldName('Location', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->location = (null !== $col) ? (string) $col : null;
+
+            $col = $row[TableMap::TYPE_NUM == $indexType ? 8 + $startcol : NotificationsTableMap::translateFieldName('User', TableMap::TYPE_PHPNAME, $indexType)];
+            $this->user = (null !== $col) ? (int) $col : null;
             $this->resetModified();
 
             $this->setNew(false);
@@ -669,7 +760,7 @@ abstract class Notifications implements ActiveRecordInterface
                 $this->ensureConsistency();
             }
 
-            return $startcol + 7; // 7 = NotificationsTableMap::NUM_HYDRATE_COLUMNS.
+            return $startcol + 9; // 9 = NotificationsTableMap::NUM_HYDRATE_COLUMNS.
 
         } catch (Exception $e) {
             throw new PropelException(sprintf('Error populating %s object', '\\Notifications'), 0, $e);
@@ -696,6 +787,9 @@ abstract class Notifications implements ActiveRecordInterface
         }
         if ($this->aAnimals !== null && $this->animalid !== $this->aAnimals->getAnimal()) {
             $this->aAnimals = null;
+        }
+        if ($this->aUsers !== null && $this->user !== $this->aUsers->getUser()) {
+            $this->aUsers = null;
         }
     } // ensureConsistency
 
@@ -736,6 +830,7 @@ abstract class Notifications implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
+            $this->aUsers = null;
             $this->aNotificationtype = null;
             $this->aAnimals = null;
             $this->collSearchnotificationss = null;
@@ -844,6 +939,13 @@ abstract class Notifications implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
+            if ($this->aUsers !== null) {
+                if ($this->aUsers->isModified() || $this->aUsers->isNew()) {
+                    $affectedRows += $this->aUsers->save($con);
+                }
+                $this->setUsers($this->aUsers);
+            }
+
             if ($this->aNotificationtype !== null) {
                 if ($this->aNotificationtype->isModified() || $this->aNotificationtype->isNew()) {
                     $affectedRows += $this->aNotificationtype->save($con);
@@ -933,6 +1035,12 @@ abstract class Notifications implements ActiveRecordInterface
         if ($this->isColumnModified(NotificationsTableMap::COL_LONGITUDE)) {
             $modifiedColumns[':p' . $index++]  = 'longitude';
         }
+        if ($this->isColumnModified(NotificationsTableMap::COL_LOCATION)) {
+            $modifiedColumns[':p' . $index++]  = 'location';
+        }
+        if ($this->isColumnModified(NotificationsTableMap::COL_USER)) {
+            $modifiedColumns[':p' . $index++]  = 'user';
+        }
 
         $sql = sprintf(
             'INSERT INTO notifications (%s) VALUES (%s)',
@@ -964,6 +1072,12 @@ abstract class Notifications implements ActiveRecordInterface
                         break;
                     case 'longitude':
                         $stmt->bindValue($identifier, $this->longitude, PDO::PARAM_STR);
+                        break;
+                    case 'location':
+                        $stmt->bindValue($identifier, $this->location, PDO::PARAM_STR);
+                        break;
+                    case 'user':
+                        $stmt->bindValue($identifier, $this->user, PDO::PARAM_INT);
                         break;
                 }
             }
@@ -1048,6 +1162,12 @@ abstract class Notifications implements ActiveRecordInterface
             case 6:
                 return $this->getLongitude();
                 break;
+            case 7:
+                return $this->getLocation();
+                break;
+            case 8:
+                return $this->getUser();
+                break;
             default:
                 return null;
                 break;
@@ -1085,6 +1205,8 @@ abstract class Notifications implements ActiveRecordInterface
             $keys[4] => $this->getDescription(),
             $keys[5] => $this->getAnimalid(),
             $keys[6] => $this->getLongitude(),
+            $keys[7] => $this->getLocation(),
+            $keys[8] => $this->getUser(),
         );
         if ($result[$keys[3]] instanceof \DateTime) {
             $result[$keys[3]] = $result[$keys[3]]->format('c');
@@ -1096,6 +1218,21 @@ abstract class Notifications implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
+            if (null !== $this->aUsers) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'users';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'users';
+                        break;
+                    default:
+                        $key = 'Users';
+                }
+
+                $result[$key] = $this->aUsers->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
             if (null !== $this->aNotificationtype) {
 
                 switch ($keyType) {
@@ -1196,6 +1333,12 @@ abstract class Notifications implements ActiveRecordInterface
             case 6:
                 $this->setLongitude($value);
                 break;
+            case 7:
+                $this->setLocation($value);
+                break;
+            case 8:
+                $this->setUser($value);
+                break;
         } // switch()
 
         return $this;
@@ -1242,6 +1385,12 @@ abstract class Notifications implements ActiveRecordInterface
         }
         if (array_key_exists($keys[6], $arr)) {
             $this->setLongitude($arr[$keys[6]]);
+        }
+        if (array_key_exists($keys[7], $arr)) {
+            $this->setLocation($arr[$keys[7]]);
+        }
+        if (array_key_exists($keys[8], $arr)) {
+            $this->setUser($arr[$keys[8]]);
         }
     }
 
@@ -1304,6 +1453,12 @@ abstract class Notifications implements ActiveRecordInterface
         }
         if ($this->isColumnModified(NotificationsTableMap::COL_LONGITUDE)) {
             $criteria->add(NotificationsTableMap::COL_LONGITUDE, $this->longitude);
+        }
+        if ($this->isColumnModified(NotificationsTableMap::COL_LOCATION)) {
+            $criteria->add(NotificationsTableMap::COL_LOCATION, $this->location);
+        }
+        if ($this->isColumnModified(NotificationsTableMap::COL_USER)) {
+            $criteria->add(NotificationsTableMap::COL_USER, $this->user);
         }
 
         return $criteria;
@@ -1397,6 +1552,8 @@ abstract class Notifications implements ActiveRecordInterface
         $copyObj->setDescription($this->getDescription());
         $copyObj->setAnimalid($this->getAnimalid());
         $copyObj->setLongitude($this->getLongitude());
+        $copyObj->setLocation($this->getLocation());
+        $copyObj->setUser($this->getUser());
 
         if ($deepCopy) {
             // important: temporarily setNew(false) because this affects the behavior of
@@ -1437,6 +1594,57 @@ abstract class Notifications implements ActiveRecordInterface
         $this->copyInto($copyObj, $deepCopy);
 
         return $copyObj;
+    }
+
+    /**
+     * Declares an association between this object and a ChildUsers object.
+     *
+     * @param  ChildUsers $v
+     * @return $this|\Notifications The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setUsers(ChildUsers $v = null)
+    {
+        if ($v === null) {
+            $this->setUser(NULL);
+        } else {
+            $this->setUser($v->getUser());
+        }
+
+        $this->aUsers = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUsers object, it will not be re-added.
+        if ($v !== null) {
+            $v->addNotifications($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildUsers object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUsers The associated ChildUsers object.
+     * @throws PropelException
+     */
+    public function getUsers(ConnectionInterface $con = null)
+    {
+        if ($this->aUsers === null && ($this->user !== null)) {
+            $this->aUsers = ChildUsersQuery::create()->findPk($this->user, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUsers->addNotificationss($this);
+             */
+        }
+
+        return $this->aUsers;
     }
 
     /**
@@ -1789,6 +1997,9 @@ abstract class Notifications implements ActiveRecordInterface
      */
     public function clear()
     {
+        if (null !== $this->aUsers) {
+            $this->aUsers->removeNotifications($this);
+        }
         if (null !== $this->aNotificationtype) {
             $this->aNotificationtype->removeNotifications($this);
         }
@@ -1802,6 +2013,8 @@ abstract class Notifications implements ActiveRecordInterface
         $this->description = null;
         $this->animalid = null;
         $this->longitude = null;
+        $this->location = null;
+        $this->user = null;
         $this->alreadyInSave = false;
         $this->clearAllReferences();
         $this->resetModified();
@@ -1828,6 +2041,7 @@ abstract class Notifications implements ActiveRecordInterface
         } // if ($deep)
 
         $this->collSearchnotificationss = null;
+        $this->aUsers = null;
         $this->aNotificationtype = null;
         $this->aAnimals = null;
     }
