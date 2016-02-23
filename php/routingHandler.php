@@ -141,14 +141,22 @@ function resolveActions($urlParams, $sessionHandler, $root)
                 
                 $output = [];
                 foreach ($animals as $animal) {
-                    $output[] = [
+                    $tmpAnimal = [
                         'name' => $animal->getName(),
                         'birthday' => $animal->getBirthDay()->format('d.m.Y'),
                         'race' => $animal->getRaces()->getName(),
                         'animal' => $animal->getAnimal(),
-                        'specification' => $animal->getSpecification(),
-                        'imagePath' => 'pictures/'.$animal->getImage()
+                        'specification' => $animal->getSpecification()
                     ];
+                    
+                    $animalImage = $animal->getImage();
+                    if ($animalImage) {
+                        $tmpAnimal['imagePath'] = 'pictures/'.$animal->getImage();
+                    } else {
+                        $tmpAnimal['imagePath'] = 'pictures/placeholder.png';
+                    }
+                    
+                    $output[] = $tmpAnimal;
                 }
                 
                 $th->addContent('animals', $output);
