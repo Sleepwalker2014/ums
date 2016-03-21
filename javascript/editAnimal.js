@@ -1,6 +1,8 @@
 $(document).ready(function() {
     $(function() {
-        var clearImage = false;
+        var hasInitialImage = false;
+        var updatedImage = false;
+        
         $("#furColour").select2({
             'placeholder' : 'Fellfarbe...',
         });
@@ -12,10 +14,10 @@ $(document).ready(function() {
             var image = $("#animalImg")[0].files[0];
             var imageData = new FormData();
 
-            if (image !== undefined && !clearImage) {
+            if (image !== undefined && updatedImage) {
                 imageData.append('image', image);
             }
-            
+
             imageData.append('actionCode', 13);
             imageData.append('animal', $('#animalId').val());
             imageData.append('name', $('#callingName').val());
@@ -27,6 +29,7 @@ $(document).ready(function() {
             imageData.append('species', $("#species").val());
             imageData.append('size', $('#weight').val());
             imageData.append('specification', $("#specification").val());
+            imageData.append('hasInitialImage', hasInitialImage);
 
             $(this).attr("disabled");
 
@@ -56,8 +59,9 @@ $(document).ready(function() {
 
             // Closure to capture the file information.
             reader.onload = function(theFile) {
-                clearImage = false;
+                updatedImage = true;
                 $('#animalPreview').attr("src", theFile.target.result);
+                $("#removeImage").show();
             };
 
             // Read in the image file as a data URL.
@@ -65,8 +69,8 @@ $(document).ready(function() {
         });
         
         $("#removeImage").click(function() {
-            clearImage = true;
             $('#animalPreview').attr("src", 'pictures/placeholder.png');
+            $(this).hide();
         });
 
         function formatRepo(repo) {

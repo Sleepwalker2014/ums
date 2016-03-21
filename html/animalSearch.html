@@ -1,51 +1,52 @@
 <div class="container">
-    <div class="row">
-        <div class="col-md-12">
-            <div class="jumbotron">
-                <h1>Suchbereich!</h1>
-            </div>
-        </div>
-    </div>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="jumbotron">
+				<h1>Suchbereich!</h1>
+			</div>
+		</div>
+	</div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <div class="form-group">
-                <label for="missingDate">vermisst seit</label>
-                <div class='input-group date'>
-                    <input type='text' id='missingDate'
-                        class="form-control" placeholder="vermisst seit">
-                    <span class="input-group-addon"> <span
-                        class="glyphicon glyphicon-calendar"></span>
-                    </span>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 form-group">
-            <label for="missingLocation">vermisst in</label>
-            <input id="missingLocation" class="form-control" placeholder="Geben Sie einen Ort ein" type="text"></input>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 form-group">
-            <label for="additionalInfo">weitere Informationen</label>
-            <textarea id="additionalInfo" class="form-control"></textarea>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12 form-group">
-            <label for="reward">Finderlohn (€)</label> <input id="reward"
-                type="number" min="0" step="1" class="form-control"
-                placeholder="Finderlohn" value=0></input>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-12">
-            <button id="saveMissingAnnounce" type="button"
-                class="btn btn-primary">Speichern</button>
-        </div>
-    </div>
-    <input type="hidden" id="animalId" value={{ animalId }}></input>
+	<div class="row">
+		<div class="col-md-12">
+			<div class="form-group">
+				<label for="missingDate">vermisst seit</label>
+				<div class='input-group date'>
+					<input type='text' id='missingDate' class="form-control"
+						placeholder="vermisst seit" value={{ animal.missingDate }}>
+					<span class="input-group-addon"> <span
+						class="glyphicon glyphicon-calendar"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 form-group">
+			<label for="missingLocation">vermisst in</label> <input
+				id="missingLocation" class="form-control"
+				placeholder="Geben Sie einen Ort ein" type="text" value={{ animal.location }}></input>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 form-group">
+			<label for="additionalInfo">weitere Informationen</label>
+			<textarea id="additionalInfo" class="form-control">{{ animal.additionalInformation }}</textarea>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12 form-group">
+			<label for="reward">Finderlohn (€)</label> <input id="reward"
+				type="number" min="0" step="1" class="form-control"
+				placeholder="Finderlohn" value={{ animal.reward }}></input>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-md-12">
+			<button id="saveMissingAnnounce" type="button"
+				class="btn btn-primary">Speichern</button>
+		</div>
+	</div>
+	<input type="hidden" id="animalId" value={{ animalId }}></input>
 </div>
 <script src="javascript/searchAnimal.js"></script>

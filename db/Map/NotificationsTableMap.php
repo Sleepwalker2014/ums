@@ -182,13 +182,6 @@ class NotificationsTableMap extends TableMap
      */
     public function buildRelations()
     {
-        $this->addRelation('Users', '\\Users', RelationMap::MANY_TO_ONE, array (
-  0 =>
-  array (
-    0 => ':user',
-    1 => ':user',
-  ),
-), null, null, null, false);
         $this->addRelation('Notificationtype', '\\Notificationtype', RelationMap::MANY_TO_ONE, array (
   0 =>
   array (
@@ -203,6 +196,13 @@ class NotificationsTableMap extends TableMap
     1 => ':animal',
   ),
 ), null, 'CASCADE', null, false);
+        $this->addRelation('Users', '\\Users', RelationMap::MANY_TO_ONE, array (
+  0 =>
+  array (
+    0 => ':user',
+    1 => ':user',
+  ),
+), null, null, null, false);
         $this->addRelation('Searchnotifications', '\\Searchnotifications', RelationMap::ONE_TO_MANY, array (
   0 =>
   array (

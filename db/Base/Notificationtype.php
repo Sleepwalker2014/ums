@@ -1359,10 +1359,10 @@ abstract class Notificationtype implements ActiveRecordInterface
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildNotifications[] List of ChildNotifications objects
      */
-    public function getNotificationssJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getNotificationssJoinAnimals(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildNotificationsQuery::create(null, $criteria);
-        $query->joinWith('Users', $joinBehavior);
+        $query->joinWith('Animals', $joinBehavior);
 
         return $this->getNotificationss($query, $con);
     }
@@ -1384,10 +1384,10 @@ abstract class Notificationtype implements ActiveRecordInterface
      * @param      string $joinBehavior optional join type to use (defaults to Criteria::LEFT_JOIN)
      * @return ObjectCollection|ChildNotifications[] List of ChildNotifications objects
      */
-    public function getNotificationssJoinAnimals(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
+    public function getNotificationssJoinUsers(Criteria $criteria = null, ConnectionInterface $con = null, $joinBehavior = Criteria::LEFT_JOIN)
     {
         $query = ChildNotificationsQuery::create(null, $criteria);
-        $query->joinWith('Animals', $joinBehavior);
+        $query->joinWith('Users', $joinBehavior);
 
         return $this->getNotificationss($query, $con);
     }

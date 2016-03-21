@@ -79,14 +79,14 @@
     <column name="longitude" phpName="Longitude" type="DOUBLE" required="true"/>
     <column name="location" phpName="Location" type="VARCHAR" size="255" required="true"/>
     <column name="user" phpName="User" type="INTEGER" size="10" sqlType="int(10) unsigned" required="true"/>
-    <foreign-key foreignTable="users" name="notifications_ibfk_3">
-      <reference local="user" foreign="user"/>
-    </foreign-key>
     <foreign-key foreignTable="notificationType" name="notifications_ibfk_1" onUpdate="CASCADE">
       <reference local="notificationTypeId" foreign="notificationType"/>
     </foreign-key>
     <foreign-key foreignTable="animals" name="notifications_ibfk_2" onUpdate="CASCADE">
       <reference local="animalId" foreign="animal"/>
+    </foreign-key>
+    <foreign-key foreignTable="users" name="notifications_ibfk_3">
+      <reference local="user" foreign="user"/>
     </foreign-key>
     <index name="fk_animal">
       <index-column name="animalId"/>

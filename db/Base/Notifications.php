@@ -136,11 +136,6 @@ abstract class Notifications implements ActiveRecordInterface
     protected $user;
 
     /**
-     * @var        ChildUsers
-     */
-    protected $aUsers;
-
-    /**
      * @var        ChildNotificationtype
      */
     protected $aNotificationtype;
@@ -149,6 +144,11 @@ abstract class Notifications implements ActiveRecordInterface
      * @var        ChildAnimals
      */
     protected $aAnimals;
+
+    /**
+     * @var        ChildUsers
+     */
+    protected $aUsers;
 
     /**
      * @var        ObjectCollection|ChildSearchnotifications[] Collection to store aggregation of ChildSearchnotifications objects.
@@ -830,9 +830,9 @@ abstract class Notifications implements ActiveRecordInterface
 
         if ($deep) {  // also de-associate any related objects?
 
-            $this->aUsers = null;
             $this->aNotificationtype = null;
             $this->aAnimals = null;
+            $this->aUsers = null;
             $this->collSearchnotificationss = null;
 
         } // if (deep)
@@ -939,13 +939,6 @@ abstract class Notifications implements ActiveRecordInterface
             // method.  This object relates to these object(s) by a
             // foreign key reference.
 
-            if ($this->aUsers !== null) {
-                if ($this->aUsers->isModified() || $this->aUsers->isNew()) {
-                    $affectedRows += $this->aUsers->save($con);
-                }
-                $this->setUsers($this->aUsers);
-            }
-
             if ($this->aNotificationtype !== null) {
                 if ($this->aNotificationtype->isModified() || $this->aNotificationtype->isNew()) {
                     $affectedRows += $this->aNotificationtype->save($con);
@@ -958,6 +951,13 @@ abstract class Notifications implements ActiveRecordInterface
                     $affectedRows += $this->aAnimals->save($con);
                 }
                 $this->setAnimals($this->aAnimals);
+            }
+
+            if ($this->aUsers !== null) {
+                if ($this->aUsers->isModified() || $this->aUsers->isNew()) {
+                    $affectedRows += $this->aUsers->save($con);
+                }
+                $this->setUsers($this->aUsers);
             }
 
             if ($this->isNew() || $this->isModified()) {
@@ -1218,21 +1218,6 @@ abstract class Notifications implements ActiveRecordInterface
         }
 
         if ($includeForeignObjects) {
-            if (null !== $this->aUsers) {
-
-                switch ($keyType) {
-                    case TableMap::TYPE_CAMELNAME:
-                        $key = 'users';
-                        break;
-                    case TableMap::TYPE_FIELDNAME:
-                        $key = 'users';
-                        break;
-                    default:
-                        $key = 'Users';
-                }
-
-                $result[$key] = $this->aUsers->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
-            }
             if (null !== $this->aNotificationtype) {
 
                 switch ($keyType) {
@@ -1262,6 +1247,21 @@ abstract class Notifications implements ActiveRecordInterface
                 }
 
                 $result[$key] = $this->aAnimals->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
+            }
+            if (null !== $this->aUsers) {
+
+                switch ($keyType) {
+                    case TableMap::TYPE_CAMELNAME:
+                        $key = 'users';
+                        break;
+                    case TableMap::TYPE_FIELDNAME:
+                        $key = 'users';
+                        break;
+                    default:
+                        $key = 'Users';
+                }
+
+                $result[$key] = $this->aUsers->toArray($keyType, $includeLazyLoadColumns,  $alreadyDumpedObjects, true);
             }
             if (null !== $this->collSearchnotificationss) {
 
@@ -1597,57 +1597,6 @@ abstract class Notifications implements ActiveRecordInterface
     }
 
     /**
-     * Declares an association between this object and a ChildUsers object.
-     *
-     * @param  ChildUsers $v
-     * @return $this|\Notifications The current object (for fluent API support)
-     * @throws PropelException
-     */
-    public function setUsers(ChildUsers $v = null)
-    {
-        if ($v === null) {
-            $this->setUser(NULL);
-        } else {
-            $this->setUser($v->getUser());
-        }
-
-        $this->aUsers = $v;
-
-        // Add binding for other direction of this n:n relationship.
-        // If this object has already been added to the ChildUsers object, it will not be re-added.
-        if ($v !== null) {
-            $v->addNotifications($this);
-        }
-
-
-        return $this;
-    }
-
-
-    /**
-     * Get the associated ChildUsers object
-     *
-     * @param  ConnectionInterface $con Optional Connection object.
-     * @return ChildUsers The associated ChildUsers object.
-     * @throws PropelException
-     */
-    public function getUsers(ConnectionInterface $con = null)
-    {
-        if ($this->aUsers === null && ($this->user !== null)) {
-            $this->aUsers = ChildUsersQuery::create()->findPk($this->user, $con);
-            /* The following can be used additionally to
-                guarantee the related object contains a reference
-                to this object.  This level of coupling may, however, be
-                undesirable since it could result in an only partially populated collection
-                in the referenced object.
-                $this->aUsers->addNotificationss($this);
-             */
-        }
-
-        return $this->aUsers;
-    }
-
-    /**
      * Declares an association between this object and a ChildNotificationtype object.
      *
      * @param  ChildNotificationtype $v
@@ -1747,6 +1696,57 @@ abstract class Notifications implements ActiveRecordInterface
         }
 
         return $this->aAnimals;
+    }
+
+    /**
+     * Declares an association between this object and a ChildUsers object.
+     *
+     * @param  ChildUsers $v
+     * @return $this|\Notifications The current object (for fluent API support)
+     * @throws PropelException
+     */
+    public function setUsers(ChildUsers $v = null)
+    {
+        if ($v === null) {
+            $this->setUser(NULL);
+        } else {
+            $this->setUser($v->getUser());
+        }
+
+        $this->aUsers = $v;
+
+        // Add binding for other direction of this n:n relationship.
+        // If this object has already been added to the ChildUsers object, it will not be re-added.
+        if ($v !== null) {
+            $v->addNotifications($this);
+        }
+
+
+        return $this;
+    }
+
+
+    /**
+     * Get the associated ChildUsers object
+     *
+     * @param  ConnectionInterface $con Optional Connection object.
+     * @return ChildUsers The associated ChildUsers object.
+     * @throws PropelException
+     */
+    public function getUsers(ConnectionInterface $con = null)
+    {
+        if ($this->aUsers === null && ($this->user !== null)) {
+            $this->aUsers = ChildUsersQuery::create()->findPk($this->user, $con);
+            /* The following can be used additionally to
+                guarantee the related object contains a reference
+                to this object.  This level of coupling may, however, be
+                undesirable since it could result in an only partially populated collection
+                in the referenced object.
+                $this->aUsers->addNotificationss($this);
+             */
+        }
+
+        return $this->aUsers;
     }
 
 
@@ -1997,14 +1997,14 @@ abstract class Notifications implements ActiveRecordInterface
      */
     public function clear()
     {
-        if (null !== $this->aUsers) {
-            $this->aUsers->removeNotifications($this);
-        }
         if (null !== $this->aNotificationtype) {
             $this->aNotificationtype->removeNotifications($this);
         }
         if (null !== $this->aAnimals) {
             $this->aAnimals->removeNotifications($this);
+        }
+        if (null !== $this->aUsers) {
+            $this->aUsers->removeNotifications($this);
         }
         $this->notification = null;
         $this->latitude = null;
@@ -2041,9 +2041,9 @@ abstract class Notifications implements ActiveRecordInterface
         } // if ($deep)
 
         $this->collSearchnotificationss = null;
-        $this->aUsers = null;
         $this->aNotificationtype = null;
         $this->aAnimals = null;
+        $this->aUsers = null;
     }
 
     /**

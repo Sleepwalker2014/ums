@@ -2,7 +2,7 @@
     <div class="col-md-12">
         {% for animal in animals %}
         <div class="col-sm-12 col-md-6 notification" data-notification={{ animal.notification }}>
-            <div class="thumbnail">
+            <div class="thumbnail editSearch" data-notification={{ animal.notification }}>
                 <img
                     src="{% if animal.imagePath %}{{ animal.imagePath }}{% else %}pictures/placeholder.png{% endif %}"
                     class="img-thumbnail" alt="barcode">

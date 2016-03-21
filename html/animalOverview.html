@@ -15,27 +15,29 @@
         {% for animal in animals %}
         <div class="col-sm-6 col-md-4 removable">
             <div class="thumbnail">
+                                            <icon data-animal={{
+                    animal.animal }} class="removeAnimal glyphicon glyphicon-remove btn-default"></icon>
                 <img class="editAnimal" data-animal={{
                     animal.animal }}
                     src="{{animal.imagePath}}"
                     alt="bild">
                 <div class="caption">
-                    <h3>{{ animal.name }}</h3>
-                    <p>{{ animal.birthday }}</p>
+                    <h3>{{ animal.name }} <span class="fa {% if animal.sex == 'female' %}fa-venus{% else %}fa-mars{% endif %}"></span></h3>
+                    <p><span class="fa fa-birthday-cake"></span> {{ animal.birthday }}</p>
+                    <p><span class="fa fa-eye"></span> {{ animal.eyeColour }}</p>
+                    <p><span class="fa fa-eye"></span> {{ animal.furColour }}</p>
                     <p>{{ animal.race }}</p>
-                    <p>{{ animal.specification }}</p>
+                    <p><span class="fa fa-info-circle"></span> {{ animal.specification }}</p>
                     <p>
                         <button type="button"
                             class="btn btn-primary editAnimal"
-                            data-animal={{animal.getAnimal}}>Bearbeiten</button>
+                            data-animal={{animal.animal}}>Bearbeiten</button>
                     </p>
                 </div>
                 <icon data-animal={{
                     animal.animal }} class="searchAnimal glyphicon glyphicon-search btn btn-default"></icon>
                 <icon data-animal={{
                     animal.animal }} class="printAnimal glyphicon glyphicon-print btn btn-default"></icon>
-                <icon data-animal={{
-                    animal.animal }} class="removeAnimal glyphicon glyphicon-remove btn-default"></icon>
             </div>
         </div>
         {% endfor %}

@@ -11,4 +11,15 @@ $(document).ready(function() {
     		notificationDiv.remove();
         });
     });
+    
+    $(".editSearch").click(function() {
+        var postData = {
+    		'notificationId' : $(this).data('notification'),
+            'actionCode' : "20"
+        };
+
+        ajaxCall('php/routingHandler.php', postData).always(function(result) {
+        	$('#content').html(result);
+        });
+    });
 });

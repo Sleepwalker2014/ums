@@ -48,16 +48,6 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotificationsQuery rightJoinWith($relation) Adds a RIGHT JOIN clause and with to the query
  * @method     ChildNotificationsQuery innerJoinWith($relation) Adds a INNER JOIN clause and with to the query
  *
- * @method     ChildNotificationsQuery leftJoinUsers($relationAlias = null) Adds a LEFT JOIN clause to the query using the Users relation
- * @method     ChildNotificationsQuery rightJoinUsers($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Users relation
- * @method     ChildNotificationsQuery innerJoinUsers($relationAlias = null) Adds a INNER JOIN clause to the query using the Users relation
- *
- * @method     ChildNotificationsQuery joinWithUsers($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Users relation
- *
- * @method     ChildNotificationsQuery leftJoinWithUsers() Adds a LEFT JOIN clause and with to the query using the Users relation
- * @method     ChildNotificationsQuery rightJoinWithUsers() Adds a RIGHT JOIN clause and with to the query using the Users relation
- * @method     ChildNotificationsQuery innerJoinWithUsers() Adds a INNER JOIN clause and with to the query using the Users relation
- *
  * @method     ChildNotificationsQuery leftJoinNotificationtype($relationAlias = null) Adds a LEFT JOIN clause to the query using the Notificationtype relation
  * @method     ChildNotificationsQuery rightJoinNotificationtype($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Notificationtype relation
  * @method     ChildNotificationsQuery innerJoinNotificationtype($relationAlias = null) Adds a INNER JOIN clause to the query using the Notificationtype relation
@@ -78,6 +68,16 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotificationsQuery rightJoinWithAnimals() Adds a RIGHT JOIN clause and with to the query using the Animals relation
  * @method     ChildNotificationsQuery innerJoinWithAnimals() Adds a INNER JOIN clause and with to the query using the Animals relation
  *
+ * @method     ChildNotificationsQuery leftJoinUsers($relationAlias = null) Adds a LEFT JOIN clause to the query using the Users relation
+ * @method     ChildNotificationsQuery rightJoinUsers($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Users relation
+ * @method     ChildNotificationsQuery innerJoinUsers($relationAlias = null) Adds a INNER JOIN clause to the query using the Users relation
+ *
+ * @method     ChildNotificationsQuery joinWithUsers($joinType = Criteria::INNER_JOIN) Adds a join clause and with to the query using the Users relation
+ *
+ * @method     ChildNotificationsQuery leftJoinWithUsers() Adds a LEFT JOIN clause and with to the query using the Users relation
+ * @method     ChildNotificationsQuery rightJoinWithUsers() Adds a RIGHT JOIN clause and with to the query using the Users relation
+ * @method     ChildNotificationsQuery innerJoinWithUsers() Adds a INNER JOIN clause and with to the query using the Users relation
+ *
  * @method     ChildNotificationsQuery leftJoinSearchnotifications($relationAlias = null) Adds a LEFT JOIN clause to the query using the Searchnotifications relation
  * @method     ChildNotificationsQuery rightJoinSearchnotifications($relationAlias = null) Adds a RIGHT JOIN clause to the query using the Searchnotifications relation
  * @method     ChildNotificationsQuery innerJoinSearchnotifications($relationAlias = null) Adds a INNER JOIN clause to the query using the Searchnotifications relation
@@ -88,7 +88,7 @@ use Propel\Runtime\Exception\PropelException;
  * @method     ChildNotificationsQuery rightJoinWithSearchnotifications() Adds a RIGHT JOIN clause and with to the query using the Searchnotifications relation
  * @method     ChildNotificationsQuery innerJoinWithSearchnotifications() Adds a INNER JOIN clause and with to the query using the Searchnotifications relation
  *
- * @method     \UsersQuery|\NotificationtypeQuery|\AnimalsQuery|\SearchnotificationsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
+ * @method     \NotificationtypeQuery|\AnimalsQuery|\UsersQuery|\SearchnotificationsQuery endUse() Finalizes a secondary criteria and merges it with its primary Criteria
  *
  * @method     ChildNotifications findOne(ConnectionInterface $con = null) Return the first ChildNotifications matching the query
  * @method     ChildNotifications findOneOrCreate(ConnectionInterface $con = null) Return the first ChildNotifications matching the query, or a new ChildNotifications object populated from the query conditions when no match is found
@@ -662,83 +662,6 @@ abstract class NotificationsQuery extends ModelCriteria
     }
 
     /**
-     * Filter the query by a related \Users object
-     *
-     * @param \Users|ObjectCollection $users The related object(s) to use as filter
-     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
-     *
-     * @throws \Propel\Runtime\Exception\PropelException
-     *
-     * @return ChildNotificationsQuery The current query, for fluid interface
-     */
-    public function filterByUsers($users, $comparison = null)
-    {
-        if ($users instanceof \Users) {
-            return $this
-                ->addUsingAlias(NotificationsTableMap::COL_USER, $users->getUser(), $comparison);
-        } elseif ($users instanceof ObjectCollection) {
-            if (null === $comparison) {
-                $comparison = Criteria::IN;
-            }
-
-            return $this
-                ->addUsingAlias(NotificationsTableMap::COL_USER, $users->toKeyValue('PrimaryKey', 'User'), $comparison);
-        } else {
-            throw new PropelException('filterByUsers() only accepts arguments of type \Users or Collection');
-        }
-    }
-
-    /**
-     * Adds a JOIN clause to the query using the Users relation
-     *
-     * @param     string $relationAlias optional alias for the relation
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return $this|ChildNotificationsQuery The current query, for fluid interface
-     */
-    public function joinUsers($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        $tableMap = $this->getTableMap();
-        $relationMap = $tableMap->getRelation('Users');
-
-        // create a ModelJoin object for this join
-        $join = new ModelJoin();
-        $join->setJoinType($joinType);
-        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
-        if ($previousJoin = $this->getPreviousJoin()) {
-            $join->setPreviousJoin($previousJoin);
-        }
-
-        // add the ModelJoin to the current object
-        if ($relationAlias) {
-            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
-            $this->addJoinObject($join, $relationAlias);
-        } else {
-            $this->addJoinObject($join, 'Users');
-        }
-
-        return $this;
-    }
-
-    /**
-     * Use the Users relation Users object
-     *
-     * @see useQuery()
-     *
-     * @param     string $relationAlias optional alias for the relation,
-     *                                   to be used as main alias in the secondary query
-     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
-     *
-     * @return \UsersQuery A secondary query class using the current class as primary query
-     */
-    public function useUsersQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
-    {
-        return $this
-            ->joinUsers($relationAlias, $joinType)
-            ->useQuery($relationAlias ? $relationAlias : 'Users', '\UsersQuery');
-    }
-
-    /**
      * Filter the query by a related \Notificationtype object
      *
      * @param \Notificationtype|ObjectCollection $notificationtype The related object(s) to use as filter
@@ -890,6 +813,83 @@ abstract class NotificationsQuery extends ModelCriteria
         return $this
             ->joinAnimals($relationAlias, $joinType)
             ->useQuery($relationAlias ? $relationAlias : 'Animals', '\AnimalsQuery');
+    }
+
+    /**
+     * Filter the query by a related \Users object
+     *
+     * @param \Users|ObjectCollection $users The related object(s) to use as filter
+     * @param string $comparison Operator to use for the column comparison, defaults to Criteria::EQUAL
+     *
+     * @throws \Propel\Runtime\Exception\PropelException
+     *
+     * @return ChildNotificationsQuery The current query, for fluid interface
+     */
+    public function filterByUsers($users, $comparison = null)
+    {
+        if ($users instanceof \Users) {
+            return $this
+                ->addUsingAlias(NotificationsTableMap::COL_USER, $users->getUser(), $comparison);
+        } elseif ($users instanceof ObjectCollection) {
+            if (null === $comparison) {
+                $comparison = Criteria::IN;
+            }
+
+            return $this
+                ->addUsingAlias(NotificationsTableMap::COL_USER, $users->toKeyValue('PrimaryKey', 'User'), $comparison);
+        } else {
+            throw new PropelException('filterByUsers() only accepts arguments of type \Users or Collection');
+        }
+    }
+
+    /**
+     * Adds a JOIN clause to the query using the Users relation
+     *
+     * @param     string $relationAlias optional alias for the relation
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return $this|ChildNotificationsQuery The current query, for fluid interface
+     */
+    public function joinUsers($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        $tableMap = $this->getTableMap();
+        $relationMap = $tableMap->getRelation('Users');
+
+        // create a ModelJoin object for this join
+        $join = new ModelJoin();
+        $join->setJoinType($joinType);
+        $join->setRelationMap($relationMap, $this->useAliasInSQL ? $this->getModelAlias() : null, $relationAlias);
+        if ($previousJoin = $this->getPreviousJoin()) {
+            $join->setPreviousJoin($previousJoin);
+        }
+
+        // add the ModelJoin to the current object
+        if ($relationAlias) {
+            $this->addAlias($relationAlias, $relationMap->getRightTable()->getName());
+            $this->addJoinObject($join, $relationAlias);
+        } else {
+            $this->addJoinObject($join, 'Users');
+        }
+
+        return $this;
+    }
+
+    /**
+     * Use the Users relation Users object
+     *
+     * @see useQuery()
+     *
+     * @param     string $relationAlias optional alias for the relation,
+     *                                   to be used as main alias in the secondary query
+     * @param     string $joinType Accepted values are null, 'left join', 'right join', 'inner join'
+     *
+     * @return \UsersQuery A secondary query class using the current class as primary query
+     */
+    public function useUsersQuery($relationAlias = null, $joinType = Criteria::INNER_JOIN)
+    {
+        return $this
+            ->joinUsers($relationAlias, $joinType)
+            ->useQuery($relationAlias ? $relationAlias : 'Users', '\UsersQuery');
     }
 
     /**
